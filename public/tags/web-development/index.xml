@@ -1,0 +1,42 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Web Development - Tag - My New Hugo Site</title>
+        <link>http://localhost:1313/tags/web-development/</link>
+        <description>Web Development - Tag - My New Hugo Site</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 20 Mar 2024 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/tags/web-development/" rel="self" type="application/rss+xml" /><item>
+    <title>Sample Project</title>
+    <link>http://localhost:1313/portfolio/sample-project/</link>
+    <pubDate>Wed, 20 Mar 2024 00:00:00 &#43;0000</pubDate>
+    <author>xxxx</author>
+    <guid>http://localhost:1313/portfolio/sample-project/</guid>
+    <description><![CDATA[<h2 id="project-overview">Project Overview</h2>
+<p>This is a sample portfolio project that demonstrates how to structure your portfolio items in Hugo.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Feature 1</li>
+<li>Feature 2</li>
+<li>Feature 3</li>
+</ul>
+<h2 id="technologies-used">Technologies Used</h2>
+<ul>
+<li>Technology 1</li>
+<li>Technology 2</li>
+<li>Technology 3</li>
+</ul>
+<h2 id="project-details">Project Details</h2>
+<p>Add your project details here. You can include:</p>
+<ul>
+<li>Project goals</li>
+<li>Your role</li>
+<li>Challenges faced</li>
+<li>Solutions implemented</li>
+<li>Results achieved</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://example.com" target="_blank" rel="noopener noreffer ">Project Demo</a></li>
+<li><a href="https://github.com/example" target="_blank" rel="noopener noreffer ">GitHub Repository</a></li>
+</ul>]]></description>
+</item>
+</channel>
+</rss>
