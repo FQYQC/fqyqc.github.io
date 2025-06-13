@@ -1,19 +1,19 @@
 ---
 title: "About"
-date: 2025-06-14
+date: 2025-06-12
 draft: false
 description: "Professional Background and Experience"
 ---
 
 ## About Me
 
-I'm now a Master's student at [Electrical and Computer Engineering](https://ece.ucsd.edu/), [UC San Diego](https://ucsd.edu/), majoring in Machine Learning and Data Science.
+I'm currently a Master's student at [Electrical and Computer Engineering](https://ece.ucsd.edu/), [UC San Diego](https://ucsd.edu/), majoring in Machine Learning and Data Science.
 
-I received my Bachelor's Degree from [Peking University](https://english.pku.edu.cn/) this year. At PKU, I'm a member of the first [Tong Class](https://tongclass.ac.cn/) (an honorary pilot class in AI) at [Yuanpei College](https://yuanpei.pku.edu.cn/), and was also affiliated with [Institute for Artificial Intelligence](https://www.ai.pku.edu.cn/).
+I received my Bachelor's Degree from [Peking University](https://english.pku.edu.cn/) last year. At PKU, I'm a member of the first [Tong Class](https://tongclass.ac.cn/) (an honorary pilot class in AI) at [Yuanpei College](https://yuanpei.pku.edu.cn/), and was also affiliated with [Institute for Artificial Intelligence](https://www.ai.pku.edu.cn/).
 
 My research and career interests include but are not limited to:
 
-- **Research:** Machine Learning, (Machine and Human) Cognitive Reasoning, LLMs, Planning.
+- **Research:** Machine Learning, (Machine and Human) Cognitive Reasoning, LLMs, (Robotic) Planning.
 - **Industry:** Self-driving, Recommendation, Cloud/Distributed Computation, Data-driven Learning, Software Development, especially related to AI and AI products.
 
 Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]](https://www.linkedin.com/in/yilue-qian/) [[Email]](mailto://qianyilue@outlook.com), I'm happy to share ideas and infos.
@@ -21,29 +21,32 @@ Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]
 ## Education
 
 ### University of California, San Diego
-**Master of Science in Machine Learning and Data Science**  
-*Sep 2024 - Spring 2026 (Expected)*  
+**Master of Science in Machine Learning and Data Science** | *Sep 2024 - Spring 2026 (Expected)*  
 - Department of [Electrical and Computer Engineering](https://ece.ucsd.edu/)
 
 ### Peking University
-**Bachelor of Engineering in Artificial Intelligence (Computer Science)**  
-*Sep 2020 - Jul 2024*  
+**Bachelor of Engineering in Artificial Intelligence (Computer Science)** | *Sep 2020 - Jul 2024* 
 - [Yuanpei College](https://yuanpei.pku.edu.cn/)
 - Member of the first [Tong Class](https://tongclass.ac.cn/)
 
 ## Professional Experience
 
+### WeRide
+**Software Development Engineer Intern (Perception Group)** | *San Jose, CA* | *Summer 2025*  
+- Building and optimizing data pipelines for data mining, labeling, training, and evaluation to support end-to-end onboard development
+- Conducting advanced research to solve complex real-world challenges in object detection, segmentation, and scene understanding
+- Leveraging multi-modal sensor fusion techniques to design robust and scalable architectures for autonomous vehicles
+- Engaging in cross-functional collaboration to support model enhancement and refinement for platform deployment
+
 ### Megvii Technology Limited
-**Self-driving Software Development Intern**  
-*Jun 2023 - Dec 2023*  
+**Software Development Intern (Self-Driving)** | *Beijing, CN* | *Jun 2023 - Dec 2023*  
 - Models and tools development for self-driving vehicles
 - Proposed **Transformer neural networks** to simulate vehicle trajectories
 - Developed **visualization tools** to better understand vehicle behaviors
 - Built **benchmarks** to evaluate trajectories
 
 ### Beijing Institute for General Artificial Intelligence (BIGAI)
-**Research Intern**  
-*Mar 2022 - Jun 2023*  
+**Research Intern** | *Beijing, CN* | *Mar 2022 - Jun 2023*  
 - Individual Research in Cognitive Reasoning Lab, under supervision of [Prof. Wei Wang](https://cognn.com/) and [Dr. Lifeng Fan](https://lifengfan.github.io/)
 - Project on **concept disentanglement, causal transition, symbolic reasoning, and visual planning**
 - Project on **3-D spatial reasoning**
@@ -95,30 +98,3 @@ Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]
 - Designed goal-oriented intrinsic reward module improving game scores
 - Implemented hand card inference module based on Theory of Mind
 - Enhanced performance by 0.47 and 2.62 points in different game modes
-
-## Skills & Expertise
-
-### Technical Skills
-- Skill Category 1: Specific skills
-- Skill Category 2: Specific skills
-- Skill Category 3: Specific skills
-
-### Professional Skills
-- Leadership
-- Project Management
-- Communication
-
-## Awards & Recognition
-- Award 1 (Year)
-- Award 2 (Year)
-- Award 3 (Year)
-
-## Professional Memberships
-- Organization 1
-- Organization 2
-- Organization 3
-
-## Contact Information
-- Email: your.email@example.com
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- GitHub: [Your Profile](https://github.com/yourusername) 

@@ -3,16 +3,16 @@
         <title>All Posts - My New Hugo Site</title>
         <link>http://localhost:1313/posts/</link>
         <description>All Posts | My New Hugo Site</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 07 Apr 2025 22:00:06 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>My First Post</title>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>qianyilue@outlook.com (Yilue)</managingEditor>
+            <webMaster>qianyilue@outlook.com (Yilue)</webMaster><lastBuildDate>Thu, 12 Jun 2025 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Coming Soon</title>
     <link>http://localhost:1313/posts/my-first-post/</link>
-    <pubDate>Mon, 07 Apr 2025 22:00:06 &#43;0800</pubDate>
-    <author>xxxx</author>
+    <pubDate>Thu, 12 Jun 2025 00:00:00 &#43;0000</pubDate>
+    <author>Yilue</author>
     <guid>http://localhost:1313/posts/my-first-post/</guid>
-    <description><![CDATA[<p>jhhilh\f
-dfdsf</p>
-<p>df</p>
-<p>四时变化</p>]]></description>
+    <description><![CDATA[<p>🚧 <strong>Under Construction</strong> 🚧</p>
+<p>I&rsquo;m currently working on some exciting content for this space. Check back soon for updates on my research, projects, and insights in the field of artificial intelligence and machine learning.</p>
+<p>In the meantime, feel free to explore my <a href="/about/" rel="">About</a> page to learn more about my background and experience.</p>]]></description>
 </item>
 </channel>
 </rss>
