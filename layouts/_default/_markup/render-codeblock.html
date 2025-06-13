@@ -1,0 +1,10 @@
+{{- $lang := .Attributes.lang | default .Type -}}
+{{- $code := .Inner -}}
+
+{{- if eq $lang "mermaid" -}}
+<div class="mermaid">
+{{- $code -}}
+</div>
+{{- else -}}
+<pre class="chroma"><code class="language-{{ $lang }}" data-lang="{{ $lang }}">{{- $code -}}</code></pre>
+{{- end -}} 
