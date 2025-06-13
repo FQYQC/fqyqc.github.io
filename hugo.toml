@@ -56,6 +56,10 @@ languageName = "English"
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
 
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
+
 [params]
   # site default theme ["auto", "light", "dark"]
   defaultTheme = "auto"
