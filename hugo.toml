@@ -87,3 +87,18 @@ languageName = "English"
       post = ""
       # whether to use typeit animation for title name
       typeit = false
+
+  # Footer config
+  [params.footer]
+    enable = true
+    copyright = true
+    author = true
+    since = 2025  # This is the start year
+
+  # Home profile config
+  [params.home.profile]
+    enable = true
+    title = "Yilue's Blog"  # This will be your main title
+    subtitle = ""  # Leave this empty to remove "This is my cool site"
+    typeit = false
+    social = true
