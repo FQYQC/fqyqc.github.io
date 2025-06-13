@@ -59,8 +59,8 @@ Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]
 - **Published at IROS 2024 as Oral Pitch**
 - [[Paper]](https://fqyqc.github.io/Portfolio/assets/publications/LearningCCTSRVP/paper.pdf) [[Web]](https://fqyqc.github.io/ConTranPlan) [[Video]](https://youtu.be/qWfZV8vI7Q0) [[Poster]](https://fqyqc.github.io/Portfolio/assets/publications/LearningCCTSRVP/poster.pdf)
 
-### Evaluate and Mitigate Human-like Cognitive Biases in LLMs
-- Coming soon
+<!-- ### Evaluate and Mitigate Human-like Cognitive Biases in LLMs
+- Coming soon  -->
 
 ## Projects
 
