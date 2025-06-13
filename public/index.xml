@@ -1,17 +1,17 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>My New Hugo Site</title>
-        <link>http://localhost:1313/</link>
+        <link>https://example.org/</link>
         <description>This is my cool site</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>qianyilue@outlook.com (Yilue)</managingEditor>
             <webMaster>qianyilue@outlook.com (Yilue)</webMaster><lastBuildDate>Thu, 12 Jun 2025 00:00:00 &#43;0000</lastBuildDate>
-            <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+            <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>Coming Soon</title>
-    <link>http://localhost:1313/posts/my-first-post/</link>
+    <link>https://example.org/posts/my-first-post/</link>
     <pubDate>Thu, 12 Jun 2025 00:00:00 &#43;0000</pubDate>
     <author>Yilue</author>
-    <guid>http://localhost:1313/posts/my-first-post/</guid>
+    <guid>https://example.org/posts/my-first-post/</guid>
     <description><![CDATA[<p>🚧 <strong>Under Construction</strong> 🚧</p>
 <p>I&rsquo;m currently working on some exciting content for this space. Check back soon for updates on my research, projects, and insights in the field of artificial intelligence and machine learning.</p>
 <p>In the meantime, feel free to explore my <a href="/about/" rel="">About</a> page to learn more about my background and experience.</p>]]></description>
