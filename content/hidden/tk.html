@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交互式东京行程规划器 (最终版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-line {
+            position: absolute; left: 1.25rem; top: 0; bottom: 0;
+            width: 3px; background-color: #e5e7eb; border-radius: 99px;
+        }
+        .timeline-item-dot {
+            position: absolute; left: 0.875rem; top: 0.5rem;
+            width: 1rem; height: 1rem; background-color: white;
+            border-width: 4px; border-radius: 50%; z-index: 10;
+        }
+        .insert-button {
+            position: absolute; left: 1.25rem; transform: translateX(-50%);
+            width: 1.5rem; height: 1.5rem;
+            background-color: #3b82f6; color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 20; transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 2px solid white;
+        }
+        .insert-button:hover {
+            transform: translateX(-50%) scale(1.1); background-color: #2563eb;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
+        input[type="number"] { -moz-appearance: textfield; }
+        .travel-item { background-color: #f3f4f6; }
+        .editable { cursor: pointer; }
+        .editable:hover { background-color: #fef9c3; } /* yellow-100 */
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+
+        <header class="relative rounded-xl overflow-hidden mb-6 bg-gray-800">
+            <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop" alt="东京城市天际线" class="w-full h-64 object-cover opacity-60">
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-wider text-shadow">动态行程规划器</h1>
+                <p class="mt-4 text-lg bg-black bg-opacity-50 px-4 py-1 rounded-md">最终版：自由增删改、任意位置插入</p>
+            </div>
+        </header>
+        
+        <div class="flex justify-end mb-8">
+            <button id="reset-button" class="bg-rose-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-rose-700 transition-colors duration-200 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 110 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" /></svg>
+                恢复默认设置
+            </button>
+        </div>
+
+        <main id="itinerary-container" class="space-y-12"></main>
+
+        <footer class="text-center text-gray-500 mt-12 pb-4">
+            <p>祝您旅途愉快！</p><p class="text-sm mt-1">行程由 Gemini 精心设计</p>
+        </footer>
+    </div>
+    
+    <!-- Modals -->
+    <div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm text-center">
+            <h3 id="modal-title" class="text-lg font-bold mb-4">确认操作</h3>
+            <p id="modal-text" class="text-gray-700 mb-6"></p>
+            <div class="flex justify-center space-x-4">
+                <button id="modal-cancel" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400">取消</button>
+                <button id="modal-confirm" class="bg-rose-600 text-white px-6 py-2 rounded-lg hover:bg-rose-700">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-event-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+        <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
+            <h3 class="text-lg font-bold mb-4">增加新活动</h3>
+            <div class="space-y-4">
+                <div><label for="event-title" class="block text-sm font-medium text-gray-700">标题</label><input type="text" id="event-title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></div>
+                <div><label for="event-desc" class="block text-sm font-medium text-gray-700">描述</label><textarea id="event-desc" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></textarea></div>
+                <div><label for="event-duration" class="block text-sm font-medium text-gray-700">时长 (小时)</label><input type="number" id="event-duration" step="0.25" min="0.25" value="1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></div>
+                 <div>
+                    <label class="block text-sm font-medium text-gray-700">类型</label>
+                    <div class="mt-2 space-x-4">
+                        <label class="inline-flex items-center"><input type="radio" name="event-type" value="activity" checked class="form-radio h-4 w-4 text-sky-600"> <span class="ml-2">活动</span></label>
+                        <label class="inline-flex items-center"><input type="radio" name="event-type" value="travel" class="form-radio h-4 w-4 text-sky-600"> <span class="ml-2">交通</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-4 mt-6">
+                <button id="add-modal-cancel" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400">取消</button>
+                <button id="add-modal-save" class="bg-sky-600 text-white px-6 py-2 rounded-lg hover:bg-sky-700">保存</button>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+const STORAGE_KEY = 'tokyoItineraryData_v4'; // Updated key for new data structure
+const DEFAULT_SCHEDULE_DATA = [
+    {
+        day: 'D1', date: '6月15日', title: '都市绿洲与神圣之森', theme: { color: 'rose', hex: '#f43f5e' },
+        events: [
+            { id: Date.now() + 1, type: 'activity', duration: 2, title: '酒店休整', description: '享受悠闲的早晨，准备退房。' },
+            { id: Date.now() + 2, type: 'travel', duration: 2, title: '切换酒店', description: '办理退房，前往新酒店并入住。' },
+            { id: Date.now() + 3, type: 'travel', duration: 0.25, title: '交通 (轨道)', description: '前往 新宿御苑' },
+            { id: Date.now() + 4, type: 'activity', duration: 2, title: '新宿御苑', description: '漫步于融合了日、英、法三国园林风格的皇家园林。' },
+            { id: Date.now() + 5, type: 'travel', duration: 0.25, title: '交通 (轨道)', description: '前往 明治神宫' },
+            { id: Date.now() + 6, type: 'activity', duration: 1, title: '明治神宫', description: '感受庄严肃穆的氛围。' },
+        ]
+    },
+    {
+        day: 'D2', date: '6月16日', title: '传统与潮流的碰撞', theme: { color: 'sky', hex: '#0ea5e9' },
+        events: [
+            { id: Date.now() + 7, type: 'travel', duration: 0.75, title: '交通 (轨道)', description: '前往 浅草寺' },
+            { id: Date.now() + 8, type: 'activity', duration: 1.5, title: '浅草寺 & 仲见世商店街', description: '探访东京最古老的寺庙，感受江户风情。' },
+            { id: Date.now() + 9, type: 'travel', duration: 0.25, title: '交通 (轨道)', description: '前往 秋叶原' },
+            { id: Date.now() + 10, type: 'activity', duration: 3, title: '秋叶原', description: '沉浸在动漫、游戏和电子产品的海洋中。' },
+            { id: Date.now() + 11, type: 'travel', duration: 0.25, title: '交通 (轨道)', description: '前往 银座' },
+            { id: Date.now() + 12, type: 'activity', duration: 2, title: '银座', description: '漫步于世界顶级购物街区。' },
+            { id: Date.now() + 13, type: 'travel', duration: 0.5, title: '交通 (轨道)', description: '前往 台场' },
+            { id: Date.now() + 14, type: 'activity', duration: 1, title: '台场海滨公园', description: '欣赏彩虹大桥和东京湾的景色。' },
+            { id: Date.now() + 15, type: 'travel', duration: 0.5, title: '交通 (轨道)', description: '前往 惠比寿' },
+            { id: Date.now() + 16, type: 'activity', duration: 1.5, title: '惠比寿花园广场 (晚餐+夜景)', description: '欣赏浪漫都市夜景，寻觅美食。' },
+        ]
+    },
+    {
+        day: 'D3', date: '6月17日', title: '工业与文化的探秘', theme: { color: 'emerald', hex: '#10b981' },
+        events: [
+            { id: Date.now() + 17, type: 'activity', duration: 5.75, title: 'JAL SKY MUSEUM (机库参观)', description: '近距离接触飞机，了解航空业。(需提前预约)' },
+            { id: Date.now() + 18, type: 'travel', duration: 0.75, title: '交通 (轨道)', description: '前往 川崎' },
+            { id: Date.now() + 19, type: 'activity', duration: 2.5, title: '川崎市区探索', description: '可选择藤子·F·不二雄博物馆(需提前购票)或探索其他景点。' },
+        ]
+    },
+    {
+        day: 'D4', date: '6月18日', title: '时尚街区与悠闲生活', theme: { color: 'amber', hex: '#f59e0b' },
+        events: [
+            { id: Date.now() + 20, type: 'activity', duration: 3, title: '涩谷 (Shibuya)', description: '体验最繁忙的十字路口，探索潮流文化。' },
+            { id: Date.now() + 21, type: 'travel', duration: 0.2, title: '交通 (轨道)', description: '前往 三轩茶屋' },
+            { id: Date.now() + 22, type: 'activity', duration: 1, title: '三轩茶屋', description: '感受复古与新潮气息的小众街区。' },
+            { id: Date.now() + 23, type: 'travel', duration: 0.5, title: '交通 (轨道)', description: '前往 吉祥寺' },
+            { id: Date.now() + 24, type: 'activity', duration: 2.5, title: '吉祥寺 & 井之头公园', description: '逛有趣的杂货店，在公园湖上划船。' },
+        ]
+    },
+     {
+        day: 'D5', date: '6月19日', title: '归程', theme: { color: 'indigo', hex: '#6366f1' },
+        events: [
+            { id: Date.now() + 25, type: 'activity', duration: 4, title: '最后的购物与整理', description: '购买伴手礼，打包行李。' },
+            { id: Date.now() + 26, type: 'travel', duration: 1.5, title: '交通', description: '前往成田机场' },
+            { id: Date.now() + 27, type: 'activity', duration: 2, title: '办理登机手续', description: '预留充足时间安检与候机。' },
+        ]
+    }
+];
+let scheduleData;
+
+const minutesToTime = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60).toString().padStart(2, '0');
+    const minutes = Math.round(totalMinutes % 60).toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+};
+
+function recalculateAndRenderDay(dayIndex) {
+    const dayData = scheduleData[dayIndex];
+    const timelineContainer = document.getElementById(`timeline-${dayData.day}`);
+    if (!timelineContainer) return;
+
+    const dayStartMinutes = 8 * 60;
+    const dayEndMinutes = 22 * 60;
+    let currentTimeMinutes = dayStartMinutes;
+    let html = '';
+
+    // Insert button at the very beginning of the day
+    html += generateInsertWrapperHTML(dayIndex, 0);
+
+    dayData.events.forEach((event, eventIndex) => {
+        const startMinutes = currentTimeMinutes;
+        const durationMinutes = event.duration * 60;
+        const endMinutes = startMinutes + durationMinutes;
+
+        if (startMinutes < dayEndMinutes) {
+            const cappedEndMinutes = Math.min(endMinutes, dayEndMinutes);
+            const actualDuration = (cappedEndMinutes - startMinutes) / 60;
+            const eventHTML = event.type === 'travel'
+                ? generateTravelHTML(dayIndex, eventIndex, event, startMinutes, cappedEndMinutes, actualDuration)
+                : generateActivityHTML(dayIndex, eventIndex, event, startMinutes, cappedEndMinutes, actualDuration, dayData.theme);
+            
+            // Each event block now contains the next insert button
+            html += eventHTML;
+        }
+        currentTimeMinutes = endMinutes;
+    });
+
+    if (currentTimeMinutes < dayEndMinutes) {
+        const freeTimeDuration = (dayEndMinutes - currentTimeMinutes) / 60;
+        const freeTimeEvent = { type: 'activity', duration: freeTimeDuration, title: '自由时间', description: '可以用来休息、购物或探索计划外的惊喜。' };
+        html += generateActivityHTML(dayIndex, -1, freeTimeEvent, currentTimeMinutes, dayEndMinutes, freeTimeDuration, {color: 'gray', hex: '#6b7280'});
+    }
+
+    timelineContainer.innerHTML = html;
+}
+
+function generateEditableField(dayIndex, eventIndex, field, value) {
+    return `<span class="editable p-1 -m-1 rounded" onclick="makeEditable(this, ${dayIndex}, ${eventIndex}, '${field}')">${value}</span>`;
+}
+
+function generateInsertWrapperHTML(dayIndex, insertIndex) {
+    return `<div class="relative h-4 -mt-2">
+                <button onclick="showAddEventModal(${dayIndex}, ${insertIndex})" class="insert-button" style="top: 50%; transform: translate(-50%, -50%);" title="在此处插入新活动">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" /></svg>
+                </button>
+            </div>`;
+}
+
+function generateActivityHTML(dayIndex, eventIndex, event, startMinutes, endMinutes, duration, theme) {
+    const isFreeTime = eventIndex === -1;
+    return `<div class="relative">
+        <div class="timeline-item relative pl-10 pt-4 pb-4">
+            <div class="timeline-item-dot border-${theme.color}-500" style="border-color:${theme.hex};"></div>
+            <div class="flex items-center flex-wrap gap-2">
+                <p class="font-bold text-lg text-${theme.color}-600" style="color:${theme.hex};">${minutesToTime(startMinutes)} - ${minutesToTime(endMinutes)}</p>
+                ${!isFreeTime ? `
+                <div class="flex items-center ml-auto bg-gray-200 rounded-full">
+                    <button onclick="changeDuration(${dayIndex}, ${eventIndex}, -0.25)" class="px-2 py-1 font-bold text-gray-600 rounded-l-full">-</button>
+                    <input type="number" value="${event.duration.toFixed(2)}" step="0.25" min="0.25" onchange="updateDuration(${dayIndex}, ${eventIndex}, this.value)" class="w-16 text-center font-semibold bg-transparent border-l border-r border-gray-300">
+                    <button onclick="changeDuration(${dayIndex}, ${eventIndex}, 0.25)" class="px-2 py-1 font-bold text-gray-600 rounded-r-full">+</button>
+                </div>
+                <span class="text-sm text-gray-500">小时</span>
+                <button onclick="confirmDelete(${dayIndex}, ${eventIndex})" class="text-gray-400 hover:text-rose-500 ml-2 p-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button>
+                ` : `<p class="ml-auto text-sm font-semibold text-gray-500">(${duration.toFixed(2)} 小时)</p>`}
+            </div>
+            <h3 class="text-xl font-bold mt-2 text-gray-800">${!isFreeTime ? generateEditableField(dayIndex, eventIndex, 'title', event.title) : event.title}</h3>
+            <p class="text-gray-600 mt-1">${!isFreeTime ? generateEditableField(dayIndex, eventIndex, 'description', event.description) : event.description}</p>
+        </div>
+        ${!isFreeTime ? generateInsertWrapperHTML(dayIndex, eventIndex + 1) : ''}
+    </div>`;
+}
+
+function generateTravelHTML(dayIndex, eventIndex, event, startMinutes, endMinutes, duration) {
+     return `<div class="relative">
+        <div class="timeline-item relative pl-10 pt-4 pb-4">
+            <div class="timeline-item-dot border-gray-400"></div>
+            <div class="travel-item p-3 rounded-lg">
+                 <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    <p class="font-semibold text-gray-600">${minutesToTime(startMinutes)} - ${minutesToTime(endMinutes)}</p>
+                    <p class="ml-auto text-sm text-gray-500">(${duration.toFixed(2)} 小时)</p>
+                    <button onclick="confirmDelete(${dayIndex}, ${eventIndex})" class="text-gray-400 hover:text-rose-500 ml-2 p-1 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" /></svg></button>
+                 </div>
+                 <p class="ml-7 text-lg font-semibold text-gray-700">${generateEditableField(dayIndex, eventIndex, 'description', event.description)}</p>
+            </div>
+        </div>
+        ${generateInsertWrapperHTML(dayIndex, eventIndex + 1)}
+    </div>`;
+}
+
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(scheduleData)); }
+
+window.updateDuration = (dayIndex, eventIndex, newDuration) => {
+    const duration = parseFloat(newDuration);
+    if (!isNaN(duration) && duration > 0) {
+        scheduleData[dayIndex].events[eventIndex].duration = duration;
+        saveData();
+        recalculateAndRenderDay(dayIndex);
+    }
+};
+
+window.changeDuration = (dayIndex, eventIndex, amount) => {
+    const currentDuration = scheduleData[dayIndex].events[eventIndex].duration;
+    const newDuration = Math.max(0.25, currentDuration + amount);
+    scheduleData[dayIndex].events[eventIndex].duration = newDuration;
+    saveData();
+    recalculateAndRenderDay(dayIndex);
+};
+
+window.makeEditable = (element, dayIndex, eventIndex, field) => {
+    const originalText = element.textContent;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = originalText;
+    input.className = "w-full border border-sky-500 rounded p-1 -m-1";
+    
+    element.replaceWith(input);
+    input.focus();
+    
+    input.addEventListener('blur', () => {
+        scheduleData[dayIndex].events[eventIndex][field] = input.value;
+        saveData();
+        recalculateAndRenderDay(dayIndex);
+    });
+    
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') input.blur();
+        if (e.key === 'Escape') { input.value = originalText; input.blur(); }
+    });
+};
+
+window.confirmDelete = (dayIndex, eventIndex) => {
+    const eventTitle = scheduleData[dayIndex].events[eventIndex].title;
+    const modal = document.getElementById('confirm-modal');
+    document.getElementById('modal-title').textContent = '删除活动';
+    document.getElementById('modal-text').textContent = `您确定要删除 "${eventTitle}" 这个活动吗？`;
+    modal.classList.remove('hidden');
+    
+    const confirmBtn = document.getElementById('modal-confirm');
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    
+    newConfirmBtn.addEventListener('click', () => {
+        scheduleData[dayIndex].events.splice(eventIndex, 1);
+        saveData();
+        recalculateAndRenderDay(dayIndex);
+        modal.classList.add('hidden');
+    });
+};
+
+window.showAddEventModal = (dayIndex, insertAtIndex) => {
+    const modal = document.getElementById('add-event-modal');
+    modal.dataset.dayIndex = dayIndex;
+    modal.dataset.insertAtIndex = insertAtIndex;
+    document.getElementById('event-title').value = '';
+    document.getElementById('event-desc').value = '';
+    document.getElementById('event-duration').value = '1';
+    document.querySelector('input[name="event-type"][value="activity"]').checked = true;
+    modal.classList.remove('hidden');
+};
+
+function addEvent() {
+    const modal = document.getElementById('add-event-modal');
+    const dayIndex = parseInt(modal.dataset.dayIndex, 10);
+    const insertAtIndex = parseInt(modal.dataset.insertAtIndex, 10);
+    const title = document.getElementById('event-title').value || "新活动";
+    const description = document.getElementById('event-desc').value || "";
+    const duration = parseFloat(document.getElementById('event-duration').value) || 1;
+    const type = document.querySelector('input[name="event-type"]:checked').value;
+
+    const newEvent = { id: Date.now(), type, title, description, duration };
+    
+    scheduleData[dayIndex].events.splice(insertAtIndex, 0, newEvent);
+    saveData();
+    recalculateAndRenderDay(dayIndex);
+    modal.classList.add('hidden');
+}
+
+function initializeItinerary() {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+        try { scheduleData = JSON.parse(savedData); } catch (e) {
+            scheduleData = JSON.parse(JSON.stringify(DEFAULT_SCHEDULE_DATA));
+        }
+    } else {
+        scheduleData = JSON.parse(JSON.stringify(DEFAULT_SCHEDULE_DATA));
+    }
+
+    const container = document.getElementById('itinerary-container');
+    let html = '';
+    scheduleData.forEach((dayData) => {
+        const theme = dayData.theme;
+        html += `<section id="day-${dayData.day}">
+            <div class="flex items-baseline mb-6">
+                <span class="bg-${theme.color}-500 text-white text-2xl font-bold py-2 px-4 rounded-full" style="background-color:${theme.hex};">${dayData.day}</span>
+                <h2 class="ml-4 text-3xl font-bold text-gray-900">${dayData.title}</h2>
+                <span class="ml-auto text-gray-500">${dayData.date}</span>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="timeline-container">
+                    <div class="timeline-line" style="background-color:${theme.hex}33;"></div>
+                    <div id="timeline-${dayData.day}"></div>
+                </div>
+            </div>
+        </section>`;
+    });
+    container.innerHTML = html;
+    
+    scheduleData.forEach((_, dayIndex) => recalculateAndRenderDay(dayIndex));
+
+    document.getElementById('reset-button').addEventListener('click', () => {
+        const modal = document.getElementById('confirm-modal');
+        document.getElementById('modal-title').textContent = '恢复默认设置';
+        document.getElementById('modal-text').textContent = '您确定要清空所有修改，恢复到最初的行程安排吗？此操作无法撤销。';
+        modal.classList.remove('hidden');
+        
+        const confirmBtn = document.getElementById('modal-confirm');
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+        newConfirmBtn.addEventListener('click', () => {
+            localStorage.removeItem(STORAGE_KEY);
+            window.location.reload();
+        });
+    });
+
+    document.getElementById('modal-cancel').addEventListener('click', () => {
+        document.getElementById('confirm-modal').classList.add('hidden');
+    });
+    
+    document.getElementById('add-modal-save').addEventListener('click', addEvent);
+    document.getElementById('add-modal-cancel').addEventListener('click', () => {
+        document.getElementById('add-event-modal').classList.add('hidden');
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initializeItinerary);
+</script>
+</body>
+</html>
