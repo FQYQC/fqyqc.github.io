@@ -6,5 +6,9 @@
             <loc>http://localhost:1313/posts/my-first-post/</loc><lastmod>2025-06-12T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://localhost:1313/</loc><lastmod>2025-06-12T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://localhost:1313/posts/</loc><lastmod>2025-06-12T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/hidden/</loc><lastmod>2024-03-20T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/hidden/private-notes/note-1/</loc><lastmod>2024-03-20T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/hidden/secret-page/</loc><lastmod>2024-03-20T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://localhost:1313/hidden/tk/</loc></url><url>
             <loc>http://localhost:1313/categories/</loc></url><url>
             <loc>http://localhost:1313/tags/</loc></url></urlset>
