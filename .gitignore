@@ -1,1 +1,76 @@
-public
+# Hugo build output
+/public/
+/resources/_gen/
+/resources/_cache/
+
+# OS junk files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Hugo cache
+hugo_stats.json
+
+# VSCode settings
+.vscode/
+
+# Node modules (if using npm/yarn for assets)
+/node_modules/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backup files
+*~
+*.swp
+*.swo
+
+# Hugo specific
+.hugo_build.lock
+.hugo_build.lock.tmp
+
+# Mac specific
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Mac finder
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Hugo archetypes (optional - uncomment if you don't want to track archetype templates)
+# archetypes/
+
+# Hugo content drafts (optional - uncomment if you don't want to track draft content)
+# content/**/draft.md
+# content/**/_draft.md
+
+# Hugo data files (optional - uncomment if you don't want to track data files)
+# data/
+
+# Hugo layouts (optional - uncomment if you don't want to track custom layouts)
+# layouts/
+
+# Hugo static files (optional - uncomment if you don't want to track static files)
+# static/
+
+# Hugo themes (optional - uncomment if you don't want to track themes)
+# themes/
+
+# Hugo config files (optional - uncomment if you don't want to track config files)
+# config.toml
+# config.yaml
+# config.json
+
