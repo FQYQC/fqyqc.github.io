@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "关于我"
 date: 2025-06-12
 draft: false
 language: zh-cn
