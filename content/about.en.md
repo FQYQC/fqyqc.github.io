@@ -7,7 +7,7 @@ description: "Professional Background and Experience"
 
 ## About Me
 
-I'm currently a Master's student at [Electrical and Computer Engineering](https://ece.ucsd.edu/), [UC San Diego](https://ucsd.edu/), majoring in Machine Learning and Data Science.
+I'm **Yilue Qian**, currently a Master's student at [Electrical and Computer Engineering](https://ece.ucsd.edu/), [UC San Diego](https://ucsd.edu/), majoring in Machine Learning and Data Science.
 
 I received my Bachelor's Degree from [Peking University](https://english.pku.edu.cn/) last year. At PKU, I'm a member of the first [Tong Class](https://tongclass.ac.cn/) (an honorary pilot class in AI) at [Yuanpei College](https://yuanpei.pku.edu.cn/), and was also affiliated with [Institute for Artificial Intelligence](https://www.ai.pku.edu.cn/).
 
@@ -32,11 +32,9 @@ Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]
 ## Professional Experience
 
 ### WeRide
-**Software Development Engineer Intern (Perception Group)** | *San Jose, CA* | *Summer 2025*  
-- Building and optimizing data pipelines for data mining, labeling, training, and evaluation to support end-to-end onboard development
-- Conducting advanced research to solve complex real-world challenges in object detection, segmentation, and scene understanding
-- Leveraging multi-modal sensor fusion techniques to design robust and scalable architectures for autonomous vehicles
-- Engaging in cross-functional collaboration to support model enhancement and refinement for platform deployment
+**Software Development Engineer Intern (Perception Group)** | *San Jose, CA* | *Jun 2025 - Sep 2025*  
+- Working on the onboard detection model 
+- Enhancing the trajectory prediction model to generate diverse, multi-modal forecasts, reducing indidents by **5%** in simulation
 
 ### Megvii Technology Limited
 **Software Development Intern (Self-Driving)** | *Beijing, CN* | *Jun 2023 - Dec 2023*  
