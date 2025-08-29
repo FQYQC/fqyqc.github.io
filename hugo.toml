@@ -1,7 +1,9 @@
 baseURL = 'https://ylqian.com/'
 
-
 theme = "LoveIt"
+
+# website title
+title = "Yilue's Blog"
 
 # App config
 [params.app]
@@ -11,9 +13,6 @@ theme = "LoveIt"
   # Custom CSS and JS
   [params.library.css]
     googleFonts = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
-
-# website title
-title = "Yilue's Blog"
 
 
 # Menu config
@@ -84,7 +83,7 @@ title = "Yilue's Blog"
     [params.header.title]
       # URL of the LOGO
       logo = ""
-      # title name
+      # title name, in the head bar
       name = "Yilue's Blog"
       # you can add extra information before the name (HTML format is supported), such as icons
       pre = ""
@@ -106,7 +105,7 @@ title = "Yilue's Blog"
   [params.home.profile]
     enable = true
     title = "Yilue's Blog"  # This will be your main title
-    subtitle = ""  # Leave this empty to remove "This is my cool site"
+    subtitle = "dfafdafsd"  # Leave this empty to remove "This is my cool site"
     typeit = false
     social = true
 
@@ -179,7 +178,7 @@ defaultContentLanguage = "en"
         [languages.en.params.home.profile]
           enable = true
           gravatarEmail = ""
-          title = "Yilue Qian's Blog"
+          title = "Yilue Qian's Blog" # in the middle top
           subtitle = "This is subtitle"
           typeit = true
           social = true
@@ -257,7 +256,7 @@ defaultContentLanguage = "en"
           gravatarEmail = ""
           avatarURL = ""
           title = "Yilue Qian's Blog"
-          subtitle = ""
+          subtitle = "jhjhj"
           typeit = true
           social = false
           disclaimer = ""
