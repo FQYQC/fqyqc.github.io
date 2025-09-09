@@ -1,0 +1,26 @@
+{{/*
+  获取 Markdown 中的原始 src 和 alt 文本
+  例如：对于 ![公司Logo](logo)，.Destination 是 "logo"，.Text 是 "公司Logo"
+*/}}
+{{ $src := .Destination }}
+{{ $alt := .Text }}
+
+{{/*
+  在 data/images.json 文件中查找 $src (例如 "logo") 作为键。
+  - site.Data.images 会加载 data/images.json 的内容。
+  - `index` 函数用于在 map 中通过键来查找值。
+  - `default $src` 是一个备用方案：如果在映射文件中找不到这个键，
+    就使用原始的 src。这样就不会破坏您网站上已有的普通图片链接。
+*/}}
+{{ $url := index site.Data.assets_mapping $src | default $src }}
+
+{{/*
+  输出最终的 <img> 标签，使用我们刚刚查找到的真实 URL
+*/}}
+<!-- <img src="{{ $url }}" alt="{{ $alt }}"> -->
+<figure style="margin-top: 1em; margin-bottom: 1em;">
+  <img src="{{ $url }}" alt="{{ $alt }}" style="display: block; margin-left: auto; margin-right: auto;">
+  <figcaption style="text-align: center; color: #555; font-size: 0.9em; font-style: italic; margin-top: 0.5em;">
+    {{ $alt }}
+  </figcaption>
+</figure>
