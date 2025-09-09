@@ -105,7 +105,7 @@ title = "Yilue's Blog"
   [params.home.profile]
     enable = true
     title = "Yilue's Blog"  # This will be your main title
-    subtitle = "dfafdafsd"  # Leave this empty to remove "This is my cool site"
+    subtitle = ""  # Leave this empty to remove "This is my cool site"
     typeit = false
     social = true
 
@@ -178,9 +178,18 @@ defaultContentLanguage = "en"
         [languages.en.params.home.profile]
           enable = true
           gravatarEmail = ""
-          title = "Yilue Qian's Blog" # in the middle top
-          subtitle = "This is subtitle"
-          typeit = true
+          title = "👋 Welcome to Yilue's Blog!" # in the middle top
+          subtitle = """
+                        <p style="text-align: left;">
+                        I go by many names, but here, I'm my most authentic self: Yilue.<br>
+                        To learn more about me, please click <a href="en-us/about">
+                        <span style="text-decoration: underline;">here</span>
+                        </a> to visit the About page.<br>
+                        ✨ Welcome to my space. Here, I'll be sharing my thoughts on technology 💻, travel ✈️, and life 🤔.<br>
+                        Feel free to switch languages using the 🌐 button in the top menu.<br>
+                        </p>
+                        """
+          typeit = false
           social = true
           disclaimer = ""
       [languages.en.params.social]
@@ -255,19 +264,28 @@ defaultContentLanguage = "en"
           enable = true
           gravatarEmail = ""
           avatarURL = ""
-          title = "Yilue Qian's Blog"
-          subtitle = "jhjhj"
-          typeit = true
-          social = false
+          title = "👋 欢迎来到 Yilue 的博客！"
+          subtitle = """<p style="text-align: left;">
+                        我有很多名字，但在这里，我是最真实的自己，Yilue。<br>
+                        如果想了解更多关于我的信息，请点击<a href="zh-cn/about">
+                        <span style="text-decoration: underline;">这里</span>
+                        </a>访问“关于”页面。<br>
+                        ✨ 欢迎你来我的空间。在这里，我会分享关于 💻 技术、 ✈️ 旅行和 🤔 生活的思考<br>
+                        你可以通过顶部菜单的 🌐 按钮切换语言。<br>
+                        Feel free to switch languages using the 🌐 button in the top menu.<br>
+                        </p>
+                        """
+          typeit = false
+          social = true
           disclaimer = ""
       [languages.zh-cn.params.social]
-        GitHub = "xxxx"
-        Weibo = "xxxx"
-        Steam = "xxxx"
-        Zhihu = "xxxx"
-        Douban = "xxxx"
-        Devto = "xxxx"
-        Bilibili = "xxxx"
-        Email = "xxxx@xxxx.com"
-        Phone = "555-555-555"
-        RSS = true
+        GitHub = "https://github.com/FQYQC"
+        # Weibo = "xxxx"
+        # Steam = "xxxx"
+        # Zhihu = "xxxx"
+        # Douban = "xxxx"
+        # Devto = "xxxx"
+        # Bilibili = "xxxx"
+        Email = "qianyilue@outlook.com"
+        # Phone = "555-555-555"
+        RSS = false
