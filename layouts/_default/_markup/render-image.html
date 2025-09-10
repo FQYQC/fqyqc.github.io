@@ -14,13 +14,9 @@
 */}}
 {{ $url := index site.Data.assets_mapping $src | default $src }}
 
-{{/*
-  输出最终的 <img> 标签，使用我们刚刚查找到的真实 URL
-*/}}
-<!-- <img src="{{ $url }}" alt="{{ $alt }}"> -->
 <figure style="margin-top: 1em; margin-bottom: 1em;">
-  <img src="{{ $url }}" alt="{{ $alt }}" style="display: block; margin-left: auto; margin-right: auto;">
-  <figcaption style="text-align: center; color: #555; font-size: 0.9em; font-style: italic; margin-top: 0.5em;">
-    {{ $alt }}
+  {{- dict "Src" $url "Title" $alt "Caption" .Title "Linked" true "Resources" .Page.Resources | partial "plugin/img.html" -}}
+  <figcaption class="image-caption" style="text-align: center; color: #555; font-size: 0.9em; font-style: italic; margin-top: 0.5em;">
+    {{- $alt | safeHTML -}}
   </figcaption>
 </figure>
