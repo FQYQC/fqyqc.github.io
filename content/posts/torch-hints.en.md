@@ -11,6 +11,8 @@ tags: ["Machine Learning", "Code", "Tools"]
 
 > This page was translated from the [original Chinese version](/zh-cn/posts/torch-hints) by Gemini. Please refer to the original for definitive content.
 
+---
+
 ## Motivation
 Recently at work, I came across a piece of `torch` trivia that none of my colleagues knew. It reminded me of a time when another `torch` quirk troubled me for a long time. So, I decided to write a summary of these functions that can easily lead to bugs if you just follow your intuition.
 

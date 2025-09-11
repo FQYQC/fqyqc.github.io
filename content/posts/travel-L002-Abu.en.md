@@ -9,8 +9,12 @@ categories: ["Travel"]
 tags: ["Travel", "Journeys", "Flights", "Public Transport", "Abu Dhabi"]
 ---
 
+> This page was translated from the [original Chinese version](/zh-cn/posts/travel-L002-Abu) mainly by Gemini. Please refer to the original for definitive content.
+
+---
+
 ## Foreword
-> I've always found it incredibly difficult to write about my trip to Abu Dhabi. The purpose of the trip was to attend a conference, but it was also packed with flight experiences and sightseeing I wanted to document. I felt that the audiences for these different aspects were distinct, and arranging them chronologically would be inefficient for specific readers. Yet, splitting them up would make the travelogue feel disjointed. It wasn't until a night ten months after the trip, lost in thought due to the flu, that I began to wonder if the person I am today would still have the courage to embark on such a journey. That's when I knew I had to start writing. It doesn't matter how I write it; no one really reads my articles anyway. And for those who want to get to know me, they'll find the words they're looking for.
+*I've always found it incredibly difficult to write about my trip to Abu Dhabi. The purpose of the trip was to attend a conference, but it was also packed with flight experiences and sightseeing I wanted to document. I felt that the audiences for these different aspects were distinct, and arranging them chronologically would be inefficient for specific readers. Yet, splitting them up would make the travelogue feel disjointed. It wasn't until a night ten months after the trip, lost in thought due to the flu, that I began to wonder if the person I am today would still have the courage to embark on such a journey. That's when I knew I had to start writing. It doesn't matter how I write it; no one really reads my articles anyway. And for those who want to get to know me, they'll find the words they're looking for.*
 
 ![The Sheikh Zayed Grand Mosque in Abu Dhabi. A crystal-clear sky reflects off the pure white walls, creating an atmosphere of immense silence and purity. Melodious and devout religious songs begin to play, echoing under the domes before drifting into the distance.](/assets/local-assets/posts/travel-L002-Abu/15-mosque_fav.jpeg)
 
