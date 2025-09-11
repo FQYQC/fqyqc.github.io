@@ -9,7 +9,7 @@ categories: ["Travel"]
 tags: ["Travel", "Journeys", "Flights", "Public Transport", "Abu Dhabi"]
 ---
 
-> This page was translated from the [original Chinese version](/zh-cn/posts/travel-L002-Abu) mainly by Gemini. Please refer to the original for definitive content.
+> This page was translated from the [original Chinese version](/zh-cn/posts/travel-l002-abu) mainly by Gemini. Please refer to the original for definitive content.
 
 ---
 
