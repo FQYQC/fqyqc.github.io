@@ -100,6 +100,7 @@ title = "Yilue's Blog"
     since = 2025  # This is the start year
     custom = """My friends' websites: <a href="http://jackchou.top">JacksBlog</a> &
     <a href="http://zhxwu.com">tosaki's home</a>"""
+    visitorsImage = "https://visitor-badge.laobi.icu/badge?page_id=fqyqc.fqyqc.github.io"
 
   # Home profile config
   [params.home.profile]
@@ -161,7 +162,7 @@ defaultContentLanguage = "en"
         title = "GitHub"
     [languages.en.params]
       [languages.en.params.search]
-        enable = true
+        enable = false
         type = "algolia"
         contentLength = 4000
         placeholder = ""
@@ -246,7 +247,7 @@ defaultContentLanguage = "en"
         title = "GitHub"
     [languages.zh-cn.params]
       [languages.zh-cn.params.search]
-        enable = true
+        enable = false
         type = "algolia"
         contentLength = 4000
         placeholder = ""
