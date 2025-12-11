@@ -11,7 +11,7 @@ tags: ["Journey", "Public Transport", "Travel"]
 
 > This page was translated from the [original Chinese version](/zh-cn/posts/travel-L001-pk-hz.03) by GPT-5.1. Please refer to the original for definitive content.
 
-> This article is the third part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 1)](/posts/travel-L001-pk-hz.01) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-L001-pk-hz.02).
+> This article is the third part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 1)](/posts/travel-l001-pk-hz.01) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-l001-pk-hz.02).
 
 ---
 
@@ -275,7 +275,7 @@ And finally, thank you to all the drivers who made this journey possible, and to
 
 ---
 
-> This article is the third part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 1)](/posts/travel-L001-pk-hz.01) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-L001-pk-hz.02).
+> This article is the third part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 1)](/posts/travel-l001-pk-hz.01) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-l001-pk-hz.02).
 
 ---
 

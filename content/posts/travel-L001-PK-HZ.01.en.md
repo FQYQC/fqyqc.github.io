@@ -11,7 +11,7 @@ tags: ["Journey", "Public Transport", "Travel"]
 
 > This page was translated from the [original Chinese version](/zh-cn/posts/travel-L001-pk-hz.01) by GPT-5.1. Please refer to the original for definitive content.
 
-> This article was first published on March 2, 2024 on [bilibili.com](https://www.bilibili.com/opus/904379083033411586) and has now been compiled and lightly revised. It is the first part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-L001-pk-hz.02) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 3)](/posts/travel-L001-pk-hz.03).
+> This article was first published on March 2, 2024 on [bilibili.com](https://www.bilibili.com/opus/904379083033411586) and has now been compiled and lightly revised. It is the first part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-l001-pk-hz.02) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 3)](/posts/travel-l001-pk-hz.03).
 
 ---
 
@@ -156,7 +156,7 @@ I had added Qufu to the journey plan because I wanted to visit the Confucius Tem
 
 ---
 
-> This article is the first part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-L001-pk-hz.02) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 3)](/posts/travel-L001-pk-hz.03).
+> This article is the first part of a series, you may also enjoy [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 2)](/posts/travel-l001-pk-hz.02) and [✈️ Beijing to Hangzhou: 9 Days, 61 Rides, 1300 km (Part 3)](/posts/travel-l001-pk-hz.03).
 
 ---
 
