@@ -1,6 +1,6 @@
 ---
 title: "✈️ Eugene Mileage Run: Pushing Limits to Return the Same Day"
-date: 2025-11-18
+date: 2025-12-12
 draft: false
 language: en
 description: ""
