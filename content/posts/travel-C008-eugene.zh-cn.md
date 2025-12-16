@@ -3,7 +3,7 @@ title: "✈️ 尤金 Mileage Run：极限在当天飞了回来"
 date: 2025-12-12
 draft: false
 language: zh-cn
-description: ""
+description: "前往小镇尤金的 15 分钟奇妙旅行。"
 abstract: "前往小镇尤金的 15 分钟奇妙旅行。"
 categories: ["旅行"]
 tags: ["运转", "飞机", "Mileage Run"]

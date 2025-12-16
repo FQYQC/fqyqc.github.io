@@ -3,7 +3,7 @@ title: "PyTorch 冷知识集锦"
 date: 2025-08-03
 draft: false
 language: zh-cn
-description: "DES"
+description: "也没有很冷，只是有点反（我的）直觉。"
 abstract: "也没有很冷，只是有点反（我的）直觉。"
 categories: ["技术"]
 tags: ["机器学习", "开发", "工具"]

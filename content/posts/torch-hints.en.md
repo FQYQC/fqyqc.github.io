@@ -3,7 +3,7 @@ title: "A Collection of PyTorch Trivia"
 date: 2025-08-03
 draft: false
 language: en
-description: "DES"
+description: "Not that obscure, just a bit counterintuitive (to me)."
 abstract: "Not that obscure, just a bit counterintuitive (to me)."
 categories: ["Tech"]
 tags: ["Machine Learning", "Code", "Tools"]

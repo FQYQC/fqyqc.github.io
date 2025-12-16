@@ -3,7 +3,7 @@ title: "✈️ Eugene Mileage Run: Pushing Limits to Return the Same Day"
 date: 2025-12-12
 draft: false
 language: en
-description: ""
+description: "A magical 15-minute trip to the small town of Eugene."
 abstract: "A magical 15-minute trip to the small town of Eugene."
 categories: ["Travel"]
 tags: ["Journeys", "Flights", "Mileage Run"]

@@ -3,7 +3,7 @@ title: "✈️ Abu Dhabi: An Accidental Expedition"
 date: 2025-09-10
 draft: false
 language: en
-description: ""
+description: "A travel memoir, eleven months late. The story of a 48-hour journey from San Diego to Abu Dhabi for the IROS conference, and the unforgettable challenges, encounters, gains, and growth that shaped me along the way."
 abstract: "A travel memoir, eleven months late. The story of a 48-hour journey from San Diego to Abu Dhabi for the IROS conference, and the unforgettable challenges, encounters, gains, and growth that shaped me along the way."
 categories: ["Travel"]
 tags: ["Travel", "Journeys", "Flights", "Public Transport", "Abu Dhabi"]
