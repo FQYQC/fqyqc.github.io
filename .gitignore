@@ -8,6 +8,11 @@
 .AppleDouble
 .LSOverride
 
+# Syncthing
+.stfolder
+.stignore
+**.sync-conflict**
+
 # Thumbnails
 ._*
 
