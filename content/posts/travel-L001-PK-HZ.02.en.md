@@ -6,7 +6,7 @@ language: en
 description: "(This article is the second part of a series.) After planning for more than half a month, I started a real-life practice of “being on the road.” From Beijing to Hangzhou, sixty-one bus rides stitched together the happiest nine days of my 2024. No interruptions, escaping reality, backpack on my shoulders, canvas tote in hand — all I needed to do was move forward, observe along the way, experience as much as possible, and feel everything with a calm heart."
 abstract: "(This article is the second part of a series.) After planning for more than half a month, I started a real-life practice of “being on the road.” From Beijing to Hangzhou, sixty-one bus rides stitched together the happiest nine days of my 2024. No interruptions, escaping reality, backpack on my shoulders, canvas tote in hand — all I needed to do was move forward, observe along the way, experience as much as possible, and feel everything with a calm heart."
 categories: ["Travel"]
-tags: ["Journey", "Public Transport", "Travel"]
+tags: ["Journeys", "Public Transport", "Travel"]
 ---
 
 > This page was translated from the [original Chinese version](/zh-cn/posts/travel-l001-pk-hz.02) by GPT-5.1. Please refer to the original for definitive content.
