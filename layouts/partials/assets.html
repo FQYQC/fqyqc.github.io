@@ -1,3 +1,8 @@
+{{/*
+  Full theme override based on LoveIt commit 97921ffdecafba6d12e3b74ddbb2d0a16ad8c5e0.
+  Local delta: initialize optional page config values before the theme reads them.
+  Compare this file with themes/LoveIt/layouts/partials/assets.html after theme updates.
+*/}}
 {{- $params := .Scratch.Get "params" -}}
 {{- $cdn := .Scratch.Get "cdn" | default dict -}}
 {{- $fingerprint := .Scratch.Get "fingerprint" -}}
@@ -216,4 +221,4 @@
     {{- partial "plugin/script.html" . -}}
 {{- end -}}
 
-{{- partial "plugin/analytics.html" . -}} 
+{{- partial "plugin/analytics.html" . -}}

@@ -1,3 +1,8 @@
+{{/*
+  Full theme override based on LoveIt commit 97921ffdecafba6d12e3b74ddbb2d0a16ad8c5e0.
+  Local delta: prefer the optional `abstract` front matter field over Hugo's summary.
+  Compare this file with themes/LoveIt/layouts/_default/summary.html after theme updates.
+*/}}
 {{- $params := .Params | merge .Site.Params.page -}}
 
 <article class="single summary" itemscope itemtype="http://schema.org/Article">
@@ -77,4 +82,4 @@
             </div>
         {{- end -}}
     </div>
-</article> 
+</article>
