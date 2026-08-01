@@ -55,3 +55,7 @@ git submodule update --init --recursive
 - Pull Request 会运行隔离的完整生产构建。
 - 推送到 `main` 后，GitHub Pages 工作流构建并部署站点。
 - Dependabot 每月检查 GitHub Actions 的版本更新。
+
+## Agent 写作工作流
+
+仓库提供两个项目级 Skill：`$publish-bilingual-post` 用于首次润色、翻译和准备发布，`$update-bilingual-post` 用于只同步已发布文章的变化部分。Codex 会从 `.agents/skills/` 自动发现它们。

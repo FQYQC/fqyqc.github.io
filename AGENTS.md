@@ -31,6 +31,13 @@ git submodule update --init --recursive
 hugo server --buildDrafts --disableFastRender
 ```
 
+## 文章工作流
+
+- 首次完成、润色、翻译并准备发布双语文章时，使用 `$publish-bilingual-post`。
+- 已发布文章发生修改，需要只同步变化部分时，使用 `$update-bilingual-post`。
+- 两个 Skill 位于 `.agents/skills/`，并共同调用 `scripts/check_post_pair.py` 校验语言配对和 Markdown 结构。
+- Skill 只能暂存目标语言对及明确相关的资源映射；除非用户明确要求，否则不得创建 commit。
+
 Hugo 的唯一期望版本记录在 `.hugo-version`。需要升级时，同时验证本地构建、GitHub Actions 构建和主题兼容性。
 
 ## 修改约定

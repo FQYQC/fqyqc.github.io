@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish Bilingual Post"
+  short_description: "Polish, translate, and release a bilingual Hugo post"
+  default_prompt: "Use $publish-bilingual-post to polish, translate, validate, and prepare this post for release."
