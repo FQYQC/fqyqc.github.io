@@ -17,7 +17,7 @@ Turn one Chinese draft into a reviewed, publish-ready Chinese/English pair while
 ## Workflow
 
 1. Inspect the complete source post, its front matter, referenced images, links, and any existing target file. Preserve unrelated dirty files.
-2. Copyedit the Chinese source. Apply safe improvements to spacing, punctuation, grammar, repetition, flow, and Markdown. Do not invent facts, experiences, dates, quotes, or opinions. Flag substantive ambiguities instead of silently resolving them.
+2. Copyedit the Chinese source. Apply Pangu spacing and safe improvements to punctuation, grammar, repetition, flow, and Markdown. Audit inconsistent capitalization of embedded English and identify English expressions that would read better in Chinese, following the editorial guide. Do not invent facts, experiences, dates, quotes, or opinions. Flag substantive ambiguities instead of silently resolving them.
 3. Translate the reviewed source into idiomatic English. Preserve meaning and narrative voice rather than sentence order when natural English requires restructuring. Keep headings, paragraphs, lists, images, code, links, and shortcodes aligned.
 4. Complete both front matters according to the editorial guide. Preserve an existing valid date; use the current local date only when the date is missing. Set `draft: false` only after both versions are complete.
 5. Review the pair side by side. Confirm that no source paragraph was omitted, no unsupported detail was added, and all structural differences are intentional.

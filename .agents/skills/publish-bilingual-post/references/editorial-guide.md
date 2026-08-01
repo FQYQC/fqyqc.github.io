@@ -3,8 +3,10 @@
 ## Chinese source editing
 
 - Preserve first-person voice, uncertainty, humor, chronology, and factual claims.
-- Add a normal space between Chinese text and Latin words or Arabic numerals where appropriate; do not add spaces next to Chinese punctuation.
+- Use Pangu formatting as the default spacing standard: add a normal space between Chinese text and Latin words or Arabic numerals where appropriate; do not add spaces next to Chinese punctuation.
 - Use Chinese punctuation in Chinese prose and retain the established spelling of proper nouns, routes, flight numbers, code identifiers, and product names.
+- Audit embedded English case-insensitively across the title, summary, headings, and prose. Point out inconsistent forms such as `PyTorch` versus `Pytorch`, explain the preferred canonical form, and normalize only when the intended term is unambiguous. Do not report ordinary sentence-initial capitalization as an inconsistency.
+- Review every English expression embedded in Chinese prose for whether a clear Chinese equivalent would improve readability. Report suitable candidates as `original → suggested Chinese` with a short reason. Prefer Chinese for ordinary descriptive language; retain brand names, acronyms, code identifiers, established technical terms, and deliberate bilingual wording.
 - Remove obvious repetition and repair grammar when intent is clear. Report edits that materially change tone, emphasis, order, or interpretation.
 - Preserve Markdown semantics. Do not format prose inside code fences or alter URLs and asset keys.
 
@@ -58,6 +60,7 @@ For a new category or ambiguous tag, inspect existing posts first. Choose a stab
 
 ## Release review
 
+- Report Pangu formatting changes, English capitalization inconsistencies, and optional English-to-Chinese substitutions separately from factual or structural edits.
 - Confirm that the two posts render to the corresponding language URLs.
 - Confirm heading-level, image, link, and code-block parity with `scripts/check_post_pair.py`.
 - Confirm `./scripts/check.sh` succeeds and both local search indexes remain valid.

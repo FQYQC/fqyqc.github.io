@@ -20,7 +20,7 @@ Synchronize an existing published translation without regenerating or churning u
 1. Inspect both complete posts and the current working tree. Preserve unrelated dirty files.
 2. Establish the last synchronized source state using the incremental guide. If the baseline is ambiguous and different choices would change the translation scope, ask the user before editing.
 3. Build a change map grouped by heading: source additions, deletions, rewrites, moved blocks, metadata changes, links, and images.
-4. Copyedit only changed source passages unless the user requests a broader review. Then update the corresponding English passages. Permit small adjacent changes only when required for grammar, references, or narrative continuity.
+4. Copyedit only changed source passages unless the user requests a broader review. Apply Pangu spacing, audit inconsistent capitalization of embedded English, and identify English expressions that would read better in Chinese according to the editorial guide. Then update the corresponding English passages. Permit small adjacent changes only when required for grammar, references, or narrative continuity.
 5. Keep unaffected English blocks unchanged. Do not replace the entire translation merely because regenerating it is easier.
 6. Synchronize front matter only where the source change requires it. Keep filename stem, date, draft state, language, categories, tags, description, and abstract valid.
 7. Run:
