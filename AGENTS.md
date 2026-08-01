@@ -38,6 +38,13 @@ hugo server --buildDrafts --disableFastRender
 - 两个 Skill 位于 `.agents/skills/`，并共同调用 `scripts/check_post_pair.py` 校验语言配对和 Markdown 结构。
 - Skill 只能暂存目标语言对及明确相关的资源映射；除非用户明确要求，否则不得创建 commit。
 
+## 提交约定
+
+- Agent 专用基础设施使用 `[Agt.]`，包括 `AGENTS.md`、`.agents/skills/**`、Agent 工作流及其专用校验脚本。
+- 普通仓库维护、CI、依赖与开发工具仍使用 `[Repo]`。
+- 其他既有前缀保持原义：`[Ctt.]` 表示内容，`[Lot.]` 表示布局或站点行为，`[Str.]` 表示结构，`[Dpl.]` 表示部署。
+- 需要第二级范围时，沿用 `[Agt.][<scope>]` 的形式；提交标题使用英文祈使式或简短动作描述。
+
 Hugo 的唯一期望版本记录在 `.hugo-version`。需要升级时，同时验证本地构建、GitHub Actions 构建和主题兼容性。
 
 ## 修改约定
