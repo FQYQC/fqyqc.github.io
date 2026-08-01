@@ -55,11 +55,11 @@ Below is the actual journey record corresponding to the plan. While organizing t
 
 **Extra: Walking Huangwan East – Qianzao Road Junction**  
 For the 20th leg of the journey I had originally planned to walk less than 1 km from Huangwan East across the city boundary and then take Tengzhou Route K236 from Xinglong Village into the city. That one-kilometer walk was stunning thanks to the dense fog and the snow from the previous days. My phone couldn’t really capture it — it felt like standing in a vast, overwhelming haze.
-[Fog blanketing snow-covered fields.](/assets/local-assets/posts/travel-L001-PK-HZ/48.jpg)
+![Fog blanketing snow-covered fields.](/assets/local-assets/posts/travel-L001-PK-HZ/48.jpg)
 When I reached Xinglong Village, I asked some villagers whether buses had been running recently. They said yes, so I waited according to the timetable I’d found on the official account. After waiting for about an hour and a half, I called the hotline printed on the bus stop to ask about the service. They told me that because of the heavy fog, only two more buses were planned to Xinglong Village that day, and the next one would be in three hours (3:30 p.m.), which would obviously bring my journey to a halt. My first reaction was: why on earth isn’t the neighboring city affected by the fog at all? (Narrator: it was.)
 ![Xinglong Village is, in my mind, a symbolic spot of this journey. I later chose this photo to represent the trip in my 2024 year-in-review.](/assets/local-assets/posts/travel-L001-PK-HZ/49.jpg)
 At that point I had three options: wait for the 3:30 p.m. bus and end today’s journey in Tengzhou; go back across the border, take a bus back to Zoucheng, and try again the next day; or start walking toward the city, hoping to reach an area with other buses or at least somewhere I could catch a ride so the journey could continue. With Genso Fuubi and Lalala cheering me on, I decided to walk toward Tengzhou. In the worst case, if I could just make it to a town, the transport problem would probably solve itself. It was already close to 1 p.m. by then, so I pulled out the chestnut cakes I’d bought the day before (foresight!) — very handy.
-[Houzao Primary School in the fog.](/assets/local-assets/posts/travel-L001-PK-HZ/50.jpg)
+![Houzao Primary School in the fog.](/assets/local-assets/posts/travel-L001-PK-HZ/50.jpg)
 After walking 4 km to the Qianzao Road Junction bus stop, I decided to take a break and reconsider my options, since the stop had a shelter and it was at a junction served by two bus routes. I opened the Tengzhou Bus app (“Bus e-Travel”) and was shocked to see that the entire Tengzhou bus system had been completely shut down the previous day because of snow and fog — today’s sporadic services were already an improvement. Looking again, I noticed that the other route serving this stop, Tengzhou Route K206, had just departed and was about to arrive. I turned on my phone’s flashlight, ready to flag it down. And just like that, today’s journey could continue.
 
 20. **Tengzhou Route K206 Qianzao Road Junction – Municipal Letters and Visits Bureau**  
@@ -79,8 +79,8 @@ After walking 4 km to the Qianzao Road Junction bus stop, I decided to take a br
     After getting off at Tai’erzhuang Ancient City Station, I walked about 30 minutes into the scenic area to check into my lodging, ending the day’s journey. This was the designated resupply point in my journey plan, a place to take a proper break. After arriving, I originally planned to stay inside the ancient city an extra day to rest. But it turned out to be the absolute low season: hardly any visitors, most shops closed, and I just couldn’t stand doing nothing in the room. So I left at noon the next day, effectively extending the journey by one extra day as a disguised rest period.
 
 That evening I tried spicy chicken and big pancakes — both very tasty, cheap, and generous in portion, but way too spicy for me, so the experience wasn’t exactly perfect. That may well be why my coughing got worse, which in turn made the later parts of the journey less enjoyable.
-[Tai’erzhuang Ancient City (part one).](/assets/local-assets/posts/travel-L001-PK-HZ/56.jpg)
-[Tai’erzhuang Ancient City (part two).](/assets/local-assets/posts/travel-L001-PK-HZ/57.png)
+![Tai’erzhuang Ancient City (part one).](/assets/local-assets/posts/travel-L001-PK-HZ/56.jpg)
+![Tai’erzhuang Ancient City (part two).](/assets/local-assets/posts/travel-L001-PK-HZ/57.png)
 
 ### Day 5 Zaozhuang (Tai’erzhuang) – Xuzhou (Huayuan Apartment)
 
