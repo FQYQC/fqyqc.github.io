@@ -2,6 +2,8 @@
 title: "Glimpses from the Cove"
 description: "A collection of moments and stories from the Cove."
 draft: false
+cascade:
+  hiddenFromSearch: true
 ---
 
 
