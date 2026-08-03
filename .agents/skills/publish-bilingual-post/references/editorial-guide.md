@@ -2,16 +2,29 @@
 
 ## Chinese source editing
 
-- Preserve first-person voice, uncertainty, humor, chronology, and factual claims.
-- Use Pangu formatting as the default spacing standard: add a normal space between Chinese text and Latin words or Arabic numerals where appropriate; do not add spaces next to Chinese punctuation.
-- Use Chinese punctuation in Chinese prose and retain the established spelling of proper nouns, routes, flight numbers, code identifiers, and product names.
-- Audit embedded English case-insensitively across the title, summary, headings, and prose. Point out inconsistent forms such as `PyTorch` versus `Pytorch`, explain the preferred canonical form, and normalize only when the intended term is unambiguous. Do not report ordinary sentence-initial capitalization as an inconsistency.
-- Review every English expression embedded in Chinese prose for whether a clear Chinese equivalent would improve readability. Report suitable candidates as `original → suggested Chinese` with a short reason. Prefer Chinese for ordinary descriptive language; retain brand names, acronyms, code identifiers, established technical terms, and deliberate bilingual wording.
-- Remove obvious repetition and repair grammar when intent is clear. Report edits that materially change tone, emphasis, order, or interpretation.
-- Preserve Markdown semantics. Do not format prose inside code fences or alter URLs and asset keys.
+- Treat every `.zh-cn.md` file, including its front matter, as author-owned text. Never rewrite it unless the user explicitly authorizes direct edits. Requests to review, polish, publish, translate, update, or fix the bilingual pair do not grant that permission.
+- By default, write only adjacent, non-rendered review comments in this form:
+
+  ```html
+  <!-- AGENT-SUGGESTION
+  类型：结构｜措辞｜事实核对｜Pangu｜大小写｜中文化｜front matter
+  理由：说明问题及其对含义、语气或阅读体验的影响。
+  参考改写：提供可直接采用的版本；若只需核对事实，可省略。
+  -->
+  ```
+
+- Place each comment immediately after the affected paragraph. Put insertion or structural proposals at the intended insertion point. For front matter, place the comment immediately after the closing delimiter. Never insert a comment inside YAML, code fences, shortcodes, or URLs.
+- Do not alter original Chinese bytes for obvious typos, punctuation, Pangu spacing, capitalization, Markdown, or broken front matter. Put the correction in a suggestion comment instead.
+- Preserve first-person voice, uncertainty, humor, chronology, and factual claims in every proposed rewrite. Distinguish copyedits from changes to tone, emphasis, order, interpretation, or argument.
+- Suggest Pangu formatting as the default spacing standard: add a normal space between Chinese text and Latin words or Arabic numerals where appropriate; do not add spaces next to Chinese punctuation.
+- Suggest Chinese punctuation in Chinese prose and retain the established spelling of proper nouns, routes, flight numbers, code identifiers, and product names.
+- Audit embedded English case-insensitively across the title, summary, headings, and prose. Point out inconsistent forms such as `PyTorch` versus `Pytorch`, explain the preferred canonical form, and suggest normalization only when the intended term is unambiguous. Do not report ordinary sentence-initial capitalization as an inconsistency.
+- Review every English expression embedded in Chinese prose for whether a clear Chinese equivalent would improve readability. Record suitable candidates as `original → suggested Chinese` with a short reason. Prefer Chinese for ordinary descriptive language; retain brand names, acronyms, code identifiers, established technical terms, and deliberate bilingual wording.
+- Never translate `AGENT-SUGGESTION` comments. After the user confirms that suggestions are resolved, remove only these comments or retain them according to the user's direction; never change the surrounding prose while cleaning comments.
 
 ## English translation
 
+- Add the established translation notice immediately after the English front matter: `> This page was translated from the [original Chinese version](/zh-cn/posts/<slug>) by <model>. Please refer to the original for definitive content.` Use the actual translation model and matching Chinese URL. Treat this English-only notice as an intentional structural difference.
 - Write natural narrative English rather than a word-for-word rendering.
 - Preserve every factual statement and meaningful qualifier. Do not add background information that is absent from the source.
 - Keep proper nouns and common industry terms in their conventional form. Preserve useful bilingual terms when the author's style depends on them.

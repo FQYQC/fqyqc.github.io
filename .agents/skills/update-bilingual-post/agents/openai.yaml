@@ -1,4 +1,4 @@
 interface:
   display_name: "Update Bilingual Post"
-  short_description: "Review and sync changes across a bilingual Hugo post"
-  default_prompt: "Use $update-bilingual-post to review source changes and update only the affected translation."
+  short_description: "Suggest and sync changes in a bilingual Hugo post"
+  default_prompt: "Use $update-bilingual-post to annotate changed Chinese passages, then sync only the author-confirmed changes into English."

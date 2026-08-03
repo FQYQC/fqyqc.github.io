@@ -1,6 +1,6 @@
 ---
 name: publish-bilingual-post
-description: Polish a Chinese Hugo draft, produce its natural English translation, synchronize bilingual front matter and Markdown structure, validate the site, and prepare a release commit. Use for first publication of a post in this repository when the user says publish, release, finish and translate, create the English version, or prepare a bilingual post for commit. Do not use for incremental edits to an already published bilingual pair; use update-bilingual-post instead.
+description: Review a Chinese Hugo draft by inserting non-rendered editorial suggestions without rewriting the Chinese source unless explicitly authorized, then produce a natural English translation from the author-confirmed source, synchronize bilingual front matter and Markdown structure, validate the site, and prepare a release commit. Use for first publication of a post in this repository when the user says publish, release, finish and translate, create the English version, or prepare a bilingual post for commit. Do not use for incremental edits to an already published bilingual pair; use update-bilingual-post instead.
 ---
 
 # Publish Bilingual Post
@@ -17,19 +17,20 @@ Turn one Chinese draft into a reviewed, publish-ready Chinese/English pair while
 ## Workflow
 
 1. Inspect the complete source post, its front matter, referenced images, links, and any existing target file. Preserve unrelated dirty files.
-2. Copyedit the Chinese source. Apply Pangu spacing and safe improvements to punctuation, grammar, repetition, flow, and Markdown. Audit inconsistent capitalization of embedded English and identify English expressions that would read better in Chinese, following the editorial guide. Do not invent facts, experiences, dates, quotes, or opinions. Flag substantive ambiguities instead of silently resolving them.
-3. Translate the reviewed source into idiomatic English. Preserve meaning and narrative voice rather than sentence order when natural English requires restructuring. Keep headings, paragraphs, lists, images, code, links, and shortcodes aligned.
-4. Complete both front matters according to the editorial guide. Preserve an existing valid date; use the current local date only when the date is missing. Set `draft: false` only after both versions are complete.
-5. Review the pair side by side. Confirm that no source paragraph was omitted, no unsupported detail was added, and all structural differences are intentional.
-6. Run:
+2. Review the Chinese source without rewriting it. Insert adjacent `AGENT-SUGGESTION` comments for Pangu spacing, punctuation, grammar, repetition, structure, capitalization, Chinese substitutions, factual ambiguities, and proposed front matter. A request to publish, polish, translate, or update is not permission to alter Chinese prose. Do not change even obvious errors unless the user explicitly authorizes direct edits.
+3. Stop after adding suggestions and let the user revise the Chinese source. Continue only after the user confirms that the source is final, explicitly accepts or rejects the suggestions, or explicitly authorizes the Agent to apply a defined set of edits. Treat authorization as scoped to that request, not as a permanent exception.
+4. Translate only the author-confirmed Chinese source into idiomatic English. Never translate `AGENT-SUGGESTION` comments. Preserve meaning and narrative voice rather than sentence order when natural English requires restructuring. Keep headings, paragraphs, lists, images, code, links, and shortcodes aligned.
+5. Complete the English front matter according to the editorial guide. Do not modify Chinese front matter without explicit authorization; add a suggestion after its closing delimiter instead. Preserve an existing valid date and use the current local date only when the date is missing. Require both versions to be complete and `draft: false` before release.
+6. Review the pair side by side. Confirm that no source paragraph was omitted, no unsupported detail was added, and all structural differences are intentional.
+7. Run:
 
    ```bash
    python3 scripts/check_post_pair.py content/posts/<stem>.zh-cn.md content/posts/<stem>.en.md --release
    ./scripts/check.sh
    ```
 
-7. Inspect `git diff` for only the target pair and explicitly related files such as `data/assets_mapping.json`. Fix failures before handoff.
-8. Summarize meaningful editorial decisions, translation choices, files changed, and validation results. Propose a commit matching the repository style, normally `[Ctt.][<series>] Release <post>.`
+8. Inspect `git diff` for only the target pair and explicitly related files such as `data/assets_mapping.json`. Fix failures before handoff.
+9. Summarize unresolved Chinese suggestions, author-approved editorial decisions, translation choices, files changed, and validation results. Propose a commit matching the repository style, normally `[Ctt.][<series>] Release <post>.`
 
 ## Commit boundary
 
