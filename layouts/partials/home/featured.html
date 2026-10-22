@@ -29,12 +29,14 @@
     <span class="featured-image"><img src="{{ . | relURL }}" alt="" loading="{{ cond (eq $i 0) "eager" "lazy" }}" decoding="async"></span>
     {{- end }}
     <span class="featured-body">
-      {{- with $p.Params.categories }}<span class="featured-kicker">{{ index . 0 }}</span>{{ end }}
       <span class="featured-title">{{ $p.LinkTitle }}</span>
       {{- if or (not $item.image) (eq $i 0) }}{{ with $summary }}
       <span class="featured-summary">{{ . | plainify | truncate 160 }}</span>
       {{- end }}{{ end }}
-      <span class="featured-date">{{ $p.Date.Format "2006-01-02" }}</span>
+      <span class="featured-meta">
+        {{- with $p.Params.categories }}<span class="featured-kicker">{{ index . 0 }}</span><span class="featured-sep" aria-hidden="true">·</span>{{ end -}}
+        <span class="featured-date">{{ $p.Date.Format "2006-01-02" }}</span>
+      </span>
     </span>
   </a>
   {{- end }}
