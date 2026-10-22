@@ -32,6 +32,12 @@ Hugo 读取根配置和双语内容。根目录中的模板与资源优先于主
 
 文章中的图片目标先经过 `layouts/_default/_markup/render-image.html`。该 render hook 查询 `data/assets_mapping.json`；有映射时使用远程 URL，没有映射时保留原始目标。被忽略的 `assets/local-assets/` 是本地素材来源，不属于可复现部署输入。
 
+### 友链
+
+友链数据保存在 `data/friends.toml`，每个 `[[friends]]` 条目包含必填的 `name`、`url`，以及可选的 `icon` 和双语 `description`。图标下载到 `static/images/friends/` 后随站点发布，页面不直接请求对方服务器；没有图标时显示名字首字母。`layouts/shortcodes/friends.html` 是站点新增的 shortcode，不覆盖主题文件；`content/friends.en.md` 与 `content/friends.zh-cn.md` 调用它，分别生成 `/friends/` 和 `/zh-cn/friends/`。顶部菜单和各语言页脚 `params.footer.custom` 只链接到对应语言的友链页。新增朋友时只修改数据文件。
+
+`scripts/check_friends.py` 由 `scripts/check.sh` 调用，校验数据字段、URL 协议、重复项和图标文件，并确认两种语言的友链页都包含全部链接。
+
 ### 主题和模板覆盖
 
 `themes/LoveIt` 固定在 `.gitmodules` 与 Git index 记录的 commit。根目录当前有三类覆盖：

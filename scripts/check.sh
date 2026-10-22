@@ -27,4 +27,6 @@ for SEARCH_INDEX in \
   fi
 done
 
+python3 -I "$PROJECT_ROOT/scripts/check_friends.py" "$PROJECT_ROOT" "$BUILD_ROOT/public"
+
 echo "Hugo production build passed."

@@ -92,8 +92,6 @@ title = "Yilue's Blog"
     copyright = true
     author = true
     since = 2025  # This is the start year
-    custom = """My friends' websites: <a href="http://jackchou.top">JacksBlog</a> &
-    <a href="http://zhxwu.com">tosaki's home</a>"""
     visitorsImage = "https://visitor-badge.laobi.icu/badge?page_id=fqyqc.fqyqc.github.io"
 
   # Home profile config
@@ -159,6 +157,14 @@ defaultContentLanguage = "en"
         url = "/categories/"
         title = ""
       [[languages.en.menu.main]]
+        weight = 4
+        identifier = "friends"
+        pre = ""
+        post = ""
+        name = "Friends"
+        url = "/friends/"
+        title = ""
+      [[languages.en.menu.main]]
         weight = 5
         identifier = "about"
         pre = ""
@@ -175,6 +181,8 @@ defaultContentLanguage = "en"
         url = "https://github.com/FQYQC/fqyqc.github.io"
         title = "GitHub"
     [languages.en.params]
+      [languages.en.params.footer]
+        custom = "<a href=\"/friends/\">My friends' websites</a>"
       [languages.en.params.search]
         enable = true
         type = "lunr"
@@ -240,6 +248,14 @@ defaultContentLanguage = "en"
         url = "/categories/"
         title = ""
       [[languages.zh-cn.menu.main]]
+        weight = 4
+        identifier = "friends"
+        pre = ""
+        post = ""
+        name = "友链"
+        url = "/friends/"
+        title = ""
+      [[languages.zh-cn.menu.main]]
         weight = 5
         identifier = "about"
         pre = ""
@@ -256,6 +272,8 @@ defaultContentLanguage = "en"
         url = "https://github.com/FQYQC/fqyqc.github.io"
         title = "GitHub"
     [languages.zh-cn.params]
+      [languages.zh-cn.params.footer]
+        custom = "<a href=\"/zh-cn/friends/\">友链</a>"
       [languages.zh-cn.params.search]
         enable = true
         type = "lunr"

@@ -1,0 +1,25 @@
+{{- /* Renders data/friends.toml as cards; descriptions follow the page language. */ -}}
+{{- $lang := .Page.Language.Lang -}}
+{{- with site.Data.friends.friends -}}
+<ul class="friend-links">
+  {{- range . }}
+  {{- if or (not .name) (not .url) }}
+    {{- errorf "data/friends.toml: every [[friends]] entry needs name and url" }}
+  {{- end }}
+  <li class="friend-link">
+    <a class="friend-link-card" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+      <span class="friend-link-icon" aria-hidden="true">
+        {{- with .icon }}<img src="{{ . | relURL }}" alt="" loading="lazy" width="40" height="40">
+        {{- else }}{{ substr .name 0 1 | upper }}{{ end -}}
+      </span>
+      <span class="friend-link-text">
+        <span class="friend-link-name">{{ .name }}</span>
+        {{- with .description }}{{ with index . $lang }}
+        <span class="friend-link-description">{{ . }}</span>
+        {{- end }}{{ end }}
+      </span>
+    </a>
+  </li>
+  {{- end }}
+</ul>
+{{- end -}}

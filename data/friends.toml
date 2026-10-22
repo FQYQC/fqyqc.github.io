@@ -1,0 +1,30 @@
+# 友链列表，由 layouts/shortcodes/friends.html 渲染到 /friends/ 和 /zh-cn/friends/。
+# 新增朋友时按顺序追加一个 [[friends]] 条目：
+#   name 和 url 必填，url 需以 http:// 或 https:// 开头；
+#   icon 可选，填 static/ 下的站内路径，图标文件请下载到 static/images/friends/，不要引用对方服务器；
+#     没有 icon 时显示名字首字母；
+#   description 可选，按语言填写 en 和 zh-cn，缺少某种语言时该语言页面不显示简介。
+#
+# [[friends]]
+# name = "Example"
+# url = "https://example.com/"
+# icon = "/images/friends/example.png"
+# description = { en = "One-line intro", zh-cn = "一句话介绍" }
+
+[[friends]]
+name = "JacksBlog"
+url = "https://jackchou00.com/"
+icon = "/images/friends/jacksblog.png"
+description = { en = "JackChou00's blog on color science, photography, and tech", zh-cn = "JackChou00 的博客，关于色彩科学、摄影和技术分享" }
+
+[[friends]]
+name = "tosaki's home"
+url = "https://t0saki.com/"
+icon = "/images/friends/tosaki.svg"
+description = { en = "tosaki's personal website and blog", zh-cn = "tosaki 的个人网站与博客" }
+
+[[friends]]
+name = "ZZ's Homepage"
+url = "https://zzzyc001.github.io/"
+icon = "/images/friends/zz.svg"
+description = { en = "Yuechen Zhu, DPhil student in Applied Mathematics at the University of Oxford", zh-cn = "Yuechen Zhu，牛津大学应用数学博士生" }
