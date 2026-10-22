@@ -7,21 +7,21 @@ description: "Professional Background and Experience"
 
 ## About Me
 
-I'm **Yilue Qian**, currently a Master's student at [Electrical and Computer Engineering](https://ece.ucsd.edu/), [UC San Diego](https://ucsd.edu/), majoring in Machine Learning and Data Science.
+I'm **Yilue Qian**, currently a Machine Learning Engineer at [ByteDance](https://www.bytedance.com/), working on TikTok Search. I received my Master's Degree in Machine Learning and Data Science from [Electrical and Computer Engineering](https://ece.ucsd.edu/), [UC San Diego](https://ucsd.edu/) in 2026.
 
-I received my Bachelor's Degree from [Peking University](https://english.pku.edu.cn/) last year. At PKU, I'm a member of the first [Tong Class](https://tongclass.ac.cn/) (an honorary pilot class in AI) at [Yuanpei College](https://yuanpei.pku.edu.cn/), and was also affiliated with [Institute for Artificial Intelligence](https://www.ai.pku.edu.cn/).
+I received my Bachelor's Degree from [Peking University](https://english.pku.edu.cn/) in 2024. At PKU, I was a member of the first [Tong Class](https://tongclass.ac.cn/) (an honorary pilot class in AI) at [Yuanpei College](https://yuanpei.pku.edu.cn/), and was also affiliated with [Institute for Artificial Intelligence](https://www.ai.pku.edu.cn/).
 
 My research and career interests include but are not limited to:
 
 - **Research:** Machine Learning, (Machine and Human) Cognitive Reasoning, LLMs, (Robotic) Planning.
-- **Industry:** Self-driving, Recommendation, Cloud/Distributed Computation, Data-driven Learning, Software Development, especially related to AI and AI products.
+- **Industry:** Self-driving, Search Systems, Cloud/Distributed Computation, Data-driven Learning, Software Development, especially related to AI and AI products.
 
 Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]](https://www.linkedin.com/in/yilue-qian/) [[Email]](mailto://qianyilue@outlook.com), I'm happy to share ideas and infos.
 
 ## Education
 
 ### University of California, San Diego
-**Master of Science in Machine Learning and Data Science** | *Sep 2024 - Spring 2026 (Expected)*  
+**Master of Science in Machine Learning and Data Science** | *Sep 2024 - Mar 2026*  
 - Department of [Electrical and Computer Engineering](https://ece.ucsd.edu/)
 
 ### Peking University
@@ -30,6 +30,12 @@ Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]
 - Member of the first [Tong Class](https://tongclass.ac.cn/)
 
 ## Professional Experience
+
+### ByteDance Inc.
+**Machine Learning Engineer (TikTok Search)** | *San Jose, CA* | *Apr 2026 - Present*  
+- Developing next-generation search systems, balancing **relevance**, **latency**, and **computational efficiency**
+- Evaluating search relevance and user satisfaction for **local-service video search**, covering intent matching, content and visual usefulness, and timeliness
+- Optimizing **inference efficiency and serving performance** of encoder-based search models, including tail latency, dynamic batching, and throughput-utilization trade-offs
 
 ### WeRide
 **Software Development Engineer Intern (Perception Group)** | *San Jose, CA* | *Jun 2025 - Sep 2025*  

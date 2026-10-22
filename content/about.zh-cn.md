@@ -8,14 +8,14 @@ description: "Professional Background and Experience"
 
 ## About Me
 
-我是**钱一略**，目前是[加州大学圣地亚哥分校](https://ucsd.edu/)的一名硕士生，主修机器学习和数据科学.
+我是**钱一略**，目前在[字节跳动](https://www.bytedance.com/)担任机器学习工程师，从事 TikTok 搜索相关工作。我于2026年从[加州大学圣地亚哥分校](https://ucsd.edu/)获得机器学习与数据科学硕士学位。
 
 我于2024年从[北京大学](https://pku.edu.cn/)毕业，获得人工智能学士学位。在北大期间，我是[元培学院](https://yuanpei.pku.edu.cn/)首届[通班](https://tongclass.ac.cn/)（通用人工智能试验班）的成员，并与[人工智能研究院](https://www.ai.pku.edu.cn/)有深入合作。
 
 我的学术和职业兴趣包括但不限于：
 
 - **学术方向：** 机器学习、（机器与人类的）认知推理、大语言模型、机器人规划。
-- **工业方向：** 自动驾驶、推荐系统、云计算/分布式计算、数据驱动学习、软件开发（特别是与人工智能和人工智能产品相关的领域）
+- **工业方向：** 自动驾驶、搜索系统、云计算/分布式计算、数据驱动学习、软件开发（特别是与人工智能和人工智能产品相关的领域）
 
 欢迎随时通过 [[Github]](https://github.com/FQYQC) [[领英]](https://www.linkedin.com/in/yilue-qian/) [[电子邮件]](mailto://qianyilue@outlook.com) 与我联系，我很乐意分享想法和信息。
 
@@ -23,7 +23,7 @@ description: "Professional Background and Experience"
 ## Education
 
 ### University of California, San Diego (加州大学圣地亚哥分校)
-**Master of Science in Machine Learning and Data Science** | *Sep 2024 - Spring 2026 (Expected)*  
+**Master of Science in Machine Learning and Data Science** | *Sep 2024 - Mar 2026*  
 - Department of [Electrical and Computer Engineering](https://ece.ucsd.edu/)
 
 ### Peking University (北京大学)
@@ -33,6 +33,12 @@ description: "Professional Background and Experience"
 
 
 ## Professional Experience
+
+### ByteDance Inc. (字节跳动)
+**Machine Learning Engineer (TikTok Search)** | *San Jose, CA* | *Apr 2026 - Present*  
+- Developing next-generation search systems, balancing **relevance**, **latency**, and **computational efficiency**
+- Evaluating search relevance and user satisfaction for **local-service video search**, covering intent matching, content and visual usefulness, and timeliness
+- Optimizing **inference efficiency and serving performance** of encoder-based search models, including tail latency, dynamic batching, and throughput-utilization trade-offs
 
 ### WeRide (文远知行)
 **Software Development Engineer Intern (Perception Group)** | *San Jose, CA* | *Jun 2025 - Sep 2025*  
