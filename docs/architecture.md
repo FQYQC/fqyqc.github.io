@@ -40,22 +40,27 @@ Hugo 读取根配置和双语内容。根目录中的模板与资源优先于主
 
 ### 视觉样式
 
-站点外观在主题之上用两份样式文件定制，均不修改主题子模块：
+站点外观采用极简黑白方向：几乎不用颜色，靠字号、字重和留白建立层级，照片是唯一的色彩来源。样式在主题之上用两份文件定制，均不修改主题子模块：
 
 - `assets/css/_override.scss`：覆盖主题同名占位文件，重设颜色、字体等 SCSS 变量。主题在 `_variables` 之后导入它，直接赋值即可。
-- `assets/css/_custom.scss`：主题最后导入的自定义样式，负责排版、首页介绍、文章摘要、页面标题和友链卡片。
+- `assets/css/_custom.scss`：主题最后导入的自定义样式，负责排版、首页介绍、封面位、文章摘要、页面标题和友链卡片。
 
-衬线标题字体通过 `hugo.toml` 中 `params.library.css.googleFonts` 加载。主题的标题入场动画在 `_custom.scss` 中被关闭。
+Inter 与 Noto Sans SC 通过 `hugo.toml` 中 `params.library.css.googleFonts` 加载。主题的标题入场动画在 `_custom.scss` 中被关闭。
+
+### 首页封面位
+
+`data/featured.toml` 按顺序列出要在首页个人介绍下方突出的文章（`page` 为不带语言后缀的路径，`image` 可选）。`layouts/partials/home/featured.html` 渲染这些卡片：有图时显示图片卡，无图时显示纯文字封面；某种语言缺少该文章时自动跳过。封面图需压缩后放在 `static/images/covers/`，不引用外部图床；图片路径不存在时构建失败。被选入封面位的文章不会在下方列表中重复出现。
 
 ### 主题和模板覆盖
 
-`themes/LoveIt` 固定在 `.gitmodules` 与 Git index 记录的 commit。根目录当前有三类覆盖：
+`themes/LoveIt` 固定在 `.gitmodules` 与 Git index 记录的 commit。根目录当前有四类覆盖：
 
 - `layouts/_default/summary.html`：优先用 front matter 的 `abstract` 生成列表摘要。
 - `layouts/partials/assets.html`：为主题的页面配置补齐默认值。
 - `layouts/_default/_markup/render-image.html`：实现图片 URL 映射和统一图注。
+- `layouts/index.html`：在个人介绍后渲染首页封面位，并从文章列表中排除封面位文章。
 
-前两个文件基于主题模板的完整副本。更新主题后必须与新的同路径文件进行三方比较，避免遗漏主题修复。
+`summary.html`、`assets.html` 和 `index.html` 基于主题模板的完整副本。更新主题后必须与新的同路径文件进行三方比较，避免遗漏主题修复。
 
 ### 生成物
 

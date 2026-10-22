@@ -1,79 +1,79 @@
 // ==============================
 // 站点级变量覆盖（覆盖 themes/LoveIt/assets/css/_override.scss 占位文件）
 // 主题在 _variables 之后导入本文件，这里直接赋值即可生效。
-// 设计方向：暖色纸张底 + 墨色文字 + 砖红强调色，标题衬线、正文无衬线。
+// 设计方向：极简黑白。几乎不用颜色，靠字号、字重和留白区分层级；照片是唯一的色彩来源。
 // ==============================
 
 // ---------- 字体 ----------
-$sans-font-stack: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Emoji, Helvetica, Arial, sans-serif;
-$serif-font-stack: "Noto Serif SC", "Source Han Serif SC", "Songti SC", Georgia, "Times New Roman", serif;
+$sans-font-stack: "Inter", "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Emoji, Helvetica, Arial, sans-serif;
 
 $global-font-family: $sans-font-stack;
 $global-font-size: 16px;
 $global-line-height: 1.6rem;
-$header-title-font-family: $serif-font-stack;
+$header-title-font-family: $sans-font-stack;
 
 // ---------- 基础色 ----------
-$accent: #b5482a;
-$accent-dark: #ec9a72;
+$ink: #111111;
+$ink-dark: #ededed;
 
-// 摘要、介绍等较长的辅助文字：比次要色深，保证可读性
-$muted-ink: #4f4a43;
-$muted-ink-dark: #b9b2a7;
+// 摘要、介绍等较长的辅助文字
+$muted-ink: #444444;
+$muted-ink-dark: #b4b4b4;
 
-$global-background-color: #faf8f4;
-$global-background-color-dark: #1c1b19;
+$global-background-color: #ffffff;
+$global-background-color-dark: #111113;
 
-$global-font-color: #24211d;
-$global-font-color-dark: #ddd7cd;
+$global-font-color: $ink;
+$global-font-color-dark: $ink-dark;
 
-$global-font-secondary-color: #76706a;
-$global-font-secondary-color-dark: #8f897f;
+// 日期、元信息等小字；对白底对比度约 5.3:1
+$global-font-secondary-color: #6b6b6b;
+$global-font-secondary-color-dark: #9b9b9b;
 
-$global-link-color: #24211d;
-$global-link-color-dark: #ddd7cd;
+$global-link-color: $ink;
+$global-link-color-dark: $ink-dark;
 
-$global-link-hover-color: $accent;
-$global-link-hover-color-dark: $accent-dark;
+$global-link-hover-color: #6b6b6b;
+$global-link-hover-color-dark: #ffffff;
 
-$global-border-color: #e9e3d9;
-$global-border-color-dark: #33302c;
+$global-border-color: #ececec;
+$global-border-color-dark: #262628;
 
-$selection-color: rgba(181, 72, 42, 0.18);
-$selection-color-dark: rgba(236, 154, 114, 0.28);
+$selection-color: rgba(0, 0, 0, 0.12);
+$selection-color-dark: rgba(255, 255, 255, 0.18);
 
 // ---------- 顶栏 ----------
 $header-height: 4rem;
-$header-title-font-size: 1.35rem;
-$header-background-color: #faf8f4;
-$header-background-color-dark: #1c1b19;
-$header-hover-color: $accent;
-$header-hover-color-dark: $accent-dark;
-$search-background-color: #f0ebe2;
-$search-background-color-dark: #2a2825;
+$header-title-font-size: 1.15rem;
+$header-background-color: #ffffff;
+$header-background-color-dark: #111113;
+$header-hover-color: $ink;
+$header-hover-color-dark: #ffffff;
+$search-background-color: #f4f4f4;
+$search-background-color-dark: #1d1d20;
 
 // ---------- 正文 ----------
-$single-link-color: $accent;
-$single-link-color-dark: $accent-dark;
-$single-link-hover-color: #7f2f19;
-$single-link-hover-color-dark: #f6c3a8;
+$single-link-color: $ink;
+$single-link-color-dark: $ink-dark;
+$single-link-hover-color: #6b6b6b;
+$single-link-hover-color-dark: #ffffff;
 
-$table-background-color: #fffdf9;
-$table-background-color-dark: #22201e;
-$table-thead-color: #f0ebe2;
-$table-thead-color-dark: #2a2825;
+$table-background-color: #ffffff;
+$table-background-color-dark: #151517;
+$table-thead-color: #f4f4f4;
+$table-thead-color-dark: #1d1d20;
 
-$blockquote-color: $accent;
-$blockquote-color-dark: $accent-dark;
+$blockquote-color: $ink;
+$blockquote-color-dark: $ink-dark;
 
 // ---------- 分页 ----------
-$pagination-link-color: #76706a;
-$pagination-link-color-dark: #8f897f;
-$pagination-link-hover-color: $accent;
-$pagination-link-hover-color-dark: $accent-dark;
+$pagination-link-color: #6b6b6b;
+$pagination-link-color-dark: #9b9b9b;
+$pagination-link-hover-color: $ink;
+$pagination-link-hover-color-dark: #ffffff;
 
 // ---------- 代码 ----------
-$code-color: #a63d22;
-$code-color-dark: #e9b48f;
-$code-background-color: #f2ede4;
-$code-background-color-dark: #24221f;
+$code-color: $ink;
+$code-color-dark: $ink-dark;
+$code-background-color: #f4f4f4;
+$code-background-color-dark: #1b1b1e;

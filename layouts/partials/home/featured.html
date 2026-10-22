@@ -1,0 +1,40 @@
+{{- /*
+  Home page cover slot. Reads data/featured.toml; each entry is a post path plus an
+  optional local image. Entries without an image render as a text-only cover.
+  Posts missing in the current language are skipped.
+*/ -}}
+{{- $items := slice -}}
+{{- range $entry := site.Data.featured.featured -}}
+  {{- if not $entry.page -}}
+    {{- errorf "data/featured.toml: every [[featured]] entry needs a page path" -}}
+  {{- end -}}
+  {{- with $entry.image -}}
+    {{- if not (fileExists (path.Join "static" .)) -}}
+      {{- errorf "data/featured.toml: cover image %q is missing under static/" . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with site.GetPage $entry.page -}}
+    {{- $items = $items | append (dict "page" . "image" $entry.image) -}}
+  {{- end -}}
+{{- end -}}
+{{- with $items -}}
+<section class="home-featured{{ if eq (len .) 1 }} is-single{{ end }}" aria-label="{{ cond (eq site.Language.Lang "zh-cn") "精选" "Featured" }}">
+  {{- range . }}
+  {{- $p := .page }}
+  {{- $summary := $p.Params.abstract | default $p.Description | default $p.Summary }}
+  <a class="featured-card{{ if .image }} has-image{{ else }} is-text{{ end }}" href="{{ $p.RelPermalink }}">
+    {{- with .image }}
+    <span class="featured-image"><img src="{{ . | relURL }}" alt="" loading="eager" decoding="async"></span>
+    {{- end }}
+    <span class="featured-body">
+      {{- with $p.Params.categories }}<span class="featured-kicker">{{ index . 0 }}</span>{{ end }}
+      <span class="featured-title">{{ $p.LinkTitle }}</span>
+      {{- if not .image }}{{ with $summary }}
+      <span class="featured-summary">{{ . | plainify | truncate 140 }}</span>
+      {{- end }}{{ end }}
+      <span class="featured-date">{{ $p.Date.Format "2006-01-02" }}</span>
+    </span>
+  </a>
+  {{- end }}
+</section>
+{{- end -}}

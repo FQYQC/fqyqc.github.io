@@ -1,26 +1,48 @@
 // ==============================
 // 站点级样式（在主题样式之后导入）
 // 颜色与字体变量见 assets/css/_override.scss
+// 设计方向：极简黑白，靠字号、字重和留白建立层级；照片是唯一的色彩来源。
 // ==============================
 
 // ---------- 排版 ----------
 body {
   font-family: $sans-font-stack;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
 }
 
 h1, h2, h3, h4, h5, h6,
 .single-title,
 .home-title,
 .header-title {
-  font-family: $serif-font-stack;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-family: $sans-font-stack;
+  font-weight: 700;
+  letter-spacing: -0.015em;
 }
 
 code, pre {
   font-family: "Source Code Pro", "Fira Code", Menlo, Consolas, monospace;
   font-weight: 400;
+}
+
+// 链接靠下划线区分，而不是颜色
+.single .content a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: rgba(17, 17, 17, 0.35);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+
+  [theme=dark] & {
+    text-decoration-color: rgba(237, 237, 237, 0.35);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
 }
 
 .single .content {
@@ -31,14 +53,11 @@ code, pre {
   }
 
   h2, h3, h4 {
+    position: relative;
     margin-top: 2.2rem;
   }
 
-  // 标题前的 # 链接符号移到左侧边距里，平时隐藏，悬停时再显示，不占正文缩进
-  h2, h3, h4 {
-    position: relative;
-  }
-
+  // 标题前的 # / | 链接符号移到左侧边距里，平时隐藏，悬停时再显示
   .header-mark::before {
     position: absolute;
     left: -1.1em;
@@ -54,16 +73,17 @@ code, pre {
   }
 
   blockquote {
-    border-left-width: 3px;
-    background: rgba(181, 72, 42, 0.05);
+    border-left-width: 2px;
+    background: transparent;
+    color: $muted-ink;
 
     [theme=dark] & {
-      background: rgba(236, 154, 114, 0.06);
+      color: $muted-ink-dark;
     }
   }
 }
 
-// 主题给标题加了翻转/脉冲入场动画；编辑风格不需要，且动画被暂停时标题会一直不可见
+// 主题给标题加了翻转/脉冲入场动画；简洁风格不需要，且动画被暂停时标题会一直不可见
 .single-title.animate__animated,
 .home-title.animate__animated {
   animation: none !important;
@@ -83,29 +103,38 @@ header.mobile {
 }
 
 .header-title a {
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 header.desktop .menu .menu-item {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   padding: 0 0.6rem;
+  color: $global-font-secondary-color;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+
+  &.active,
+  &:hover {
+    color: $ink;
+
+    [theme=dark] & {
+      color: $ink-dark;
+    }
+  }
 }
 
 // ---------- 首页个人介绍 ----------
 .home .home-profile {
   transform: none;
-  padding: 4.5rem 0 2.5rem;
-  margin-bottom: 1.5rem;
+  padding: 4rem 0 2rem;
   text-align: left;
-  border-bottom: 1px solid $global-border-color;
-
-  [theme=dark] & {
-    border-bottom-color: $global-border-color-dark;
-  }
 
   .home-title {
-    font-size: 2.1rem;
-    line-height: 1.3;
+    font-size: 2.2rem;
+    line-height: 1.25;
     padding: 0 0 1rem;
   }
 
@@ -126,20 +155,15 @@ header.desktop .menu .menu-item {
 
     a,
     a span {
-      color: $accent;
-      text-decoration: none !important;
-      border-bottom: 1px solid rgba(181, 72, 42, 0.35);
-
-      [theme=dark] & {
-        color: $accent-dark;
-        border-bottom-color: rgba(236, 154, 114, 0.35);
-      }
+      color: inherit;
+      text-decoration: underline !important;
+      text-underline-offset: 0.2em;
     }
   }
 
   .links {
     padding: 1.25rem 0 0;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
 
     a {
       margin-right: 0.75rem;
@@ -149,7 +173,7 @@ header.desktop .menu .menu-item {
 
 @media only screen and (max-width: 680px) {
   .home .home-profile {
-    padding: 2.5rem 0 2rem;
+    padding: 2.5rem 0 1.5rem;
 
     .home-title {
       font-size: 1.6rem;
@@ -167,10 +191,139 @@ header.desktop .menu .menu-item {
   }
 }
 
+// ---------- 首页封面位：layouts/partials/home/featured.html ----------
+.home-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0.5rem 0 1.5rem;
+
+  &.is-single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .featured-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  // 有图：图片在上，标题在下
+  .featured-card.has-image {
+    .featured-image {
+      display: block;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #f4f4f4;
+
+      [theme=dark] & {
+        background: #1d1d20;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+    }
+
+    &:hover img {
+      transform: scale(1.02);
+    }
+
+    .featured-body {
+      padding: 0.85rem 0 0;
+    }
+  }
+
+  // 无图：纯文字封面，黑底白字（深色模式下反转）
+  .featured-card.is-text {
+    justify-content: flex-end;
+    padding: 1.4rem 1.4rem 1.2rem;
+    background: $ink;
+    color: #ffffff;
+
+    [theme=dark] & {
+      background: $ink-dark;
+      color: #111111;
+    }
+
+    .featured-title {
+      font-size: 1.5rem;
+    }
+
+    .featured-kicker,
+    .featured-date {
+      opacity: 0.65;
+    }
+
+    .featured-summary {
+      opacity: 0.85;
+    }
+  }
+
+  .featured-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .featured-kicker {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .featured-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+
+  .featured-summary {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .featured-date {
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .featured-card.is-text .featured-kicker,
+  .featured-card.is-text .featured-date {
+    color: inherit;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .home-featured {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 // ---------- 首页文章摘要 ----------
 .home .summary,
 .page .summary {
-  padding: 1.75rem 0 1.5rem;
+  padding: 1.5rem 0 1.25rem;
   border-bottom: 1px solid $global-border-color;
   box-shadow: none;
 
@@ -179,13 +332,13 @@ header.desktop .menu .menu-item {
   }
 
   .single-title {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
     line-height: 1.4;
-    margin: 0 0 0.5rem;
+    margin: 0 0 0.45rem;
   }
 
   .post-meta {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: $global-font-secondary-color;
 
     [theme=dark] & {
@@ -194,7 +347,7 @@ header.desktop .menu .menu-item {
   }
 
   .content {
-    margin-top: 0.6rem;
+    margin-top: 0.55rem;
     line-height: 1.75;
     color: $muted-ink;
 
@@ -204,16 +357,8 @@ header.desktop .menu .menu-item {
   }
 
   .post-footer {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-
-    a {
-      color: $accent;
-
-      [theme=dark] & {
-        color: $accent-dark;
-      }
-    }
+    margin-top: 0.7rem;
+    font-size: 0.82rem;
   }
 }
 
@@ -224,16 +369,15 @@ header.desktop .menu .menu-item {
   text-align: left;
   font-size: 2rem;
   margin: 2.5rem 0 1.5rem;
-  animation: none;
 }
 
 .archive {
   .group-title {
-    font-family: $serif-font-stack;
-    color: $accent;
+    font-size: 1.1rem;
+    color: $global-font-secondary-color;
 
     [theme=dark] & {
-      color: $accent-dark;
+      color: $global-font-secondary-color-dark;
     }
   }
 
@@ -248,7 +392,7 @@ header.desktop .menu .menu-item {
 
 // ---------- 页脚 ----------
 .footer {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: $global-font-secondary-color;
   padding-top: 2rem;
 
