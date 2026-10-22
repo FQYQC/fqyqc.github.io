@@ -3,6 +3,22 @@
 /resources/_gen/
 /resources/_cache/
 
+# Local asset library (also self-ignored by assets/local-assets/.gitignore)
+/assets/local-assets/
+
+# Claude Code local settings and preview config (machine-specific paths)
+/.claude/settings.local.json
+/.claude/launch.json
+
+# Python bytecode from scripts/
+__pycache__/
+
+# Local scratch files for post processing; never publish these
+/tmp.txt
+/L001/
+# Hugo copies non-Markdown files under content/ into the site verbatim
+/content/**/*.py
+
 # OS junk files
 .DS_Store
 .AppleDouble
