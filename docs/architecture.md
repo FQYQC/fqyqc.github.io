@@ -38,6 +38,15 @@ Hugo 读取根配置和双语内容。根目录中的模板与资源优先于主
 
 `scripts/check_friends.py` 由 `scripts/check.sh` 调用，校验数据字段、URL 协议、重复项和图标文件，并确认两种语言的友链页都包含全部链接。
 
+### 视觉样式
+
+站点外观在主题之上用两份样式文件定制，均不修改主题子模块：
+
+- `assets/css/_override.scss`：覆盖主题同名占位文件，重设颜色、字体等 SCSS 变量。主题在 `_variables` 之后导入它，直接赋值即可。
+- `assets/css/_custom.scss`：主题最后导入的自定义样式，负责排版、首页介绍、文章摘要、页面标题和友链卡片。
+
+衬线标题字体通过 `hugo.toml` 中 `params.library.css.googleFonts` 加载。主题的标题入场动画在 `_custom.scss` 中被关闭。
+
 ### 主题和模板覆盖
 
 `themes/LoveIt` 固定在 `.gitmodules` 与 Git index 记录的 commit。根目录当前有三类覆盖：

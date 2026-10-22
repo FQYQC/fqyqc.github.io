@@ -1,32 +1,262 @@
+// ==============================
+// 站点级样式（在主题样式之后导入）
+// 颜色与字体变量见 assets/css/_override.scss
+// ==============================
 
-// 修改全局字体 - 使用Google Fonts
+// ---------- 排版 ----------
 body {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-family: $sans-font-stack;
+  -webkit-font-smoothing: antialiased;
 }
 
-// 修改标题字体
-h1, h2, h3, h4, h5, h6 {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-font-weight: 500 !important;
+h1, h2, h3, h4, h5, h6,
+.single-title,
+.home-title,
+.header-title {
+  font-family: $serif-font-stack;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
-// 修改代码字体
 code, pre {
-font-family: "Source Code Pro", "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
-// font-family: "Arial", monospace !important;
-font-weight: 400 !important;
+  font-family: "Source Code Pro", "Fira Code", Menlo, Consolas, monospace;
+  font-weight: 400;
 }
 
-// 修改导航栏字体
-.header {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-}
-
-// 修改文章内容字体
 .single .content {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-line-height: 1.7 !important;
+  line-height: 1.8;
+
+  p {
+    margin: 0.75rem 0;
+  }
+
+  h2, h3, h4 {
+    margin-top: 2.2rem;
+  }
+
+  // 标题前的 # 链接符号移到左侧边距里，平时隐藏，悬停时再显示，不占正文缩进
+  h2, h3, h4 {
+    position: relative;
+  }
+
+  .header-mark::before {
+    position: absolute;
+    left: -1.1em;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  h2:hover .header-mark::before,
+  h3:hover .header-mark::before,
+  h4:hover .header-mark::before {
+    opacity: 1;
+  }
+
+  blockquote {
+    border-left-width: 3px;
+    background: rgba(181, 72, 42, 0.05);
+
+    [theme=dark] & {
+      background: rgba(236, 154, 114, 0.06);
+    }
+  }
 }
+
+// 主题给标题加了翻转/脉冲入场动画；编辑风格不需要，且动画被暂停时标题会一直不可见
+.single-title.animate__animated,
+.home-title.animate__animated {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+// ---------- 顶栏 ----------
+header.desktop,
+header.mobile {
+  border-bottom: 1px solid $global-border-color;
+  box-shadow: none !important;
+
+  [theme=dark] & {
+    border-bottom-color: $global-border-color-dark;
+  }
+}
+
+.header-title a {
+  font-weight: 600;
+}
+
+header.desktop .menu .menu-item {
+  font-size: 0.95rem;
+  padding: 0 0.6rem;
+}
+
+// ---------- 首页个人介绍 ----------
+.home .home-profile {
+  transform: none;
+  padding: 4.5rem 0 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid $global-border-color;
+
+  [theme=dark] & {
+    border-bottom-color: $global-border-color-dark;
+  }
+
+  .home-title {
+    font-size: 2.1rem;
+    line-height: 1.3;
+    padding: 0 0 1rem;
+  }
+
+  .home-subtitle {
+    padding: 0;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: $muted-ink;
+
+    [theme=dark] & {
+      color: $muted-ink-dark;
+    }
+
+    p {
+      margin: 0;
+      text-align: left !important;
+    }
+
+    a,
+    a span {
+      color: $accent;
+      text-decoration: none !important;
+      border-bottom: 1px solid rgba(181, 72, 42, 0.35);
+
+      [theme=dark] & {
+        color: $accent-dark;
+        border-bottom-color: rgba(236, 154, 114, 0.35);
+      }
+    }
+  }
+
+  .links {
+    padding: 1.25rem 0 0;
+    font-size: 1.25rem;
+
+    a {
+      margin-right: 0.75rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .home .home-profile {
+    padding: 2.5rem 0 2rem;
+
+    .home-title {
+      font-size: 1.6rem;
+    }
+
+    .home-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .page.single.special .single-title,
+  .page.archive .single-title {
+    font-size: 1.7rem;
+    margin-top: 1.5rem;
+  }
+}
+
+// ---------- 首页文章摘要 ----------
+.home .summary,
+.page .summary {
+  padding: 1.75rem 0 1.5rem;
+  border-bottom: 1px solid $global-border-color;
+  box-shadow: none;
+
+  [theme=dark] & {
+    border-bottom-color: $global-border-color-dark;
+  }
+
+  .single-title {
+    font-size: 1.45rem;
+    line-height: 1.4;
+    margin: 0 0 0.5rem;
+  }
+
+  .post-meta {
+    font-size: 0.85rem;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .content {
+    margin-top: 0.6rem;
+    line-height: 1.75;
+    color: $muted-ink;
+
+    [theme=dark] & {
+      color: $muted-ink-dark;
+    }
+  }
+
+  .post-footer {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+
+    a {
+      color: $accent;
+
+      [theme=dark] & {
+        color: $accent-dark;
+      }
+    }
+  }
+}
+
+// ---------- 页面与归档标题 ----------
+// 主题默认把 About、友链、归档的大标题右对齐，这里统一左对齐。
+.page.single.special .single-title,
+.page.archive .single-title {
+  text-align: left;
+  font-size: 2rem;
+  margin: 2.5rem 0 1.5rem;
+  animation: none;
+}
+
+.archive {
+  .group-title {
+    font-family: $serif-font-stack;
+    color: $accent;
+
+    [theme=dark] & {
+      color: $accent-dark;
+    }
+  }
+
+  .archive-item {
+    padding: 0.35rem 0 0.35rem 1rem;
+  }
+
+  .archive-item-date {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// ---------- 页脚 ----------
+.footer {
+  font-size: 0.85rem;
+  color: $global-font-secondary-color;
+  padding-top: 2rem;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+}
+
 // 友链页面：layouts/shortcodes/friends.html
 .single .content ul.friend-links {
   list-style: none;
