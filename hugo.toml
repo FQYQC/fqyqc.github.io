@@ -252,7 +252,7 @@ defaultContentLanguage = "en"
         identifier = "friends"
         pre = ""
         post = ""
-        name = "友链"
+        name = "朋友们"
         url = "/friends/"
         title = ""
       [[languages.zh-cn.menu.main]]
@@ -273,7 +273,7 @@ defaultContentLanguage = "en"
         title = "GitHub"
     [languages.zh-cn.params]
       [languages.zh-cn.params.footer]
-        custom = "<a href=\"/zh-cn/friends/\">友链</a>"
+        custom = "<a href=\"/zh-cn/friends/\">朋友们的网站</a>"
       [languages.zh-cn.params.search]
         enable = true
         type = "lunr"

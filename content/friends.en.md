@@ -5,6 +5,6 @@ draft: false
 description: "Websites of my friends"
 ---
 
-Websites of my friends.
+Little corners of the internet kept by my friends. Feel free to drop by and say hi.
 
 {{< friends >}}

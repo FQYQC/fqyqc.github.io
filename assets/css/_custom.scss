@@ -42,7 +42,8 @@ line-height: 1.7 !important;
 
   a.friend-link-card {
     display: flex;
-    align-items: center;
+    // 顶部对齐：同一行卡片的图标和名字处于同一高度，不受简介行数影响。
+    align-items: flex-start;
     gap: 0.9rem;
     height: 100%;
     padding: 0.9rem 1rem;
