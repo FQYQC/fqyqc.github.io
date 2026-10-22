@@ -3,6 +3,7 @@
 #   name 和 url 必填，url 需以 http:// 或 https:// 开头；
 #   icon 可选，填 static/ 下的站内路径，图标文件请下载到 static/images/friends/，不要引用对方服务器；
 #     没有 icon 时显示名字首字母；
+#   iconFill 可选，设为 true 时图标铺满圆形，适合头像照片或细笔画图标；默认留白显示，适合 logo；
 #   description 可选，按语言填写 en 和 zh-cn，缺少某种语言时该语言页面不显示简介。
 #
 # [[friends]]
@@ -28,3 +29,10 @@ name = "ZZ's Homepage"
 url = "https://zzzyc001.github.io/"
 icon = "/images/friends/zz.svg"
 description = { en = "Yuechen Zhu, DPhil student in Applied Mathematics at the University of Oxford", zh-cn = "Yuechen Zhu，牛津大学应用数学博士生" }
+
+[[friends]]
+name = "Helin Xu"
+url = "https://helinxu.com/"
+icon = "/images/friends/helinxu.jpg"
+iconFill = true
+description = { en = "Helin Xu, ML engineer at TikTok, researching embodied AI and robot learning", zh-cn = "徐赫临，TikTok 机器学习工程师，研究具身智能与机器人学习" }

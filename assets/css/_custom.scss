@@ -83,6 +83,13 @@ line-height: 1.7 !important;
       margin: 0;
       object-fit: contain;
     }
+
+    // 照片或细笔画图标铺满圆形，由 data/friends.toml 的 iconFill 控制。
+    &.is-fill img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .friend-link-text {

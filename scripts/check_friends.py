@@ -46,6 +46,8 @@ def main() -> None:
                 fail(f"friend {name!r} icon file is missing: static{icon}")
             if not (public / icon.lstrip("/")).is_file():
                 fail(f"friend {name!r} icon was not copied into the build: {icon}")
+        if not isinstance(friend.get("iconFill", False), bool):
+            fail(f"friend {name!r} iconFill must be true or false")
         description = friend.get("description", {})
         if not isinstance(description, dict) or set(description) - set(LANGS):
             fail(f"friend {name!r} description may only contain {', '.join(LANGS)}")
