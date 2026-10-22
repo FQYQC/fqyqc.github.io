@@ -18,7 +18,7 @@
   {{- end -}}
 {{- end -}}
 {{- with $items -}}
-<section class="home-featured{{ if eq (len .) 1 }} is-single{{ end }}" aria-label="{{ cond (eq site.Language.Lang "zh-cn") "精选" "Featured" }}">
+<section class="home-featured count-{{ len . }}" aria-label="{{ cond (eq site.Language.Lang "zh-cn") "精选" "Featured" }}">
   {{- range . }}
   {{- $p := .page }}
   {{- $summary := $p.Params.abstract | default $p.Description | default $p.Summary }}

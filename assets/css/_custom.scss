@@ -198,8 +198,42 @@ header.desktop .menu .menu-item {
   gap: 1rem;
   margin: 0.5rem 0 1.5rem;
 
-  &.is-single {
+  &.count-1 {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  // 三篇及以上：第一篇占满一行做大图，其余每行三张
+  &:not(.count-1):not(.count-2) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 1.5rem;
+
+    > .featured-card:first-child {
+      grid-column: 1 / -1;
+
+      .featured-image {
+        aspect-ratio: 21 / 9;
+      }
+
+      .featured-title {
+        font-size: 1.6rem;
+      }
+    }
+
+    > .featured-card:not(:first-child) .featured-title {
+      font-size: 1.05rem;
+    }
+
+    > .featured-card.is-text:not(:first-child) {
+      padding: 1.1rem 1.1rem 1rem;
+
+      .featured-title {
+        font-size: 1.15rem;
+      }
+
+      .featured-summary {
+        font-size: 0.85rem;
+      }
+    }
   }
 
   .featured-card {
@@ -315,8 +349,43 @@ header.desktop .menu .menu-item {
 }
 
 @media only screen and (max-width: 680px) {
-  .home-featured {
+  .home-featured,
+  .home-featured:not(.count-1):not(.count-2) {
     grid-template-columns: minmax(0, 1fr);
+
+    > .featured-card:first-child .featured-image {
+      aspect-ratio: 16 / 9;
+    }
+  }
+}
+
+// 内容区较窄时（主题在中等屏幕上只给约 500px），小卡片改为整行的左图右文横条，避免三列挤在一起
+.home-featured {
+  container-type: inline-size;
+}
+
+@container (max-width: 640px) {
+  .home-featured > .featured-card:not(:first-child) {
+    grid-column: 1 / -1;
+  }
+
+  .home-featured > .featured-card.has-image:not(:first-child) {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    .featured-image {
+      flex: 0 0 38%;
+      aspect-ratio: 4 / 3;
+    }
+
+    .featured-body {
+      padding: 0;
+    }
+  }
+
+  .home-featured > .featured-card.is-text:not(:first-child) {
+    min-height: 9rem;
   }
 }
 
