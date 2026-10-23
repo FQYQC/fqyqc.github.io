@@ -1,12 +1,12 @@
 {{- /*
-  Resolves the cover image of a featured post. Returns a dict {url, tint} or nil.
+  Resolves the cover image of a featured post. Returns a dict {url, tintLight, tintDark} or false.
 
   Order:
     1. Local file assets/images/covers/<post file name>.jpg|.png|.webp (wins if present).
     2. `cover` front matter (any language version): either an image path already used in
        the post, e.g. /assets/local-assets/posts/<post>/01.jpg (mapped to the image host via
        data/assets_mapping.json), or a full https:// URL. Downloaded at build time.
-  The image is resized for the home page and its dominant color is returned as `tint`.
+  The image is resized for the home page; tintLight / tintDark are card background colors derived from its most colorful palette entry.
   If a remote download fails, the post silently falls back to a text card so an image-host
   outage never breaks the build.
 */ -}}
@@ -50,8 +50,47 @@
   {{- else if ne .MediaType.SubType "jpeg" -}}
     {{- $resized = .Resize (printf "%dx jpg q82" .Width) -}}
   {{- end -}}
-  {{- $tint := "" -}}
-  {{- with .Colors -}}{{- $tint = printf "%v" (index . 0) -}}{{- end -}}
-  {{- $result = dict "url" $resized.RelPermalink "tint" $tint -}}
+  {{- /*
+    Card tint: among the palette Hugo extracts, take the most colorful entry (highest chroma),
+    not the largest area, so a dark ground or grey sky does not win. Keep only its hue and
+    a capped saturation, then fix the lightness ourselves (very light / very dark) so text
+    stays readable. Near-grey palettes stay neutral.
+  */ -}}
+  {{- $best := dict "chroma" -1.0 "hex" "" -}}
+  {{- range .Colors -}}
+    {{- $hex := strings.TrimPrefix "#" (printf "%v" .) -}}
+    {{- if eq (len $hex) 6 -}}
+      {{- $r := div (float (int (printf "0x%s" (substr $hex 0 2)))) 255.0 -}}
+      {{- $g := div (float (int (printf "0x%s" (substr $hex 2 2)))) 255.0 -}}
+      {{- $b := div (float (int (printf "0x%s" (substr $hex 4 2)))) 255.0 -}}
+      {{- $chroma := sub (math.Max $r (math.Max $g $b)) (math.Min $r (math.Min $g $b)) -}}
+      {{- if gt $chroma $best.chroma -}}
+        {{- $best = dict "chroma" $chroma "r" $r "g" $g "b" $b -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $tintLight := "" -}}
+  {{- $tintDark := "" -}}
+  {{- if gt $best.chroma 0.08 -}}
+    {{- $r := $best.r -}}{{- $g := $best.g -}}{{- $b := $best.b -}}
+    {{- $max := math.Max $r (math.Max $g $b) -}}
+    {{- $min := math.Min $r (math.Min $g $b) -}}
+    {{- $d := sub $max $min -}}
+    {{- $l := div (add $max $min) 2.0 -}}
+    {{- $sat := div $d (sub 1.0 (math.Abs (sub (mul 2.0 $l) 1.0))) -}}
+    {{- $h := 0.0 -}}
+    {{- if eq $max $r -}}
+      {{- $h = mul 60.0 (div (sub $g $b) $d) -}}
+    {{- else if eq $max $g -}}
+      {{- $h = mul 60.0 (add (div (sub $b $r) $d) 2.0) -}}
+    {{- else -}}
+      {{- $h = mul 60.0 (add (div (sub $r $g) $d) 4.0) -}}
+    {{- end -}}
+    {{- if lt $h 0.0 -}}{{- $h = add $h 360.0 -}}{{- end -}}
+    {{- $h = math.Round $h -}}
+    {{- $tintLight = printf "hsl(%v, %v%%, 93%%)" $h (math.Round (mul 100.0 (math.Min $sat 0.45))) -}}
+    {{- $tintDark = printf "hsl(%v, %v%%, 14%%)" $h (math.Round (mul 100.0 (math.Min $sat 0.3))) -}}
+  {{- end -}}
+  {{- $result = dict "url" $resized.RelPermalink "tintLight" $tintLight "tintDark" $tintDark -}}
 {{- end -}}
 {{- return $result -}}

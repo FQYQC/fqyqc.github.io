@@ -6,9 +6,11 @@
 */ -}}
 {{- $items := slice -}}
 {{- range partial "home/featured-pages.html" . -}}
-  {{- $item := dict "page" . "image" "" "tint" "" -}}
+  {{- $item := dict "page" . "image" "" "style" "" -}}
   {{- with partial "home/featured-cover.html" . -}}
-    {{- $item = merge $item (dict "image" .url "tint" .tint) -}}
+    {{- $style := "" -}}
+    {{- if .tintLight -}}{{- $style = printf "--tint-light: %s; --tint-dark: %s" .tintLight .tintDark -}}{{- end -}}
+    {{- $item = merge $item (dict "image" .url "style" $style) -}}
   {{- end -}}
   {{- $items = $items | append $item -}}
 {{- end -}}
@@ -19,7 +21,7 @@
   {{- range $i, $item := . }}
   {{- $p := $item.page }}
   {{- $summary := $p.Params.abstract | default $p.Description | default $p.Summary }}
-  <a class="featured-card{{ if $item.image }} has-image{{ else }} is-text{{ end }}" href="{{ $p.RelPermalink }}"{{ with $item.tint }} style="{{ printf "--tint: %s" . | safeCSS }}"{{ end }}>
+  <a class="featured-card{{ if $item.image }} has-image{{ else }} is-text{{ end }}" href="{{ $p.RelPermalink }}"{{ with $item.style }} style="{{ . | safeCSS }}"{{ end }}>
     {{- with $item.image }}
     <span class="featured-image"><img src="{{ . | relURL }}" alt="" loading="{{ cond (eq $i 0) "eager" "lazy" }}" decoding="async"></span>
     {{- end }}
