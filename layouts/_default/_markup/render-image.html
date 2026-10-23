@@ -15,7 +15,17 @@
 {{ $url := index site.Data.assets_mapping $src | default $src }}
 
 <figure style="margin-top: 1em; margin-bottom: 1em;">
-  {{- dict "Src" $url "Title" $alt "Caption" .Title "Linked" true "Resources" .Page.Resources | partial "plugin/img.html" -}}
+  {{- /*
+    Inlined from LoveIt partials/plugin/img.html (commit 97921ffdecafba6d12e3b74ddbb2d0a16ad8c5e0),
+    linked branch, minus data-srcset. The theme lists the same file as "1.5x" and "2x", so on
+    high-DPI screens the browser treats every photo as a 2x asset and shows it at half its pixel
+    width; a 1400px image then renders at 700px, narrower than the text column. Without srcset the
+    image fills the column (max-width: 100%). Also uses the caption as alt text instead of the URL.
+  */ -}}
+  {{- $loading := resources.Get "svg/loading.svg" | minify -}}
+  <a class="lightgallery" href="{{ $url | safeURL }}" title="{{ $alt }}" data-thumbnail="{{ $url | safeURL }}">
+    <img class="lazyload" src="{{ $loading.RelPermalink }}" data-src="{{ $url | safeURL }}" alt="{{ $alt | plainify }}">
+  </a>
   <figcaption class="image-caption" style="text-align: center; color: #555; font-size: 0.9em; font-style: italic; margin-top: 0.5em;">
     {{- $alt | safeHTML -}}
   </figcaption>
