@@ -8,7 +8,7 @@ abstract: "计划了大半个月，我开始了一场关于“在路上”的实
 categories: ["旅行"]
 tags: ["运转", "公交", "旅行"]
 featured: 10
-cover: /assets/local-assets/posts/travel-L001-PK-HZ/100.jpg
+cover: /assets/local-assets/posts/travel-L001-PK-HZ/96.jpg
 ---
 
 > 本文为系列文章的下篇，另欢迎阅读 [✈️ 北京到杭州：9 天，61 程车，1300 公里（上）](/zh-cn/posts/travel-l001-pk-hz.01) 和 [✈️ 北京到杭州：9 天，61 程车，1300 公里（中）](/zh-cn/posts/travel-l001-pk-hz.02)。
