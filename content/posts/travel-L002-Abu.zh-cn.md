@@ -8,6 +8,7 @@ abstract: "一篇迟到了十一个月的旅行回忆。从圣地亚哥出发，
 categories: ["旅行"]
 tags: ["旅行", "运转", "飞机", "公交", "阿布扎比"]
 featured: 40
+cover: /assets/local-assets/posts/travel-L002-Abu/15-mosque_fav.jpeg
 ---
 
 ## 前言
