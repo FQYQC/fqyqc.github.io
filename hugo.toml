@@ -111,6 +111,11 @@ title = "Yilue's Blog"
       googleFonts = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
 
   [params.page]
+    # LoveIt reads extra CSS/JS libraries from params.page.library (merged into each page's params),
+    # not from params.library, so they must live here to be loaded.
+    [params.page.library.js]
+      # keep TOC / #hash targets in place while lazy images above them load
+      stableAnchor = "js/stable-anchor.js"
     [params.page.toc]
       # whether to enable the table of the contents
       # 是否使用目录
