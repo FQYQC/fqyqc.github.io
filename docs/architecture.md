@@ -32,6 +32,8 @@ Hugo 读取根配置和双语内容。根目录中的模板与资源优先于主
 
 文章中的图片目标先经过 `layouts/_default/_markup/render-image.html`。该 render hook 查询 `data/assets_mapping.json`；有映射时使用远程 URL，没有映射时保留原始目标。被忽略的 `assets/local-assets/` 是本地素材来源，不属于可复现部署输入。
 
+render hook 内联了主题 `plugin/img.html` 的链接分支（懒加载与 lightgallery），但不输出 `data-srcset`：主题把同一个文件同时标为 1.5x 和 2x，高像素密度屏幕上浏览器会按图片像素宽度的一半显示，较窄的图片因此比正文窄。去掉后图片按 `max-width: 100%` 撑满正文。图片的 `alt` 使用图注文字而不是 URL。
+
 ### 目录跳转与图片懒加载
 
 主题的 `plugin/img.html` 用 lazysizes 懒加载图片，远程图片没有宽高，加载前只占 60px 的占位图。点击目录或直接打开带 `#标题` 的链接后，目标上方的照片陆续加载，会把标题向下推；没有 CSS 滚动锚定的浏览器（Safari）因此停在错误位置，长游记里可偏离数千像素。主题的 `scroll-margin-top`（顶栏高度 + 0.5rem）已经负责避开固定顶栏，这里不改。
