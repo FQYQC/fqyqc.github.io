@@ -59,7 +59,7 @@ Inter 与 Noto Sans SC 通过 `hugo.toml` 中 `params.library.css.googleFonts` �
 
 精选由文章开头的 `featured` 标记决定，中英文任一版本加了即可：`featured: true` 按发布日期从新到旧；`featured: 15` 这类数字按从小到大排在所有 `true` 前面，建议用 10、20、30 留间隔，插入新文章时不必改其他文章。`layouts/partials/home/featured-pages.html` 收集并排序当前语言的精选文章，`layouts/partials/home/featured.html` 渲染卡片，`layouts/index.html` 把它们从下方列表中排除。
 
-封面由 `layouts/partials/home/featured-cover.html` 解析，两种来源：优先使用本地 `assets/images/covers/<文章文件名>.jpg`（或 `.png`、`.webp`，文件名不带语言后缀）；否则读取文章开头的 `cover`，可写正文中已有的图片路径（经 `data/assets_mapping.json` 映射到图床）或完整 URL，构建时用 `resources.GetRemote` 下载。两种来源都会被缩放到最宽 1400px 并转为 JPEG，同时用 `.Colors` 取调色板，按面积从大到小跳过接近纯黑的阴影和接近纯白的高光，取剩下面积最大的颜色，使底色反映画面整体（阴天保持灰色，夜空保持蓝色），只保留色相和有上限的饱和度，亮度固定为 93%（浅色）和 14%（深色），生成主卡底色；整体偏灰的图片保持中性灰。远程下载失败时用 `try` 捕获，该文章退回文字卡，不影响构建。正文照片仍走图床：本地原图库约 886MB，不适合进入仓库；封面数量少、压缩后体积小，两种来源都可接受。
+封面由 `layouts/partials/home/featured-cover.html` 解析，两种来源：优先使用本地 `assets/images/covers/<文章文件名>.jpg`（或 `.png`、`.webp`，文件名不带语言后缀）；否则读取文章开头的 `cover`，可写正文中已有的图片路径（经 `data/assets_mapping.json` 映射到图床）或完整 URL，构建时用 `resources.GetRemote` 下载。两种来源都会在构建时重新编码为最宽 1200px、质量 75 的 JPEG，因此可以直接放原图，不必手动压缩；同时用 `.Colors` 取调色板，按面积从大到小跳过接近纯黑的阴影和接近纯白的高光，取剩下面积最大的颜色，使底色反映画面整体（阴天保持灰色，夜空保持蓝色），只保留色相和有上限的饱和度，亮度固定为 93%（浅色）和 14%（深色），生成主卡底色；整体偏灰的图片保持中性灰。远程下载失败时用 `try` 捕获，该文章退回文字卡，不影响构建。正文照片仍走图床：本地原图库约 886MB，不适合进入仓库；封面数量少、压缩后体积小，两种来源都可接受。
 
 [docs/featured.md](featured.md) 由 `scripts/sync_featured.py` 根据标记自动生成，列出当前精选的顺序、标记值和有无封面，只作参考；`scripts/check.sh` 每次运行都会刷新它，模板不读取这个文件。
 

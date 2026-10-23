@@ -6,7 +6,7 @@
     2. `cover` front matter (any language version): either an image path already used in
        the post, e.g. /assets/local-assets/posts/<post>/01.jpg (mapped to the image host via
        data/assets_mapping.json), or a full https:// URL. Downloaded at build time.
-  The image is resized for the home page; tintLight / tintDark are card background colors derived from its most colorful palette entry.
+  The image is always re-encoded (max 1200px wide, JPEG q75), so originals can be dropped in as-is; tintLight / tintDark are card background colors derived from its most colorful palette entry.
   If a remote download fails, the post silently falls back to a text card so an image-host
   outage never breaks the build.
 */ -}}
@@ -44,12 +44,8 @@
 
 {{- $result := false -}}
 {{- with $img -}}
-  {{- $resized := . -}}
-  {{- if gt .Width 1400 -}}
-    {{- $resized = .Resize "1400x jpg q78" -}}
-  {{- else if ne .MediaType.SubType "jpeg" -}}
-    {{- $resized = .Resize (printf "%dx jpg q82" .Width) -}}
-  {{- end -}}
+  {{- /* Always re-encode so originals can be dropped in as-is: at most 1200px wide, JPEG q75. */ -}}
+  {{- $resized := .Resize (printf "%dx jpg q75" (math.Min .Width 1200 | int)) -}}
   {{- /*
     Card tint: Hugo returns the palette ordered by area (largest first). Skip near-black
     shadows and near-white highlights, then take the largest remaining color, so the tint
