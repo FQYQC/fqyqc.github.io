@@ -7,7 +7,7 @@
                         leave gaps (10, 20, 30) so a new post can be slotted in (e.g. 15)
                         without renumbering others.
   Posts without a version in the current language are skipped.
-  scripts/sync_featured.py mirrors this logic to write data/featured.toml for reference.
+  scripts/sync_featured.py mirrors this logic to write docs/featured.md for reference.
 */ -}}
 {{- $ranked := slice -}}
 {{- range where site.RegularPages "Type" "posts" -}}

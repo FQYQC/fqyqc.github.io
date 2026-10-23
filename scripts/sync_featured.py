@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Regenerate data/featured.toml from the `featured` front matter flag of posts.
+"""Regenerate docs/featured.md from the `featured` front matter flag of posts.
 
 The site template (layouts/partials/home/featured-pages.html) reads the flags
-directly; this file is only a human-readable reference of the current result.
+directly; the Markdown file is only a human-readable reference of the current result.
 
 Usage: sync_featured.py [project-root]
 """
@@ -62,22 +62,27 @@ def main() -> None:
 
     covers = root / "static" / "images" / "covers"
     lines = [
-        "# 自动生成，请勿手改：由 scripts/sync_featured.py 根据文章开头的 featured 标记生成，",
-        "# 运行 ./scripts/check.sh 时自动更新。首页实际以文章里的标记为准，本文件只供参考。",
-        "#",
-        "# 设为精选：在文章开头加一行 featured: true（按发布日期从新到旧），",
-        "#           或 featured: 15（数字小的排在前面；留间隔，插入新文章时不用改其他文章）。",
-        "# 封面：把图片命名为 <文章文件名>.jpg / .png / .webp 放进 static/images/covers/，没有则显示文字卡。",
+        "# 首页精选",
         "",
-        "posts = [",
+        "<!-- 自动生成，请勿手改：由 scripts/sync_featured.py 根据文章开头的 featured 标记生成，运行 ./scripts/check.sh 时自动更新。 -->",
+        "",
+        "首页实际以文章里的标记为准，本文件只供参考。",
+        "",
+        "- **设为精选**：在文章开头加一行 `featured: true`，中英文任一版本即可，按发布日期从新到旧排。",
+        "  写数字如 `featured: 15` 则按数字从小到大排在所有 `true` 前面；用 10、20、30 留间隔，插入新文章时不用改其他文章。",
+        "- **封面**：把图片命名为 `<文章文件名>.jpg`（或 `.png`、`.webp`）放进 `static/images/covers/`，没有则显示文字卡。",
+        "",
     ]
-    for name, e in chosen:
-        has_cover = any((covers / f"{name}.{ext}").is_file() for ext in ("jpg", "png", "webp"))
-        note = f"featured: {e['flag']}，{e['date']}，{'有封面' if has_cover else '无封面（文字卡）'}"
-        lines.append(f'  "{name}",  # {note}')
-    lines.append("]")
+    if chosen:
+        lines += ["| 顺序 | 文章 | 标记 | 发布日期 | 封面 |", "|---|---|---|---|---|"]
+        for index, (name, e) in enumerate(chosen, start=1):
+            has_cover = any((covers / f"{name}.{ext}").is_file() for ext in ("jpg", "png", "webp"))
+            cover = "有" if has_cover else "无，显示文字卡"
+            lines.append(f"| {index} | `{name}` | `{e['flag']}` | {e['date']} | {cover} |")
+    else:
+        lines.append("当前没有精选文章，首页不显示精选区。")
 
-    out = root / "data" / "featured.toml"
+    out = root / "docs" / "featured.md"
     content = "\n".join(lines) + "\n"
     if not out.exists() or out.read_text(encoding="utf-8") != content:
         out.write_text(content, encoding="utf-8")

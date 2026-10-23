@@ -39,7 +39,7 @@ git submodule update --init --recursive
 | `assets/` | Hugo Pipes 处理的样式和本地素材 |
 | `data/assets_mapping.json` | Markdown 图片路径到远程资源的映射 |
 | `data/friends.toml` | 友链列表，渲染到双语友链页 |
-| `data/featured.toml` | 首页精选的参考清单，由文章的 `featured` 标记自动生成，勿手改 |
+| `docs/featured.md` | 首页精选的参考清单，由文章的 `featured` 标记自动生成，勿手改 |
 | `layouts/` | 对 LoveIt 主题的站点级模板覆盖 |
 | `static/` | 原样复制到站点根目录的静态文件 |
 | `themes/LoveIt` | 固定 commit 的 Git 子模块 |
