@@ -106,13 +106,11 @@ title = "Yilue's Blog"
     # modern SVG favicon to use in place of older style .png and .ico files
     svgFavicon = "/favicon.svg"
 
-    # Custom CSS and JS
-    [params.library.css]
-      googleFonts = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
-
   [params.page]
     # LoveIt reads extra CSS/JS libraries from params.page.library (merged into each page's params),
     # not from params.library, so they must live here to be loaded.
+    [params.page.library.css]
+      googleFonts = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
     [params.page.library.js]
       # keep TOC / #hash targets in place while lazy images above them load
       stableAnchor = "js/stable-anchor.js"
