@@ -37,11 +37,7 @@
                 {{- $pages = where $pages "Params.hiddenfromhomepage" "!=" true -}}
             {{- end -}}
             {{- /* Site addition: posts shown in the cover slot are not repeated in the list */ -}}
-            {{- $featured := slice -}}
-            {{- range site.Data.featured.featured -}}
-                {{- with site.GetPage .page -}}{{- $featured = $featured | append . -}}{{- end -}}
-            {{- end -}}
-            {{- with $featured -}}{{- $pages = $pages | complement . -}}{{- end -}}
+            {{- with partial "home/featured-pages.html" . -}}{{- $pages = $pages | complement . -}}{{- end -}}
             {{- with $posts.paginate | default .Site.Params.paginate -}}
                 {{- $pages = $.Paginate $pages . -}}
             {{- else -}}

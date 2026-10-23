@@ -357,7 +357,27 @@ header.desktop .menu .menu-item {
     padding-bottom: 1rem;
   }
 
-  // 主卡（第一篇）
+  // 主卡（第一篇）：整张卡带浅灰底，图片贴边，文字在卡内，右侧留白成为卡片的一部分
+  > .featured-card.has-image:first-child {
+    gap: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f4f4f4;
+
+    [theme=dark] & {
+      background: #1b1b1e;
+    }
+
+    .featured-image {
+      aspect-ratio: 16 / 10;
+      border-radius: 0;
+    }
+
+    .featured-body {
+      padding: 1rem 1.15rem 1.15rem;
+    }
+  }
+
   > .featured-card:first-child .featured-title {
     font-size: 1.45rem;
     -webkit-line-clamp: 3;
@@ -384,12 +404,37 @@ header.desktop .menu .menu-item {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
+  // 六列网格：主卡占满一行，小卡各占两列（每行三张）；
+  // 最后一行只剩两张时各占三列，只剩一张时占满整行并改为左图右文，避免留空位。
   .home-featured:not(.count-1):not(.count-2) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     row-gap: 1.75rem;
+
+    > .featured-card {
+      grid-column: span 2;
+    }
 
     > .featured-card:first-child {
       grid-column: 1 / -1;
+    }
+
+    > .featured-card:nth-child(3n+2):nth-last-child(2),
+    > .featured-card:nth-child(3n+2):nth-last-child(2) + .featured-card {
+      grid-column: span 3;
+    }
+
+    > .featured-card:not(:first-child):nth-child(3n+2):last-child {
+      grid-column: 1 / -1;
+
+      &.has-image {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+
+        .featured-image {
+          flex: 0 0 calc((100% - 1.5rem) * 2 / 3);
+        }
+      }
     }
   }
 
@@ -403,6 +448,10 @@ header.desktop .menu .menu-item {
     .featured-image {
       grid-column: span 2;
     }
+
+    .featured-body {
+      padding: 1.5rem 1.5rem 1.5rem 0;
+    }
   }
 
   .home-featured.count-1 > .featured-card.has-image:first-child {
@@ -410,6 +459,10 @@ header.desktop .menu .menu-item {
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
     column-gap: 1.5rem;
     align-items: center;
+
+    .featured-body {
+      padding: 1.5rem 1.5rem 1.5rem 0;
+    }
   }
 }
 
@@ -530,6 +583,108 @@ header.desktop .menu .menu-item {
   .page.archive .categories-card {
     grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
+  }
+}
+
+// ---------- 文章页：目录（themes/LoveIt/assets/css/_partial/_single/_toc.scss） ----------
+// 去掉每项前的 "|" 标记；普通项用次要色，当前阅读位置用墨色加粗；侧边线改为细线。
+.toc .toc-content ul {
+  text-indent: 0;
+  padding-left: 0;
+
+  a:first-child::before {
+    content: none;
+  }
+
+  li {
+    margin: 0.2rem 0;
+  }
+
+  ul {
+    padding-left: 0.9rem;
+  }
+
+  a {
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+
+    &:hover {
+      color: $ink;
+
+      [theme=dark] & {
+        color: $ink-dark;
+      }
+    }
+  }
+}
+
+.toc .toc-title {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: $global-font-secondary-color;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+}
+
+#toc-auto {
+  border-left-width: 1px;
+
+  .toc-content a.active {
+    font-weight: 600;
+    color: $ink;
+
+    [theme=dark] & {
+      color: $ink-dark;
+    }
+  }
+}
+
+// 中等宽度时正文上方的折叠目录：从灰底色块改为细边框
+#toc-static {
+  border: 1px solid $global-border-color;
+  border-radius: 8px;
+  overflow: hidden;
+
+  [theme=dark] & {
+    border-color: $global-border-color-dark;
+  }
+
+  .toc-title,
+  &.open .toc-title,
+  .toc-content {
+    background: transparent !important;
+  }
+
+  .toc-title {
+    padding: 0.35rem 0.9rem;
+  }
+
+  .toc-content > nav > ul {
+    padding: 0.2rem 0.9rem 0.6rem;
+  }
+}
+
+// ---------- 文章页：图片与图注 ----------
+// render-image.html 给图注写了行内 color: #555，在深色模式下几乎看不见，这里统一改用次要文字色。
+.single .content figure {
+  img {
+    border-radius: 6px;
+  }
+
+  figcaption.image-caption {
+    color: $global-font-secondary-color !important;
+    font-style: normal !important;
+    font-size: 0.85em !important;
+    line-height: 1.6;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark !important;
+    }
   }
 }
 

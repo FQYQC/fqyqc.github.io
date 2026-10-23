@@ -1,25 +1,13 @@
-# 首页封面位，由 layouts/partials/home/featured.html 渲染在个人介绍下方。
-# 按顺序列出要突出的文章，建议 1 到 4 篇；1 篇单独显示，2 篇左右并排，3 篇及以上时第一篇为大图、其余排成一行；整个列表留空则首页不显示封面位。
-#   page  必填，文章路径，不带语言后缀，如 "/posts/what-ai-brings-us"；
-#         某种语言没有这篇文章时，该语言首页自动跳过它。
-#   image 可选，填 static/ 下的站内路径；请把压缩后的图片放进 static/images/covers/，
-#         不要引用外部图床。没有 image 时显示纯文字封面（大标题 + 摘要）。
+# 自动生成，请勿手改：由 scripts/sync_featured.py 根据文章开头的 featured 标记生成，
+# 运行 ./scripts/check.sh 时自动更新。首页实际以文章里的标记为准，本文件只供参考。
 #
-# [[featured]]
-# page = "/posts/example"
-# image = "/images/covers/example.jpg"
+# 设为精选：在文章开头加一行 featured: true（按发布日期从新到旧），
+#           或 featured: 15（数字小的排在前面；留间隔，插入新文章时不用改其他文章）。
+# 封面：把图片命名为 <文章文件名>.jpg / .png / .webp 放进 static/images/covers/，没有则显示文字卡。
 
-[[featured]]
-page = "/posts/travel-L001-PK-HZ.03"
-image = "/images/covers/l001-yangtze-ferry.jpg"
-
-[[featured]]
-page = "/posts/what-ai-brings-us"
-
-[[featured]]
-page = "/posts/travel-C008-eugene"
-image = "/images/covers/c008-alaska.jpg"
-
-[[featured]]
-page = "/posts/travel-L002-Abu"
-image = "/images/covers/l002-abu-mosque.jpg"
+posts = [
+  "travel-L001-PK-HZ.03",  # featured: 10，2025-11-14，有封面
+  "what-ai-brings-us",  # featured: 20，2026-08-01，无封面（文字卡）
+  "travel-C008-eugene",  # featured: 30，2025-12-12，有封面
+  "travel-L002-Abu",  # featured: 40，2025-09-10，有封面
+]

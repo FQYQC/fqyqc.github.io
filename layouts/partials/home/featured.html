@@ -1,21 +1,19 @@
 {{- /*
-  Home page cover slot. Reads data/featured.toml; each entry is a post path plus an
-  optional local image. Entries without an image render as a text-only cover.
-  Posts missing in the current language are skipped.
+  Home page cover slot. Featured posts come from the `featured` front matter flag
+  (see partials/home/featured-pages.html). A cover is picked up automatically from
+  static/images/covers/<post file name>.jpg|.png|.webp; posts without one render as a text card.
 */ -}}
 {{- $items := slice -}}
-{{- range $entry := site.Data.featured.featured -}}
-  {{- if not $entry.page -}}
-    {{- errorf "data/featured.toml: every [[featured]] entry needs a page path" -}}
-  {{- end -}}
-  {{- with $entry.image -}}
-    {{- if not (fileExists (path.Join "static" .)) -}}
-      {{- errorf "data/featured.toml: cover image %q is missing under static/" . -}}
+{{- range partial "home/featured-pages.html" . -}}
+  {{- $name := .File.TranslationBaseName -}}
+  {{- $cover := "" -}}
+  {{- range slice "jpg" "png" "webp" -}}
+    {{- $candidate := printf "/images/covers/%s.%s" $name . -}}
+    {{- if and (not $cover) (fileExists (path.Join "static" $candidate)) -}}
+      {{- $cover = $candidate -}}
     {{- end -}}
   {{- end -}}
-  {{- with site.GetPage $entry.page -}}
-    {{- $items = $items | append (dict "page" . "image" $entry.image) -}}
-  {{- end -}}
+  {{- $items = $items | append (dict "page" . "image" $cover) -}}
 {{- end -}}
 {{- $zh := eq site.Language.Lang "zh-cn" -}}
 {{- with $items -}}

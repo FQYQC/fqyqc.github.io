@@ -1,0 +1,34 @@
+{{- /*
+  Returns the featured posts of the current language, in display order.
+
+  A post is featured when its front matter (in any language version) has `featured`:
+    featured: true   -> ordered by publish date, newest first
+    featured: 15     -> ordered by number, smallest first, before all `true` posts;
+                        leave gaps (10, 20, 30) so a new post can be slotted in (e.g. 15)
+                        without renumbering others.
+  Posts without a version in the current language are skipped.
+  scripts/sync_featured.py mirrors this logic to write data/featured.toml for reference.
+*/ -}}
+{{- $ranked := slice -}}
+{{- range where site.RegularPages "Type" "posts" -}}
+  {{- $flag := .Params.featured -}}
+  {{- if not $flag -}}
+    {{- range .Translations -}}
+      {{- with .Params.featured -}}{{- $flag = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if $flag -}}
+    {{- $weight := 1000000000.0 -}}
+    {{- if ne (printf "%T" $flag) "bool" -}}
+      {{- $weight = float $flag -}}
+    {{- end -}}
+    {{- /* sort key: weight ascending, then newer date first */ -}}
+    {{- $key := printf "%020.4f-%020d" $weight (sub 9999999999 .Date.Unix) -}}
+    {{- $ranked = $ranked | append (dict "key" $key "page" .) -}}
+  {{- end -}}
+{{- end -}}
+{{- $pages := slice -}}
+{{- range sort $ranked "key" -}}
+  {{- $pages = $pages | append .page -}}
+{{- end -}}
+{{- return $pages -}}

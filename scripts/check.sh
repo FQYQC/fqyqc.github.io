@@ -10,6 +10,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# 根据文章的 featured 标记刷新参考用的 data/featured.toml（首页本身直接读取标记）
+python3 -I "$PROJECT_ROOT/scripts/sync_featured.py" "$PROJECT_ROOT"
+
 "$PROJECT_ROOT/scripts/build.sh" \
   --destination "$BUILD_ROOT/public" \
   --cacheDir "$BUILD_ROOT/cache"
