@@ -7,6 +7,7 @@ description: "前往小镇尤金的 15 分钟奇妙旅行。"
 abstract: "前往小镇尤金的 15 分钟奇妙旅行。"
 categories: ["旅行"]
 tags: ["运转", "飞机", "Mileage Run"]
+featured: 30
 ---
 
 ## 前言
