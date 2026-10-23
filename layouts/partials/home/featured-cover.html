@@ -51,21 +51,24 @@
     {{- $resized = .Resize (printf "%dx jpg q82" .Width) -}}
   {{- end -}}
   {{- /*
-    Card tint: among the palette Hugo extracts, take the most colorful entry (highest chroma),
-    not the largest area, so a dark ground or grey sky does not win. Keep only its hue and
-    a capped saturation, then fix the lightness ourselves (very light / very dark) so text
-    stays readable. Near-grey palettes stay neutral.
+    Card tint: Hugo returns the palette ordered by area (largest first). Skip near-black
+    shadows and near-white highlights, then take the largest remaining color, so the tint
+    reflects the scene: an overcast sky stays grey, a night sky stays blue. Only its hue and
+    a capped saturation are kept; lightness is fixed below so text stays readable.
   */ -}}
-  {{- $best := dict "chroma" -1.0 "hex" "" -}}
+  {{- $best := dict "chroma" -1.0 -}}
   {{- range .Colors -}}
-    {{- $hex := strings.TrimPrefix "#" (printf "%v" .) -}}
-    {{- if eq (len $hex) 6 -}}
-      {{- $r := div (float (int (printf "0x%s" (substr $hex 0 2)))) 255.0 -}}
-      {{- $g := div (float (int (printf "0x%s" (substr $hex 2 2)))) 255.0 -}}
-      {{- $b := div (float (int (printf "0x%s" (substr $hex 4 2)))) 255.0 -}}
-      {{- $chroma := sub (math.Max $r (math.Max $g $b)) (math.Min $r (math.Min $g $b)) -}}
-      {{- if gt $chroma $best.chroma -}}
-        {{- $best = dict "chroma" $chroma "r" $r "g" $g "b" $b -}}
+    {{- if lt $best.chroma 0.0 -}}
+      {{- $hex := strings.TrimPrefix "#" (printf "%v" .) -}}
+      {{- if eq (len $hex) 6 -}}
+        {{- $r := div (float (int (printf "0x%s" (substr $hex 0 2)))) 255.0 -}}
+        {{- $g := div (float (int (printf "0x%s" (substr $hex 2 2)))) 255.0 -}}
+        {{- $b := div (float (int (printf "0x%s" (substr $hex 4 2)))) 255.0 -}}
+        {{- $max := math.Max $r (math.Max $g $b) -}}
+        {{- $min := math.Min $r (math.Min $g $b) -}}
+        {{- if and (gt $max 0.18) (lt $min 0.88) -}}
+          {{- $best = dict "chroma" (sub $max $min) "r" $r "g" $g "b" $b -}}
+        {{- end -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
