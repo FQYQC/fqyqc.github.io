@@ -1,0 +1,57 @@
+{{- /*
+  Resolves the cover image of a featured post. Returns a dict {url, tint} or nil.
+
+  Order:
+    1. Local file assets/images/covers/<post file name>.jpg|.png|.webp (wins if present).
+    2. `cover` front matter (any language version): either an image path already used in
+       the post, e.g. /assets/local-assets/posts/<post>/01.jpg (mapped to the image host via
+       data/assets_mapping.json), or a full https:// URL. Downloaded at build time.
+  The image is resized for the home page and its dominant color is returned as `tint`.
+  If a remote download fails, the post silently falls back to a text card so an image-host
+  outage never breaks the build.
+*/ -}}
+{{- $page := . -}}
+{{- $img := false -}}
+
+{{- range slice "jpg" "png" "webp" -}}
+  {{- if not $img -}}
+    {{- with resources.Get (printf "images/covers/%s.%s" $page.File.TranslationBaseName .) -}}
+      {{- $img = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if not $img -}}
+  {{- $cover := $page.Params.cover -}}
+  {{- if not $cover -}}
+    {{- range $page.Translations -}}
+      {{- with .Params.cover -}}{{- $cover = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $cover -}}
+    {{- $url := index site.Data.assets_mapping . | default . -}}
+    {{- if hasPrefix $url "http" -}}
+      {{- with try (resources.GetRemote $url) -}}
+        {{- if not .Err -}}
+          {{- with .Value -}}
+            {{- if eq .MediaType.MainType "image" -}}{{- $img = . -}}{{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $result := false -}}
+{{- with $img -}}
+  {{- $resized := . -}}
+  {{- if gt .Width 1400 -}}
+    {{- $resized = .Resize "1400x jpg q78" -}}
+  {{- else if ne .MediaType.SubType "jpeg" -}}
+    {{- $resized = .Resize (printf "%dx jpg q82" .Width) -}}
+  {{- end -}}
+  {{- $tint := "" -}}
+  {{- with .Colors -}}{{- $tint = printf "%v" (index . 0) -}}{{- end -}}
+  {{- $result = dict "url" $resized.RelPermalink "tint" $tint -}}
+{{- end -}}
+{{- return $result -}}

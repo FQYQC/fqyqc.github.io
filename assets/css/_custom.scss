@@ -358,14 +358,18 @@ header.desktop .menu .menu-item {
   }
 
   // 主卡（第一篇）：整张卡带浅灰底，图片贴边，文字在卡内，右侧留白成为卡片的一部分
+  // 底色取自封面主色（--tint，由 featured-cover.html 在构建时计算），只混入少量，保证黑字可读；
+  // 没有主色时退回浅灰。
   > .featured-card.has-image:first-child {
     gap: 0;
     border-radius: 10px;
     overflow: hidden;
     background: #f4f4f4;
+    background: color-mix(in srgb, var(--tint, #e8e8e8) 14%, #f7f7f7);
 
     [theme=dark] & {
       background: #1b1b1e;
+      background: color-mix(in srgb, var(--tint, #2a2a2e) 22%, #161618);
     }
 
     .featured-image {

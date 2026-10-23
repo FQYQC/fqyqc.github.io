@@ -1,19 +1,16 @@
 {{- /*
   Home page cover slot. Featured posts come from the `featured` front matter flag
-  (see partials/home/featured-pages.html). A cover is picked up automatically from
-  static/images/covers/<post file name>.jpg|.png|.webp; posts without one render as a text card.
+  (partials/home/featured-pages.html); covers come from partials/home/featured-cover.html
+  (local assets/images/covers/<name>.* first, then the `cover` front matter via the image host).
+  Posts without a usable cover render as a text card.
 */ -}}
 {{- $items := slice -}}
 {{- range partial "home/featured-pages.html" . -}}
-  {{- $name := .File.TranslationBaseName -}}
-  {{- $cover := "" -}}
-  {{- range slice "jpg" "png" "webp" -}}
-    {{- $candidate := printf "/images/covers/%s.%s" $name . -}}
-    {{- if and (not $cover) (fileExists (path.Join "static" $candidate)) -}}
-      {{- $cover = $candidate -}}
-    {{- end -}}
+  {{- $item := dict "page" . "image" "" "tint" "" -}}
+  {{- with partial "home/featured-cover.html" . -}}
+    {{- $item = merge $item (dict "image" .url "tint" .tint) -}}
   {{- end -}}
-  {{- $items = $items | append (dict "page" . "image" $cover) -}}
+  {{- $items = $items | append $item -}}
 {{- end -}}
 {{- $zh := eq site.Language.Lang "zh-cn" -}}
 {{- with $items -}}
@@ -22,7 +19,7 @@
   {{- range $i, $item := . }}
   {{- $p := $item.page }}
   {{- $summary := $p.Params.abstract | default $p.Description | default $p.Summary }}
-  <a class="featured-card{{ if $item.image }} has-image{{ else }} is-text{{ end }}" href="{{ $p.RelPermalink }}">
+  <a class="featured-card{{ if $item.image }} has-image{{ else }} is-text{{ end }}" href="{{ $p.RelPermalink }}"{{ with $item.tint }} style="{{ printf "--tint: %s" . | safeCSS }}"{{ end }}>
     {{- with $item.image }}
     <span class="featured-image"><img src="{{ . | relURL }}" alt="" loading="{{ cond (eq $i 0) "eager" "lazy" }}" decoding="async"></span>
     {{- end }}
