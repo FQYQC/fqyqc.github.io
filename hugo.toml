@@ -5,6 +5,9 @@ theme = "LoveIt"
 # website title
 title = "Yilue's Blog"
 
+# Must stay above the first [table]; anything after a table header belongs to that table.
+defaultContentLanguage = "en"
+
 # Menu config
 [menu]
   [[menu.main]]
@@ -124,8 +127,6 @@ title = "Yilue's Blog"
       # whether to make the table of the contents in the sidebar automatically collapsed
       # 是否使侧边目录自动折叠展开
       auto = true
-
-defaultContentLanguage = "en"
 
 [languages]
   [languages.en]
