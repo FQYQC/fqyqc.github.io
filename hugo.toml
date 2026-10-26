@@ -64,6 +64,10 @@ defaultContentLanguage = "en"
 [params]
   # site default theme ["auto", "light", "dark"]
   defaultTheme = "auto"
+  # Put a content hash in CSS/JS file names (production builds only) so the CDN and
+  # browsers fetch new styles right after a deploy instead of serving a cached copy
+  # for up to 4 hours. Also adds Subresource Integrity attributes.
+  fingerprint = "sha256"
 
   # Author config
   [params.author]

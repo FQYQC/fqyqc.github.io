@@ -96,6 +96,10 @@ Inter 与 Noto Sans SC 通过 `hugo.toml` 中 `params.library.css.googleFonts` �
 
 `summary.html`、`assets.html` 和 `index.html` 基于主题模板的完整副本。更新主题后必须与新的同路径文件进行三方比较，避免遗漏主题修复。
 
+### 缓存与指纹
+
+`hugo.toml` 设置了 `params.fingerprint = "sha256"`，生产构建时 CSS 和 JS 的文件名带内容哈希，并附带 SRI `integrity` 属性。原因：站点前面的 CDN 和浏览器会把静态文件缓存 4 小时，文件名不变时部署后仍会用旧样式渲染新页面。若以后在前面加会改写响应内容的 CDN（如自动压缩），SRI 校验会失败，需要关闭那类功能或去掉指纹。
+
 ### 生成物
 
 `public/`、`resources/_gen/`、`resources/_cache/` 和 Hugo lock 文件都能重新生成，并由 `.gitignore` 排除。验证脚本将输出写入安全的临时目录。
