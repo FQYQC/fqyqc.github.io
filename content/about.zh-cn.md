@@ -105,3 +105,7 @@ description: "Professional Background and Experience"
 - Designed goal-oriented intrinsic reward module improving game scores
 - Implemented hand card inference module based on Theory of Mind
 - Enhanced performance by 0.47 and 2.62 points in different game modes
+
+---
+
+关于这个网站本身的变化，见[网站更新](/zh-cn/updates/)。

@@ -1,0 +1,23 @@
+{{- /* Renders data/updates.toml as a release log; notes follow the page language. */ -}}
+{{- $zh := eq .Page.Language.Lang "zh-cn" -}}
+{{- with site.Data.updates.releases -}}
+<div class="site-updates">
+  {{- range sort . "date" "desc" }}
+  {{- $notes := cond $zh .zh .en }}
+  {{- if not $notes }}
+    {{- errorf "data/updates.toml: release %v has no %s notes" .version (cond $zh "zh" "en") }}
+  {{- end }}
+  <section class="site-update">
+    <header class="site-update-head">
+      <span class="site-update-version">{{ .version }}</span>
+      <time class="site-update-date" datetime="{{ .date }}">{{ time.Format "2006-01-02" .date }}</time>
+    </header>
+    <ul class="site-update-notes">
+      {{- range $notes }}
+      <li>{{ . }}</li>
+      {{- end }}
+    </ul>
+  </section>
+  {{- end }}
+</div>
+{{- end -}}

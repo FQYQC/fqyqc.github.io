@@ -109,16 +109,18 @@ defaultContentLanguage = "en"
     # modern SVG favicon to use in place of older style .png and .ico files
     svgFavicon = "/favicon.svg"
 
-    # Custom CSS and JS
-    [params.library.css]
-      googleFonts = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
-
   [params.page]
     # LoveIt reads extra CSS/JS libraries from params.page.library (merged into each page's params),
     # not from params.library, so they must live here to be loaded.
+    [params.page.library.css]
+      googleFonts = "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
     [params.page.library.js]
       # keep TOC / #hash targets in place while lazy images above them load
       stableAnchor = "js/stable-anchor.js"
+      # every click on the theme switch flips light/dark (see the file header)
+      themeToggle = "js/theme-toggle.js"
+      # desktop language picker styled like the site instead of the native dropdown
+      languageMenu = "js/language-menu.js"
     [params.page.toc]
       # whether to enable the table of the contents
       # 是否使用目录
@@ -188,7 +190,7 @@ defaultContentLanguage = "en"
         title = "GitHub"
     [languages.en.params]
       [languages.en.params.footer]
-        custom = "<a href=\"/friends/\">My friends' websites</a>"
+        custom = "<a href=\"/friends/\">My friends' websites</a> · <a href=\"/updates/\">Site updates</a>"
       [languages.en.params.search]
         enable = true
         type = "lunr"
@@ -279,7 +281,7 @@ defaultContentLanguage = "en"
         title = "GitHub"
     [languages.zh-cn.params]
       [languages.zh-cn.params.footer]
-        custom = "<a href=\"/zh-cn/friends/\">朋友们的网站</a>"
+        custom = "<a href=\"/zh-cn/friends/\">朋友们的网站</a> · <a href=\"/zh-cn/updates/\">网站更新</a>"
       [languages.zh-cn.params.search]
         enable = true
         type = "lunr"

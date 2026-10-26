@@ -1,32 +1,912 @@
+// ==============================
+// 站点级样式（在主题样式之后导入）
+// 颜色与字体变量见 assets/css/_override.scss
+// 设计方向：极简黑白，靠字号、字重和留白建立层级；照片是唯一的色彩来源。
+// ==============================
 
-// 修改全局字体 - 使用Google Fonts
+// ---------- 排版 ----------
 body {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-family: $sans-font-stack;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "cv11", "ss01";
 }
 
-// 修改标题字体
-h1, h2, h3, h4, h5, h6 {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-font-weight: 500 !important;
+h1, h2, h3, h4, h5, h6,
+.single-title,
+.home-title,
+.header-title {
+  font-family: $sans-font-stack;
+  font-weight: 700;
+  letter-spacing: -0.015em;
 }
 
-// 修改代码字体
 code, pre {
-font-family: "Source Code Pro", "Fira Code", "Consolas", "Monaco", "Courier New", monospace !important;
-// font-family: "Arial", monospace !important;
-font-weight: 400 !important;
+  font-family: "Source Code Pro", "Fira Code", Menlo, Consolas, monospace;
+  font-weight: 400;
 }
 
-// 修改导航栏字体
-.header {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+// 链接靠下划线区分，而不是颜色
+.single .content a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: rgba(17, 17, 17, 0.35);
+
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+
+  [theme=dark] & {
+    text-decoration-color: rgba(237, 237, 237, 0.35);
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
 }
 
-// 修改文章内容字体
 .single .content {
-font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-line-height: 1.7 !important;
+  line-height: 1.8;
+
+  p {
+    margin: 0.75rem 0;
+  }
+
+  h2, h3, h4 {
+    position: relative;
+    margin-top: 2.2rem;
+  }
+
+  // 标题前的 # / | 链接符号移到左侧边距里，平时隐藏，悬停时再显示
+  .header-mark::before {
+    position: absolute;
+    left: -1.1em;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  h2:hover .header-mark::before,
+  h3:hover .header-mark::before,
+  h4:hover .header-mark::before {
+    opacity: 1;
+  }
+
+  // 引用：浅灰底 + 左侧墨色竖条，字号略小、颜色更浅，和正文明显区分（文章里多用于系列导语、翻译说明）
+  blockquote {
+    margin: 1.25rem 0;
+    padding: 0.6rem 1rem;
+    border-left: 3px solid $ink;
+    border-radius: 0 6px 6px 0;
+    background: #f5f5f5;
+    color: #555;
+    font-size: 0.94em;
+    line-height: 1.75;
+
+    p {
+      margin: 0.3rem 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    [theme=dark] & {
+      border-left-color: $ink-dark;
+      background: #1b1b1e;
+      color: #a8a8a8;
+    }
+  }
 }
+
+// 主题给标题加了翻转/脉冲入场动画；简洁风格不需要，且动画被暂停时标题会一直不可见
+.single-title.animate__animated,
+.home-title.animate__animated {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+// ---------- 顶栏 ----------
+header.desktop,
+header.mobile {
+  border-bottom: 1px solid $global-border-color;
+  box-shadow: none !important;
+
+  [theme=dark] & {
+    border-bottom-color: $global-border-color-dark;
+  }
+}
+
+.header-title a {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+// 主题的竖线分隔符是 1.5px 正文黑，太重；改为细的边框色
+header.desktop .menu .menu-item.delimiter {
+  border-left: 1px solid $global-border-color !important;
+
+  [theme=dark] & {
+    border-left-color: $global-border-color-dark !important;
+  }
+}
+
+// 右侧功能图标（GitHub、搜索、主题切换、语言）排得更紧，作为一组；文字链接保持原来的间距。
+// 主题用 #header-desktop 选择器，这里用同样的 ID 才能覆盖。
+#header-desktop .header-wrapper .menu .menu-inner {
+  a.menu-item:not([href^="/"]),
+  .menu-item.search,
+  .menu-item.theme-switch,
+  .menu-item.language {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+
+  // GitHub 图标与左边文字链接之间保持和文字链接相同的间距
+  a.menu-item:not([href^="/"]) {
+    margin-left: 0.5rem;
+  }
+
+  .menu-item.delimiter {
+    margin: 0 0.25rem;
+    padding: 0;
+  }
+
+  // 原生语言下拉框不再响应点击，改用 assets/js/language-menu.js 生成的站点风格菜单
+  .menu-item.language .language-select {
+    pointer-events: none;
+  }
+
+  // 搜索框收起时是 2.5rem 宽的点击区，图标靠左；收起时收窄，展开（.open）时恢复主题的 24rem
+  .menu-item.search input {
+    width: 1.6rem;
+  }
+}
+
+#header-desktop.open .header-wrapper .menu .menu-inner .menu-item.search {
+  margin: 0 0.25rem 0 0.5rem;
+
+  input {
+    width: 24rem;
+  }
+}
+
+// 语言菜单（assets/js/language-menu.js）：白底细边框小卡片，挂在 body 上用 fixed 定位，避免被顶栏的 overflow 裁掉
+.language-menu {
+  position: fixed;
+  z-index: 200;
+  min-width: 8.5rem;
+  padding: 0.3rem;
+  border: 1px solid $global-border-color;
+  border-radius: 8px;
+  background: $global-background-color;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-size: 0.9rem;
+
+  &[hidden] {
+    display: none;
+  }
+
+  [theme=dark] & {
+    border-color: $global-border-color-dark;
+    background: #1b1b1e;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.language-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 5px;
+  color: $global-font-secondary-color;
+  text-decoration: none;
+
+  &:hover {
+    background: #f4f4f4;
+    color: $ink;
+  }
+
+  &.is-current {
+    color: $ink;
+    font-weight: 600;
+
+    &::after {
+      content: "";
+      width: 0.35rem;
+      height: 0.35rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+  }
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+
+    &:hover {
+      background: #26262a;
+      color: $ink-dark;
+    }
+
+    &.is-current {
+      color: $ink-dark;
+    }
+  }
+}
+
+header.desktop .menu .menu-item {
+  font-size: 0.92rem;
+  padding: 0 0.45rem;
+  color: $global-font-secondary-color;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+
+  &.active,
+  &:hover {
+    color: $ink;
+
+    [theme=dark] & {
+      color: $ink-dark;
+    }
+  }
+}
+
+// ---------- 首页个人介绍 ----------
+.home .home-profile {
+  transform: none;
+  padding: 4rem 0 2rem;
+  text-align: left;
+
+  .home-title {
+    font-size: 2.2rem;
+    line-height: 1.25;
+    padding: 0 0 1rem;
+  }
+
+  .home-subtitle {
+    padding: 0;
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: $muted-ink;
+
+    [theme=dark] & {
+      color: $muted-ink-dark;
+    }
+
+    p {
+      margin: 0;
+      text-align: left !important;
+    }
+
+    a,
+    a span {
+      color: inherit;
+      text-decoration: underline !important;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  .links {
+    padding: 1.25rem 0 0;
+    font-size: 1.2rem;
+
+    a {
+      margin-right: 0.75rem;
+    }
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .home .home-profile {
+    padding: 2.5rem 0 1.5rem;
+
+    .home-title {
+      font-size: 1.6rem;
+    }
+
+    .home-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .page.single.special .single-title,
+  .page.archive .single-title {
+    font-size: 1.7rem;
+    margin-top: 1.5rem;
+  }
+}
+
+// ---------- 首页宽度 ----------
+// 主题按屏幕宽度给内容区设比例宽度（52%～80%），在 960px 附近屏幕变宽、内容区反而变窄，
+// 导致封面卡片来回切换排法。首页改为固定上限宽度，随屏幕单调变宽；文章页依赖主题宽度放目录，不改。
+.page.home,
+.page.archive {
+  width: auto;
+  max-width: 54rem;
+  // 只改左右内边距；上内边距由主题为固定顶栏预留，不能覆盖
+  padding-left: 1rem;
+  padding-right: 1rem;
+  // 封面区的容器查询以首页内容宽度为准（容器自身的网格列数不能被自己的容器查询修改）
+  container-type: inline-size;
+}
+
+@media only screen and (max-width: 680px) {
+  .page.home,
+  .page.archive {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.home-section-title {
+  margin: 2.25rem 0 1rem;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase;
+  color: $global-font-secondary-color;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+}
+
+// ---------- 首页封面位：layouts/partials/home/featured.html ----------
+// 布局随篇数变化：1 篇单独、2 篇并排、3 篇及以上首篇做主卡、其余每行三张。
+// 用容器查询按封面区自身宽度切换：宽时主卡左图右文、小卡三列；窄时全部单列、小卡变左图右文横条。
+.home-featured {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  margin: 0 0 0.5rem;
+
+  .featured-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover .featured-title {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
+  }
+
+  .featured-image {
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f4f4f4;
+
+    [theme=dark] & {
+      background: #1d1d20;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+  }
+
+  .featured-card:hover img {
+    transform: scale(1.03);
+  }
+
+  // 无图：浅灰底文字卡，不抢照片的风头
+  .featured-card.is-text {
+    padding: 1.1rem 1.15rem 1rem;
+
+    border-radius: 8px;
+    background: #f4f4f4;
+
+    [theme=dark] & {
+      background: #1b1b1e;
+    }
+  }
+
+  .featured-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  // 分类 · 日期，合成标题下方的一行
+  .featured-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .featured-kicker {
+    font-weight: 600;
+  }
+
+  .featured-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .featured-summary {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: $muted-ink;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    [theme=dark] & {
+      color: $muted-ink-dark;
+    }
+  }
+
+  .featured-date {
+    font-variant-numeric: tabular-nums;
+  }
+
+  // 同一行的小卡片等高；正文区撑满，"分类 · 日期"贴底，整行排成一条线
+  > .featured-card:not(:first-child) {
+    .featured-body {
+      flex: 1;
+    }
+
+    .featured-meta {
+      margin-top: auto;
+      padding-top: 0.25rem;
+    }
+  }
+
+  // 照片小卡底部留出与文字卡内边距相同的空间，让整行的"分类 · 日期"落在同一条线上
+  > .featured-card.has-image:not(:first-child) {
+    padding-bottom: 1rem;
+  }
+
+  // 主卡（第一篇）：整张卡带浅灰底，图片贴边，文字在卡内，右侧留白成为卡片的一部分
+  // 底色取自封面里最鲜艳的颜色的色相，亮度固定（featured-cover.html 在构建时算好 --tint-light / --tint-dark），
+  // 保证黑字可读；封面整体偏灰或没有封面时退回中性灰。
+  > .featured-card.has-image:first-child {
+    gap: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--tint-light, #f4f4f4);
+
+    [theme=dark] & {
+      background: var(--tint-dark, #1b1b1e);
+    }
+
+    .featured-image {
+      aspect-ratio: 16 / 10;
+      border-radius: 0;
+    }
+
+    .featured-body {
+      padding: 1rem 1.15rem 1.15rem;
+    }
+  }
+
+  > .featured-card:first-child .featured-title {
+    font-size: 1.45rem;
+    -webkit-line-clamp: 3;
+  }
+}
+
+// 窄：小卡片变成左图右文横条
+@container (max-width: 639px) {
+  .home-featured > .featured-card.has-image:not(:first-child) {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 0;
+
+    .featured-image {
+      flex: 0 0 36%;
+    }
+  }
+}
+
+// 宽：主卡左图右文，其余三列
+@container (min-width: 640px) {
+  .home-featured.count-2 {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  // 六列网格：主卡占满一行，小卡各占两列（每行三张）；
+  // 最后一行只剩两张时各占三列，只剩一张时占满整行并改为左图右文，避免留空位。
+  .home-featured:not(.count-1):not(.count-2) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    row-gap: 1.75rem;
+
+    > .featured-card {
+      grid-column: span 2;
+    }
+
+    > .featured-card:first-child {
+      grid-column: 1 / -1;
+    }
+
+    > .featured-card:nth-child(3n+2):nth-last-child(2),
+    > .featured-card:nth-child(3n+2):nth-last-child(2) + .featured-card {
+      grid-column: span 3;
+    }
+
+    > .featured-card:not(:first-child):nth-child(3n+2):last-child {
+      grid-column: 1 / -1;
+
+      &.has-image {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+
+        .featured-image {
+          flex: 0 0 calc((100% - 1.5rem) * 2 / 3);
+        }
+      }
+    }
+  }
+
+  // 主卡沿用下方三列的列线：图片占前两列、文字占第三列，图片右边缘与第二张小卡右边缘对齐
+  .home-featured:not(.count-1):not(.count-2) > .featured-card.has-image:first-child {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    align-items: center;
+
+    .featured-image {
+      grid-column: span 2;
+    }
+
+    .featured-body {
+      padding: 1.5rem 1.5rem 1.5rem 0;
+    }
+  }
+
+  .home-featured.count-1 > .featured-card.has-image:first-child {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: center;
+
+    .featured-body {
+      padding: 1.5rem 1.5rem 1.5rem 0;
+    }
+  }
+}
+
+// ---------- 首页文章摘要 ----------
+.home .summary,
+.page .summary {
+  padding: 1.5rem 0 1.25rem;
+  border-bottom: 1px solid $global-border-color;
+  box-shadow: none;
+
+  [theme=dark] & {
+    border-bottom-color: $global-border-color-dark;
+  }
+
+  .single-title {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    margin: 0 0 0.45rem;
+  }
+
+  .post-meta {
+    font-size: 0.82rem;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .content {
+    margin-top: 0.55rem;
+    line-height: 1.75;
+    color: $muted-ink;
+
+    [theme=dark] & {
+      color: $muted-ink-dark;
+    }
+  }
+
+  .post-footer {
+    margin-top: 0.7rem;
+    font-size: 0.82rem;
+  }
+}
+
+// ---------- 页面与归档标题 ----------
+// 主题默认把 About、友链、归档的大标题右对齐，这里统一左对齐。
+.page.single.special .single-title,
+.page.archive .single-title {
+  text-align: left;
+  font-size: 2rem;
+  margin: 2.5rem 0 1.5rem;
+}
+
+.archive {
+  .group-title {
+    font-size: 1.1rem;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  // 主题自带 1.5rem 左外边距，这里只保留一层缩进
+  // 日期挪到标题左边作为窄列，避免标题与右端日期之间大片空白
+  .archive-item {
+    justify-content: flex-start;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0.25rem 0;
+  }
+
+  .archive-item-date {
+    order: -1;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 3.4em;
+    white-space: nowrap;
+    text-align: left;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// ---------- 分类总览页（themes/LoveIt/layouts/taxonomy/terms.html） ----------
+// 主题用 flex + align-items: center 排两列，文章少的分类会被垂直居中、看起来比旁边低；
+// 外加三层上边距和两层缩进。这里改为顶部对齐的两列网格、统一间距、条目与分类名左对齐。
+.page.archive .categories-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 2.5rem 3rem;
+  margin: 1.5rem 0 0;
+
+  .card-item {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+  }
+
+  .card-item-wrapper .card-item-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+  }
+
+  .card-item-wrapper .more-post {
+    display: block;
+    float: none;
+    padding: 0.35rem 0 0;
+    text-align: left;
+    font-size: 0.85rem;
+  }
+
+  .archive-item {
+    margin: 0;
+    padding: 0.3rem 0;
+  }
+
+  .archive-item-link {
+    white-space: normal;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .page.archive .categories-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+}
+
+// ---------- 文章页：目录（themes/LoveIt/assets/css/_partial/_single/_toc.scss） ----------
+// 去掉每项前的 "|" 标记；普通项用次要色，当前阅读位置用墨色加粗；侧边线改为细线。
+.toc .toc-content ul {
+  text-indent: 0;
+  padding-left: 0;
+
+  a:first-child::before {
+    content: none;
+  }
+
+  li {
+    margin: 0.2rem 0;
+  }
+
+  ul {
+    padding-left: 0.9rem;
+  }
+
+  a {
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+
+    &:hover {
+      color: $ink;
+
+      [theme=dark] & {
+        color: $ink-dark;
+      }
+    }
+  }
+}
+
+.toc .toc-title {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: $global-font-secondary-color;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+}
+
+#toc-auto {
+  border-left-width: 1px;
+
+  .toc-content a.active {
+    font-weight: 600;
+    color: $ink;
+
+    [theme=dark] & {
+      color: $ink-dark;
+    }
+  }
+}
+
+// 中等宽度时正文上方的折叠目录：从灰底色块改为细边框
+#toc-static {
+  border: 1px solid $global-border-color;
+  border-radius: 8px;
+  overflow: hidden;
+
+  [theme=dark] & {
+    border-color: $global-border-color-dark;
+  }
+
+  .toc-title,
+  &.open .toc-title,
+  .toc-content {
+    background: transparent !important;
+  }
+
+  .toc-title {
+    padding: 0.35rem 0.9rem;
+  }
+
+  .toc-content > nav > ul {
+    padding: 0.2rem 0.9rem 0.6rem;
+  }
+}
+
+// ---------- 文章页：分割线 ----------
+// 文章里的分割线用来隔开导语、正文和文末附录。主题默认是浅色虚线，几乎看不见；
+// 改为通栏细实线，颜色略深，上下留足空白，作为大段之间的界线。
+.single .content hr {
+  margin: 2.5rem 0;
+  border: none;
+  border-top: 1px solid #d6d6d6;
+
+  [theme=dark] & {
+    border-top: 1px solid #3a3a3d;
+  }
+}
+
+// ---------- 文章页：图片与图注 ----------
+// render-image.html 给图注写了行内 color: #555，在深色模式下几乎看不见，这里统一改用次要文字色。
+.single .content figure {
+  img {
+    border-radius: 6px;
+  }
+
+  figcaption.image-caption {
+    color: $global-font-secondary-color !important;
+    font-style: normal !important;
+    font-size: 0.85em !important;
+    line-height: 1.6;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark !important;
+    }
+  }
+}
+
+// ---------- 网站更新页（layouts/shortcodes/updates.html） ----------
+// 类似应用商店的“更新内容”：每次更新一块，版本号加粗、日期灰色，下面是要点。
+.single .content .site-updates {
+  margin-top: 2rem;
+}
+
+.single .content .site-update {
+  padding: 1.25rem 0;
+  border-top: 1px solid $global-border-color;
+
+  [theme=dark] & {
+    border-top-color: $global-border-color-dark;
+  }
+
+  .site-update-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .site-update-version {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .site-update-date {
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .site-update-notes {
+    margin: 0;
+    padding-left: 1.2rem;
+
+    li {
+      margin: 0.3rem 0;
+      line-height: 1.7;
+    }
+  }
+}
+
+// ---------- 页脚 ----------
+.footer {
+  font-size: 0.82rem;
+  color: $global-font-secondary-color;
+  padding-top: 2rem;
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+  }
+}
+
 // 友链页面：layouts/shortcodes/friends.html
 .single .content ul.friend-links {
   list-style: none;

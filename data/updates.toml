@@ -1,0 +1,97 @@
+# 网站更新日志，由 layouts/shortcodes/updates.html 渲染到 /updates/ 和 /zh-cn/updates/。
+# 只记录读者能感知的非内容更新（外观、导航、新页面、修复），不记录文章和内部维护。
+#
+# 新的一次更新加在最上面；同一个月的更新并入同一个 version。zh 与 en 逐条对应。
+# 修改外观或行为的提交（[Lot.]、[Str.] 等）应在同一提交里补一条，见 AGENTS.md。
+#
+# [[releases]]
+# version = "2026.11"
+# date = 2026-11-01
+# zh = ["一句话说明"]
+# en = ["One-line note"]
+
+[[releases]]
+version = "2026.10"
+date = 2026-10-25
+zh = [
+  "全新的极简黑白设计：重做配色、字体与排版。",
+  "首页新增“精选”区，用封面卡片展示推荐文章。",
+  "新增“朋友们”页面，展示朋友们的网站。",
+  "新增“网站更新”页面，也就是本页。",
+  "点击文章目录时，不再因为图片还在加载而跳错位置。",
+  "在高分辨率屏幕上，文章图片不再缩成一半宽度。",
+  "明暗切换每次点击都会立即生效；语言切换改为与网站风格一致的小菜单。",
+  "文章列表、引用、分割线与导航栏的版式更紧凑、更清晰。",
+]
+en = [
+  "A new minimal black-and-white design, with reworked colors, type and layout.",
+  "A Featured section on the home page shows selected posts as cover cards.",
+  "A new Friends page lists my friends' websites.",
+  "A new Site updates page — the one you are reading.",
+  "Clicking the table of contents no longer lands in the wrong place while images are still loading.",
+  "Post images no longer shrink to half width on high-resolution screens.",
+  "The light/dark switch now takes effect on every click, and the language switch is a small menu that matches the site.",
+  "Post lists, quotes, dividers and the navigation bar are tighter and clearer.",
+]
+
+[[releases]]
+version = "2026.08"
+date = 2026-08-01
+zh = [
+  "修复站内搜索。",
+]
+en = [
+  "Fixed site search.",
+]
+
+[[releases]]
+version = "2025.11"
+date = 2025-11-13
+zh = [
+  "开启站内搜索。",
+  "长文章的侧边目录会随阅读位置自动展开和折叠。",
+]
+en = [
+  "Turned on site search.",
+  "The sidebar table of contents in long posts now expands and collapses as you read.",
+]
+
+[[releases]]
+version = "2025.09"
+date = 2025-09-12
+zh = [
+  "首页加入一段自我介绍。",
+  "文章图片改由图床加载，并统一了图注样式。",
+  "调整正文字体。",
+  "页脚新增访客计数。",
+]
+en = [
+  "Added a short introduction to the home page.",
+  "Post images now load from an image host and share one caption style.",
+  "Adjusted the body font.",
+  "Added a visitor counter to the footer.",
+]
+
+[[releases]]
+version = "2025.08"
+date = 2025-08-29
+zh = [
+  "新增网站图标。",
+  "更新站点标题与社交链接。",
+]
+en = [
+  "Added a site icon.",
+  "Updated the site title and social links.",
+]
+
+[[releases]]
+version = "2025.06"
+date = 2025-06-24
+zh = [
+  "网站上线：基于 Hugo 与 LoveIt 主题，部署在 GitHub Pages。",
+  "调整首页结构与站点标题。",
+]
+en = [
+  "The site went live, built with Hugo and the LoveIt theme and hosted on GitHub Pages.",
+  "Reworked the home page structure and site title.",
+]

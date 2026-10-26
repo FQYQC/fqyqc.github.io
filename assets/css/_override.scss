@@ -1,0 +1,79 @@
+// ==============================
+// 站点级变量覆盖（覆盖 themes/LoveIt/assets/css/_override.scss 占位文件）
+// 主题在 _variables 之后导入本文件，这里直接赋值即可生效。
+// 设计方向：极简黑白。几乎不用颜色，靠字号、字重和留白区分层级；照片是唯一的色彩来源。
+// ==============================
+
+// ---------- 字体 ----------
+$sans-font-stack: "Inter", "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Emoji, Helvetica, Arial, sans-serif;
+
+$global-font-family: $sans-font-stack;
+$global-font-size: 16px;
+$global-line-height: 1.6rem;
+$header-title-font-family: $sans-font-stack;
+
+// ---------- 基础色 ----------
+$ink: #111111;
+$ink-dark: #ededed;
+
+// 摘要、介绍等较长的辅助文字
+$muted-ink: #444444;
+$muted-ink-dark: #b4b4b4;
+
+$global-background-color: #ffffff;
+$global-background-color-dark: #111113;
+
+$global-font-color: $ink;
+$global-font-color-dark: $ink-dark;
+
+// 日期、元信息等小字；对白底对比度约 5.3:1
+$global-font-secondary-color: #6b6b6b;
+$global-font-secondary-color-dark: #9b9b9b;
+
+$global-link-color: $ink;
+$global-link-color-dark: $ink-dark;
+
+$global-link-hover-color: #6b6b6b;
+$global-link-hover-color-dark: #ffffff;
+
+$global-border-color: #ececec;
+$global-border-color-dark: #262628;
+
+$selection-color: rgba(0, 0, 0, 0.12);
+$selection-color-dark: rgba(255, 255, 255, 0.18);
+
+// ---------- 顶栏 ----------
+$header-height: 4rem;
+$header-title-font-size: 1.15rem;
+$header-background-color: #ffffff;
+$header-background-color-dark: #111113;
+$header-hover-color: $ink;
+$header-hover-color-dark: #ffffff;
+$search-background-color: #f4f4f4;
+$search-background-color-dark: #1d1d20;
+
+// ---------- 正文 ----------
+$single-link-color: $ink;
+$single-link-color-dark: $ink-dark;
+$single-link-hover-color: #6b6b6b;
+$single-link-hover-color-dark: #ffffff;
+
+$table-background-color: #ffffff;
+$table-background-color-dark: #151517;
+$table-thead-color: #f4f4f4;
+$table-thead-color-dark: #1d1d20;
+
+$blockquote-color: $ink;
+$blockquote-color-dark: $ink-dark;
+
+// ---------- 分页 ----------
+$pagination-link-color: #6b6b6b;
+$pagination-link-color-dark: #9b9b9b;
+$pagination-link-hover-color: $ink;
+$pagination-link-hover-color-dark: #ffffff;
+
+// ---------- 代码 ----------
+$code-color: $ink;
+$code-color-dark: $ink-dark;
+$code-background-color: #f4f4f4;
+$code-background-color-dark: #1b1b1e;

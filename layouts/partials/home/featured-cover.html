@@ -1,0 +1,95 @@
+{{- /*
+  Resolves the cover image of a featured post. Returns a dict {url, tintLight, tintDark} or false.
+
+  Order:
+    1. Local file assets/images/covers/<post file name>.jpg|.png|.webp (wins if present).
+    2. `cover` front matter (any language version): either an image path already used in
+       the post, e.g. /assets/local-assets/posts/<post>/01.jpg (mapped to the image host via
+       data/assets_mapping.json), or a full https:// URL. Downloaded at build time.
+  The image is always re-encoded (max 1200px wide, JPEG q75), so originals can be dropped in as-is; tintLight / tintDark are card background colors derived from its most colorful palette entry.
+  If a remote download fails, the post silently falls back to a text card so an image-host
+  outage never breaks the build.
+*/ -}}
+{{- $page := . -}}
+{{- $img := false -}}
+
+{{- range slice "jpg" "png" "webp" -}}
+  {{- if not $img -}}
+    {{- with resources.Get (printf "images/covers/%s.%s" $page.File.TranslationBaseName .) -}}
+      {{- $img = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if not $img -}}
+  {{- $cover := $page.Params.cover -}}
+  {{- if not $cover -}}
+    {{- range $page.Translations -}}
+      {{- with .Params.cover -}}{{- $cover = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $cover -}}
+    {{- $url := index site.Data.assets_mapping . | default . -}}
+    {{- if hasPrefix $url "http" -}}
+      {{- with try (resources.GetRemote $url) -}}
+        {{- if not .Err -}}
+          {{- with .Value -}}
+            {{- if eq .MediaType.MainType "image" -}}{{- $img = . -}}{{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $result := false -}}
+{{- with $img -}}
+  {{- /* Always re-encode so originals can be dropped in as-is: at most 1200px wide, JPEG q75. */ -}}
+  {{- $resized := .Resize (printf "%dx jpg q75" (math.Min .Width 1200 | int)) -}}
+  {{- /*
+    Card tint: Hugo returns the palette ordered by area (largest first). Skip near-black
+    shadows and near-white highlights, then take the largest remaining color, so the tint
+    reflects the scene: an overcast sky stays grey, a night sky stays blue. Only its hue and
+    a capped saturation are kept; lightness is fixed below so text stays readable.
+  */ -}}
+  {{- $best := dict "chroma" -1.0 -}}
+  {{- range .Colors -}}
+    {{- if lt $best.chroma 0.0 -}}
+      {{- $hex := strings.TrimPrefix "#" (printf "%v" .) -}}
+      {{- if eq (len $hex) 6 -}}
+        {{- $r := div (float (int (printf "0x%s" (substr $hex 0 2)))) 255.0 -}}
+        {{- $g := div (float (int (printf "0x%s" (substr $hex 2 2)))) 255.0 -}}
+        {{- $b := div (float (int (printf "0x%s" (substr $hex 4 2)))) 255.0 -}}
+        {{- $max := math.Max $r (math.Max $g $b) -}}
+        {{- $min := math.Min $r (math.Min $g $b) -}}
+        {{- if and (gt $max 0.18) (lt $min 0.88) -}}
+          {{- $best = dict "chroma" (sub $max $min) "r" $r "g" $g "b" $b -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $tintLight := "" -}}
+  {{- $tintDark := "" -}}
+  {{- if gt $best.chroma 0.08 -}}
+    {{- $r := $best.r -}}{{- $g := $best.g -}}{{- $b := $best.b -}}
+    {{- $max := math.Max $r (math.Max $g $b) -}}
+    {{- $min := math.Min $r (math.Min $g $b) -}}
+    {{- $d := sub $max $min -}}
+    {{- $l := div (add $max $min) 2.0 -}}
+    {{- $sat := div $d (sub 1.0 (math.Abs (sub (mul 2.0 $l) 1.0))) -}}
+    {{- $h := 0.0 -}}
+    {{- if eq $max $r -}}
+      {{- $h = mul 60.0 (div (sub $g $b) $d) -}}
+    {{- else if eq $max $g -}}
+      {{- $h = mul 60.0 (add (div (sub $b $r) $d) 2.0) -}}
+    {{- else -}}
+      {{- $h = mul 60.0 (add (div (sub $r $g) $d) 4.0) -}}
+    {{- end -}}
+    {{- if lt $h 0.0 -}}{{- $h = add $h 360.0 -}}{{- end -}}
+    {{- $h = math.Round $h -}}
+    {{- $tintLight = printf "hsl(%v, %v%%, 93%%)" $h (math.Round (mul 100.0 (math.Min $sat 0.45))) -}}
+    {{- $tintDark = printf "hsl(%v, %v%%, 14%%)" $h (math.Round (mul 100.0 (math.Min $sat 0.3))) -}}
+  {{- end -}}
+  {{- $result = dict "url" $resized.RelPermalink "tintLight" $tintLight "tintDark" $tintDark -}}
+{{- end -}}
+{{- return $result -}}
