@@ -40,6 +40,8 @@ hugo server --buildDrafts --disableFastRender
 
 ## 提交约定
 
+- 改变网站外观或行为、读者能感知到的提交（通常是 `[Lot.]`、`[Str.]`），必须在同一提交里给 `data/updates.toml` 补一条中英对照的更新说明：写读者能看懂的一句话，同月并入同一个 `version`，新的一月在最上面新建。文章内容和内部维护（构建脚本、Agent 配置、CI）不记。`scripts/check.sh` 会对缺失的条目给出提醒。
+
 - Agent 专用基础设施使用 `[Agt.]`，包括 `AGENTS.md`、`.agents/skills/**`、Agent 工作流及其专用校验脚本。
 - 普通仓库维护、CI、依赖与开发工具仍使用 `[Repo]`。
 - 其他既有前缀保持原义：`[Ctt.]` 表示内容，`[Lot.]` 表示布局或站点行为，`[Str.]` 表示结构，`[Dpl.]` 表示部署。
