@@ -13,7 +13,7 @@
 
 | 顺序 | 文章 | 标记 | 发布日期 | 封面 |
 |---|---|---|---|---|
-| 1 | `travel-L001-PK-HZ.03` | `10` | 2025-11-14 | 图床 `/assets/local-assets/posts/travel-L001-PK-HZ/96.jpg` |
+| 1 | `travel-L002-Abu` | `10` | 2025-09-10 | 图床 `/assets/local-assets/posts/travel-L002-Abu/15-mosque_fav.jpeg` |
 | 2 | `what-ai-brings-us` | `20` | 2026-08-01 | 本地 `assets/images/covers/` |
 | 3 | `travel-C008-eugene` | `30` | 2025-12-12 | 图床 `/assets/local-assets/posts/travel-C008-eugene/C008-alaska_paint.jpeg` |
-| 4 | `travel-L002-Abu` | `40` | 2025-09-10 | 图床 `/assets/local-assets/posts/travel-L002-Abu/15-mosque_fav.jpeg` |
+| 4 | `travel-L001-PK-HZ.03` | `40` | 2025-11-14 | 图床 `/assets/local-assets/posts/travel-L001-PK-HZ/96.jpg` |

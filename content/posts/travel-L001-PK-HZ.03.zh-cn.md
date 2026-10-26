@@ -7,7 +7,7 @@ description: "计划了大半个月，我开始了一场关于“在路上”的
 abstract: "计划了大半个月，我开始了一场关于“在路上”的实践。从北京到杭州，六十一程公交串联了我 2024 年最快乐的九天。无人打扰，逃离现实，背上背包，手提布袋，我只需一路前进、沿途观察、尽情体验、沉心感受。本文为系列文章的下篇。"
 categories: ["旅行"]
 tags: ["运转", "公交", "旅行"]
-featured: 10
+featured: 40
 cover: /assets/local-assets/posts/travel-L001-PK-HZ/96.jpg
 ---
 

@@ -7,7 +7,7 @@ description: "一篇迟到了十一个月的旅行回忆。从圣地亚哥出发
 abstract: "一篇迟到了十一个月的旅行回忆。从圣地亚哥出发，辗转 48 小时抵达阿布扎比参加 IROS 会议的经历，以及旅途中的那些能够塑造我的，令人难忘的挑战、相遇、收获与成长。"
 categories: ["旅行"]
 tags: ["旅行", "运转", "飞机", "公交", "阿布扎比"]
-featured: 40
+featured: 10
 cover: /assets/local-assets/posts/travel-L002-Abu/15-mosque_fav.jpeg
 ---
 
