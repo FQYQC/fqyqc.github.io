@@ -72,13 +72,33 @@ code, pre {
     opacity: 1;
   }
 
+  // 引用：浅灰底 + 左侧墨色竖条，字号略小、颜色更浅，和正文明显区分（文章里多用于系列导语、翻译说明）
   blockquote {
-    border-left-width: 2px;
-    background: transparent;
-    color: $muted-ink;
+    margin: 1.25rem 0;
+    padding: 0.6rem 1rem;
+    border-left: 3px solid $ink;
+    border-radius: 0 6px 6px 0;
+    background: #f5f5f5;
+    color: #555;
+    font-size: 0.94em;
+    line-height: 1.75;
+
+    p {
+      margin: 0.3rem 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
 
     [theme=dark] & {
-      color: $muted-ink-dark;
+      border-left-color: $ink-dark;
+      background: #1b1b1e;
+      color: #a8a8a8;
     }
   }
 }
@@ -107,9 +127,125 @@ header.mobile {
   letter-spacing: -0.02em;
 }
 
+// 主题的竖线分隔符是 1.5px 正文黑，太重；改为细的边框色
+header.desktop .menu .menu-item.delimiter {
+  border-left: 1px solid $global-border-color !important;
+
+  [theme=dark] & {
+    border-left-color: $global-border-color-dark !important;
+  }
+}
+
+// 右侧功能图标（GitHub、搜索、主题切换、语言）排得更紧，作为一组；文字链接保持原来的间距。
+// 主题用 #header-desktop 选择器，这里用同样的 ID 才能覆盖。
+#header-desktop .header-wrapper .menu .menu-inner {
+  a.menu-item:not([href^="/"]),
+  .menu-item.search,
+  .menu-item.theme-switch,
+  .menu-item.language {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+
+  // GitHub 图标与左边文字链接之间保持和文字链接相同的间距
+  a.menu-item:not([href^="/"]) {
+    margin-left: 0.5rem;
+  }
+
+  .menu-item.delimiter {
+    margin: 0 0.25rem;
+    padding: 0;
+  }
+
+  // 原生语言下拉框不再响应点击，改用 assets/js/language-menu.js 生成的站点风格菜单
+  .menu-item.language .language-select {
+    pointer-events: none;
+  }
+
+  // 搜索框收起时是 2.5rem 宽的点击区，图标靠左；收起时收窄，展开（.open）时恢复主题的 24rem
+  .menu-item.search input {
+    width: 1.6rem;
+  }
+}
+
+#header-desktop.open .header-wrapper .menu .menu-inner .menu-item.search {
+  margin: 0 0.25rem 0 0.5rem;
+
+  input {
+    width: 24rem;
+  }
+}
+
+// 语言菜单（assets/js/language-menu.js）：白底细边框小卡片，挂在 body 上用 fixed 定位，避免被顶栏的 overflow 裁掉
+.language-menu {
+  position: fixed;
+  z-index: 200;
+  min-width: 8.5rem;
+  padding: 0.3rem;
+  border: 1px solid $global-border-color;
+  border-radius: 8px;
+  background: $global-background-color;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-size: 0.9rem;
+
+  &[hidden] {
+    display: none;
+  }
+
+  [theme=dark] & {
+    border-color: $global-border-color-dark;
+    background: #1b1b1e;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.language-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 5px;
+  color: $global-font-secondary-color;
+  text-decoration: none;
+
+  &:hover {
+    background: #f4f4f4;
+    color: $ink;
+  }
+
+  &.is-current {
+    color: $ink;
+    font-weight: 600;
+
+    &::after {
+      content: "";
+      width: 0.35rem;
+      height: 0.35rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+  }
+
+  [theme=dark] & {
+    color: $global-font-secondary-color-dark;
+
+    &:hover {
+      background: #26262a;
+      color: $ink-dark;
+    }
+
+    &.is-current {
+      color: $ink-dark;
+    }
+  }
+}
+
 header.desktop .menu .menu-item {
   font-size: 0.92rem;
-  padding: 0 0.6rem;
+  padding: 0 0.45rem;
   color: $global-font-secondary-color;
 
   [theme=dark] & {
@@ -530,12 +666,21 @@ header.desktop .menu .menu-item {
   }
 
   // 主题自带 1.5rem 左外边距，这里只保留一层缩进
+  // 日期挪到标题左边作为窄列，避免标题与右端日期之间大片空白
   .archive-item {
+    justify-content: flex-start;
+    gap: 1.25rem;
     margin: 0;
-    padding: 0.35rem 0 0.35rem 1rem;
+    padding: 0.25rem 0;
   }
 
   .archive-item-date {
+    order: -1;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 3.4em;
+    white-space: nowrap;
+    text-align: left;
     font-variant-numeric: tabular-nums;
   }
 }
@@ -671,6 +816,19 @@ header.desktop .menu .menu-item {
   }
 }
 
+// ---------- 文章页：分割线 ----------
+// 文章里的分割线用来隔开导语、正文和文末附录。主题默认是浅色虚线，几乎看不见；
+// 改为通栏细实线，颜色略深，上下留足空白，作为大段之间的界线。
+.single .content hr {
+  margin: 2.5rem 0;
+  border: none;
+  border-top: 1px solid #d6d6d6;
+
+  [theme=dark] & {
+    border-top: 1px solid #3a3a3d;
+  }
+}
+
 // ---------- 文章页：图片与图注 ----------
 // render-image.html 给图注写了行内 color: #555，在深色模式下几乎看不见，这里统一改用次要文字色。
 .single .content figure {
@@ -686,6 +844,54 @@ header.desktop .menu .menu-item {
 
     [theme=dark] & {
       color: $global-font-secondary-color-dark !important;
+    }
+  }
+}
+
+// ---------- 网站更新页（layouts/shortcodes/updates.html） ----------
+// 类似应用商店的“更新内容”：每次更新一块，版本号加粗、日期灰色，下面是要点。
+.single .content .site-updates {
+  margin-top: 2rem;
+}
+
+.single .content .site-update {
+  padding: 1.25rem 0;
+  border-top: 1px solid $global-border-color;
+
+  [theme=dark] & {
+    border-top-color: $global-border-color-dark;
+  }
+
+  .site-update-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .site-update-version {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .site-update-date {
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    color: $global-font-secondary-color;
+
+    [theme=dark] & {
+      color: $global-font-secondary-color-dark;
+    }
+  }
+
+  .site-update-notes {
+    margin: 0;
+    padding-left: 1.2rem;
+
+    li {
+      margin: 0.3rem 0;
+      line-height: 1.7;
     }
   }
 }

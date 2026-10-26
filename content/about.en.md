@@ -102,3 +102,7 @@ Feel free to contact me through [[Github]](https://github.com/FQYQC) [[LinkedIn]
 - Designed goal-oriented intrinsic reward module improving game scores
 - Implemented hand card inference module based on Theory of Mind
 - Enhanced performance by 0.47 and 2.62 points in different game modes
+
+---
+
+For changes to this website itself, see [Site updates](/updates/).

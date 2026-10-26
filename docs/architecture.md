@@ -42,6 +42,20 @@ render hook 内联了主题 `plugin/img.html` 的链接分支（懒加载与 lig
 
 验证：在无滚动锚定（模拟 Safari）且图片延迟 1.5 至 5 秒的条件下，修复前目标最终偏离 3000 至 12000px，修复后稳定在 72px（顶栏 64px 下方）。若以后为图片补上宽高或 `aspect-ratio`，可以减少布局偏移，但本脚本仍可保留作为兜底。
 
+### 明暗切换
+
+LoveIt 的切换按钮在 auto、light、dark 三态间循环；系统为深色时 auto 与 dark 看起来相同，从 dark 点到 auto 只换图标、页面不变。`assets/js/theme-toggle.js`（经 `params.page.library.js` 加载）在主题的点击处理之前以捕获阶段运行，只改写 `cfg-theme`，让主题的“下一态”恰好是与当前相反的明暗：若与系统偏好一致则记为 `auto`（继续跟随系统），否则记为显式的 `light` / `dark`。主题自身的处理逻辑（body 属性、localStorage、评论与图表的切换事件）保持不变。
+
+### 语言切换
+
+桌面端点击地球图标不再弹出系统原生下拉框，而是弹出站点风格的小菜单：`assets/js/language-menu.js`（经 `params.page.library.js` 加载）根据主题下拉框的选项生成菜单，当前语言加粗并带圆点，另一语言链接到当前页的翻译；当前页没有翻译时链接到该语言首页。菜单挂在 body 上用 fixed 定位（顶栏的 `.menu` 有 `overflow: hidden`），点击外部、按 Esc、滚动或改变窗口大小时关闭。主题的原生下拉框在桌面端被 `_custom.scss` 设为不响应点击；手机菜单保留原生选择器。脚本里写死了两种语言的首页路径和名称，修改语言配置时需要同步。
+
+### 网站更新页
+
+`/updates/` 记录网站本身的非内容更新，像应用商店的“更新内容”。数据在 `data/updates.toml`，每个 `[[releases]]` 有 `version`（年.月）、`date` 和逐条对应的 `zh` / `en` 列表；`layouts/shortcodes/updates.html` 按日期倒序渲染，`content/updates.*.md` 在列表前写一段“关于本站”。入口在两种语言的页脚（`params.footer.custom`），不放进顶部菜单，也不放在 About（About 是个人信息）。
+
+`AGENTS.md` 规定改变外观或行为的提交要在同一提交里补一条更新。`scripts/check_updates.py` 由 `scripts/check.sh` 调用：数据格式错误或中英条数不一致时失败；有比最新一条更晚的 `[Lot.]` / `[Str.]` 提交时只提醒，不失败。
+
 ### 友链
 
 友链数据保存在 `data/friends.toml`，每个 `[[friends]]` 条目包含必填的 `name`、`url`，以及可选的 `icon`、`iconFill` 和双语 `description`。图标下载到 `static/images/friends/` 后随站点发布，页面不直接请求对方服务器；没有图标时显示名字首字母。`layouts/shortcodes/friends.html` 是站点新增的 shortcode，不覆盖主题文件；`content/friends.en.md` 与 `content/friends.zh-cn.md` 调用它，分别生成 `/friends/` 和 `/zh-cn/friends/`。顶部菜单和各语言页脚 `params.footer.custom` 只链接到对应语言的友链页。新增朋友时只修改数据文件。
