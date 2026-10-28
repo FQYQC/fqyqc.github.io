@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate data/assets_optimized.json (web-sized post images from optimize_images.py).
 
-Fails on malformed entries or keys that are not in data/assets_mapping.json; only reports
+Fails on malformed entries or keys that are not local /assets/local-assets/ paths; only reports
 how many mapped images still lack a web-sized version.
 
 Usage: check_images.py <project-root>
@@ -28,8 +28,8 @@ def main() -> None:
         fail(f"{optimized_file} must be a JSON object")
 
     for key, entry in optimized.items():
-        if key not in mapping:
-            fail(f"{key} is in assets_optimized.json but not in assets_mapping.json")
+        if key not in mapping and not key.startswith("/assets/local-assets/"):
+            fail(f"{key} must be a local /assets/local-assets/ path used by a post")
         if not isinstance(entry, dict):
             fail(f"{key} must map to an object with avif, jpg, width and height")
         for field, suffix, required in (("avif", ".avif", True), ("jpg", ".jpg", False)):

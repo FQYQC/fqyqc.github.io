@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Make web-sized versions of post images and record their image-host URLs.
 
-Post images are referenced by local paths (data/assets_mapping.json maps them to the
-original uploads on the image host). Those originals are full-size phone photos, often
+Post images are referenced by local paths under /assets/local-assets/ (older ones are also
+mapped to original uploads on i.tsk.im by data/assets_mapping.json). Those originals are full-size phone photos, often
 5-8 MB each, and most carry GPS coordinates. This script produces, per image:
 
   - an AVIF (with a small progressive preview layer, so Chrome can show it early), and
@@ -14,9 +14,15 @@ color profile removed. layouts/_default/_markup/render-image.html serves them th
 <picture> once their URLs are listed in data/assets_optimized.json.
 
 Usage:
-  optimize_images.py build [--force]   encode images that have no entry in
-                                       data/assets_optimized.json into optimized-images/
-  optimize_images.py link <urls.txt>   read uploaded URLs (one per line, any order; extra
+  optimize_images.py build [--force]   encode post images (local /assets/local-assets/ paths
+                                       used in content/posts/, plus data/assets_mapping.json)
+                                       that have no entry in data/assets_optimized.json
+                                       into optimized-images/
+  optimize_images.py upload            upload encoded images that are not yet on the
+                                       self-hosted image host (IMGBED_URL) and update
+                                       data/assets_optimized.json; needs an API token in
+                                       ~/.config/imgbed/token
+  optimize_images.py link <urls.txt>   for manual uploads: read uploaded URLs (one per line, any order; extra
                                        text is ignored), match them to optimized-images/
                                        by file name and update data/assets_optimized.json
 
@@ -26,6 +32,7 @@ Requires macOS sips plus avifenc (libavif), jpegtran (libjpeg-turbo) and exiftoo
 import argparse
 import concurrent.futures
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -38,7 +45,15 @@ ROOT = Path(__file__).resolve().parent.parent
 MAPPING = ROOT / "data" / "assets_mapping.json"
 OPTIMIZED = ROOT / "data" / "assets_optimized.json"
 OUT = ROOT / "optimized-images"
+POSTS = ROOT / "content" / "posts"
+IMAGE_REF = re.compile(r"!\[[^\]]*\]\((/assets/local-assets/[^)\s]+)")
 MANIFEST = OUT / "manifest.json"
+
+# Self-hosted CloudFlare-ImgBed (Pages project ylqian-static, files in the R2 bucket
+# ylqian-imgbed). The API token needs only the upload permission and stays outside the repo.
+IMGBED_URL = os.environ.get("IMGBED_URL", "https://static.ylqian.com").rstrip("/")
+IMGBED_FOLDER = "blog"
+IMGBED_TOKEN = Path(os.environ.get("IMGBED_TOKEN_FILE", Path.home() / ".config" / "imgbed" / "token"))
 
 MAX_WIDTH, MAX_HEIGHT = 1800, 2400
 JPEG_QUALITY = 80
@@ -77,6 +92,14 @@ def out_names(keys) -> dict:
         counts[base(key)] = counts.get(base(key), 0) + 1
     return {key: base(key) if counts[base(key)] == 1 else f"{base(key)}-{Path(key).suffix.lstrip('.').lower()}"
             for key in keys}
+
+
+def referenced_images() -> set:
+    """Local image paths used by Markdown image syntax in content/posts/."""
+    keys = set()
+    for post in sorted(POSTS.rglob("*.md")):
+        keys.update(IMAGE_REF.findall(post.read_text(encoding="utf-8")))
+    return keys
 
 
 def source_for(key: str, url: str, work: Path) -> Path:
@@ -133,12 +156,19 @@ def build(force: bool) -> None:
     mapping, optimized = load(MAPPING), load(OPTIMIZED)
     OUT.mkdir(exist_ok=True)
     manifest = load(MANIFEST)
-    names = out_names(mapping)
-    todo = {key: url for key, url in mapping.items()
+    # Images come from the posts themselves, so a new post only needs its files under
+    # assets/local-assets/; the old mapping still supplies originals that exist only online.
+    sources = {key: mapping.get(key) for key in referenced_images() | set(mapping)}
+    missing = sorted(key for key, url in sources.items() if not url and not (ROOT / key.lstrip("/")).is_file())
+    for key in missing:
+        print(f"skipped {key}: no local file and no entry in data/assets_mapping.json", file=sys.stderr)
+        del sources[key]
+    names = out_names(sources)
+    todo = {key: url for key, url in sources.items()
             if force or (key not in optimized
                          and manifest.get(key, {}).get("avif") != f"{names[key]}.avif")}
     if not todo:
-        print("Nothing to encode: every mapped image already has an optimized version.")
+        print("Nothing to encode: every post image already has an optimized version.")
         return
     print(f"Encoding {len(todo)} image(s) into {OUT.relative_to(ROOT)}/ ...")
     failures = 0
@@ -153,8 +183,7 @@ def build(force: bool) -> None:
                 failures += 1
                 print(f"[{done}/{len(todo)}] failed {key}: {error}", file=sys.stderr)
             dump(MANIFEST, manifest)
-    print(f"Done. Upload every .avif (and optionally .jpg) in {OUT.relative_to(ROOT)}/ to the image host, "
-          f"save the returned URLs to a text file and run: {Path(__file__).name} link <file>")
+    print(f"Done. Run `{Path(__file__).name} upload` to put them on {IMGBED_URL}.")
     if failures:
         fail(f"{failures} image(s) failed")
 
@@ -187,16 +216,72 @@ def link(urls_file: Path) -> None:
         print(f"{len(missing)} image(s) have no uploaded URL yet, e.g. {', '.join(missing[:5])}")
 
 
+def upload_file(path: Path, token_header: Path) -> str:
+    """POST one file to the CloudFlare-ImgBed instance at IMGBED_URL and return its URL."""
+    query = "uploadChannel=cfr2&uploadNameType=origin&uploadFolder=" + IMGBED_FOLDER
+    # The token goes in through a header file so it never shows up in the process list.
+    result = subprocess.run(["curl", "-sS", "--fail-with-body", "--retry", "3", "-X", "POST",
+                             "-H", f"@{token_header}", "-F", f"file=@{path}",
+                             f"{IMGBED_URL}/upload?{query}"], capture_output=True, text=True)
+    if result.returncode:
+        raise RuntimeError((result.stdout or result.stderr).strip()[:200])
+    src = json.loads(result.stdout)[0]["src"]
+    return src if src.startswith("http") else IMGBED_URL + src
+
+
+def upload() -> None:
+    if not IMGBED_TOKEN.is_file():
+        fail(f"put an ImgBed API token with upload permission in {IMGBED_TOKEN}")
+    manifest, optimized = load(MANIFEST), load(OPTIMIZED)
+    if not manifest:
+        fail(f"{MANIFEST.relative_to(ROOT)} is empty; run `build` first")
+    todo = [key for key, entry in manifest.items()
+            if not optimized.get(key, {}).get("avif", "").startswith(IMGBED_URL + "/")]
+    if not todo:
+        print(f"Nothing to upload: every image is already on {IMGBED_URL}.")
+        return
+    print(f"Uploading {len(todo)} image(s) to {IMGBED_URL} ...")
+    failures = 0
+    with tempfile.TemporaryDirectory() as tmp:
+        header = Path(tmp) / "auth"
+        header.write_text(f"Authorization: Bearer {IMGBED_TOKEN.read_text().strip()}\n")
+        header.chmod(0o600)
+
+        def one(key: str) -> dict:
+            entry = manifest[key]
+            return {"avif": upload_file(OUT / entry["avif"], header),
+                    "jpg": upload_file(OUT / entry["jpg"], header),
+                    "width": entry["width"], "height": entry["height"]}
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+            futures = {pool.submit(one, key): key for key in todo}
+            for done, future in enumerate(concurrent.futures.as_completed(futures), start=1):
+                key = futures[future]
+                try:
+                    optimized[key] = future.result()
+                    print(f"[{done}/{len(todo)}] {manifest[key]['avif']}")
+                except Exception as error:  # keep going; report at the end
+                    failures += 1
+                    print(f"[{done}/{len(todo)}] failed {key}: {error}", file=sys.stderr)
+                dump(OPTIMIZED, optimized)
+    if failures:
+        fail(f"{failures} image(s) failed; run upload again to retry them")
+    print(f"Done. {OPTIMIZED.relative_to(ROOT)} now points at {IMGBED_URL}.")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
     build_parser = sub.add_parser("build")
     build_parser.add_argument("--force", action="store_true", help="re-encode images that already have entries")
+    sub.add_parser("upload")
     link_parser = sub.add_parser("link")
     link_parser.add_argument("urls", type=Path)
     args = parser.parse_args()
     if args.command == "build":
         build(args.force)
+    elif args.command == "upload":
+        upload()
     else:
         link(args.urls)
 

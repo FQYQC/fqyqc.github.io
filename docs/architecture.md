@@ -36,9 +36,9 @@ Hugo 读取根配置和双语内容。根目录中的模板与资源优先于主
 
 图床上的原图多为手机原片（中位数约 5MB，最大 8MB，大多带 GPS 定位）。`scripts/optimize_images.py` 为每张映射图片生成网页尺寸版本：
 
-1. `python3 scripts/optimize_images.py build`：从 `assets/local-assets/` 读原图（本地没有时从图床下载），按 EXIF 方向转正，缩到最大 1800×2400，输出到被忽略的 `optimized-images/`。每张图生成两份：带渐进预览层的 AVIF（质量 60，桌面 Chrome 可先显示模糊预览），以及渐进式 JPEG（质量 80）作为不支持 AVIF 时的备用。只保留 ICC 色彩配置（不少照片是 Display P3），GPS 等 EXIF 全部去掉。已在 `data/assets_optimized.json` 中的图片会被跳过，`--force` 可全部重做。
-2. 把 `optimized-images/` 里的 `.avif` 批量上传到图床（`.jpg` 可选：不传时，不支持 AVIF 的旧浏览器改用图床原图），把返回的 URL 存进一个文本文件（每行一个，顺序不限，夹杂其他文字也可以）。
-3. `python3 scripts/optimize_images.py link <文件>`：按文件名把 URL 对回图片（兼容图床加的 `<时间戳>_` 前缀），连同宽高写入 `data/assets_optimized.json`。
+1. `python3 scripts/optimize_images.py build`：扫描 `content/posts/` 里引用的 `/assets/local-assets/` 图片（再加上 `data/assets_mapping.json` 中的旧条目），从 `assets/local-assets/` 读原图（本地没有时按旧映射从 i.tsk.im 下载），按 EXIF 方向转正，缩到最大 1800×2400，输出到被忽略的 `optimized-images/`。每张图生成两份：带渐进预览层的 AVIF（质量 60，桌面 Chrome 可先显示模糊预览），以及渐进式 JPEG（质量 80）作为不支持 AVIF 时的备用。只保留 ICC 色彩配置（不少照片是 Display P3），GPS 等 EXIF 全部去掉。已在 `data/assets_optimized.json` 中的图片会被跳过，`--force` 可全部重做。
+2. `python3 scripts/optimize_images.py upload`：把还不在自建图床上的 AVIF 和 JPEG 上传，并直接写入 `data/assets_optimized.json`（URL 与宽高）。图床是自建的 [CloudFlare-ImgBed](https://github.com/MarSeventh/CloudFlare-ImgBed)：Cloudflare Pages 项目 `ylqian-static`（代码来自 `FQYQC/CloudFlare-ImgBed`），数据库为 D1 `img_d1`，文件存在 R2 存储桶 `ylqian-imgbed`，对外域名 `https://static.ylqian.com`。上传走 R2 渠道、保留原文件名、放在 `blog/` 目录，所以地址固定为 `https://static.ylqian.com/file/blog/<文件名>`。认证用只有“上传”权限的 API 令牌，放在本机 `~/.config/imgbed/token`（权限 600，不进仓库），脚本通过 curl 的头文件传入，不出现在进程列表里；`IMGBED_URL`、`IMGBED_TOKEN_FILE` 环境变量可覆盖默认值。图床后台为 `https://static.ylqian.com/dashboard`，网页上传需要上传密码，未带令牌或密码的上传返回 401。
+3. 手动上传到其他图床时，可改用 `python3 scripts/optimize_images.py link <文件>`：把返回的 URL 存进文本文件（每行一个，顺序不限，夹杂其他文字也可以），按文件名对回图片（兼容图床加的 `<时间戳>_` 前缀）。`.jpg` 可以不传，这时不支持 AVIF 的旧浏览器改用原图。
 
 render hook 发现图片在 `data/assets_optimized.json` 中时，输出 `<picture>`：AVIF 优先，JPEG 备用（没有 JPEG 时用原图），带 `width`/`height` 属性让浏览器在加载前按比例预留位置，使用浏览器原生 `loading="lazy"`；点开大图（lightgallery）也用 AVIF，不再链接原图。没有条目的图片沿用下面的旧写法，所以新文章在压缩上传前也能正常显示。有 JPEG 时首页精选封面也优先下载它，构建更快。`scripts/check_images.py` 由 `scripts/check.sh` 调用，校验条目格式和 URL，并提示还有多少图片没有压缩版本。
 
