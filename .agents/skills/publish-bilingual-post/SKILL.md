@@ -29,7 +29,7 @@ Turn one Chinese draft into a reviewed, publish-ready Chinese/English pair while
    ./scripts/check.sh
    ```
 
-8. Inspect `git diff` for only the target pair and explicitly related files such as `data/assets_mapping.json` and `data/assets_optimized.json`. Fix failures before handoff. If the post adds mapped images, run `python3 scripts/optimize_images.py build` and tell the user to upload the new files in `optimized-images/` and send back their URLs, then run `python3 scripts/optimize_images.py link <file>`; until then the images fall back to the full-size originals.
+8. Inspect `git diff` for only the target pair and explicitly related files such as `data/assets_mapping.json` and `data/assets_optimized.json`. Fix failures before handoff. If the post adds images under `/assets/local-assets/`, run `python3 scripts/optimize_images.py build` and then `python3 scripts/optimize_images.py upload` (it needs the user's ImgBed token in `~/.config/imgbed/token`; never read or print it); until then the images fall back to the full-size originals.
 9. Summarize unresolved Chinese suggestions, author-approved editorial decisions, translation choices, files changed, and validation results. Propose a commit matching the repository style, normally `[Ctt.][<series>] Release <post>.`
 
 ## Commit boundary
