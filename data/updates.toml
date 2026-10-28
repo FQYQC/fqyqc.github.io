@@ -22,6 +22,7 @@ zh = [
   "在高分辨率屏幕上，文章图片不再缩成一半宽度。",
   "明暗切换每次点击都会立即生效；语言切换改为与网站风格一致的小菜单。",
   "文章列表、引用、分割线与导航栏的版式更紧凑、更清晰。",
+  "文章图片改用压缩后的 AVIF 格式，体积约为原来的十分之一，加载更快，并去掉了照片里的定位信息。",
 ]
 en = [
   "A new minimal black-and-white design, with reworked colors, type and layout.",
@@ -32,6 +33,7 @@ en = [
   "Post images no longer shrink to half width on high-resolution screens.",
   "The light/dark switch now takes effect on every click, and the language switch is a small menu that matches the site.",
   "Post lists, quotes, dividers and the navigation bar are tighter and clearer.",
+  "Post images are now compressed AVIF files, about a tenth of their former size, so they load much faster; location data has been removed from the photos.",
 ]
 
 [[releases]]

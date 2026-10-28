@@ -14,7 +14,24 @@
 */}}
 {{ $url := index site.Data.assets_mapping $src | default $src }}
 
+{{- /*
+  Web-sized versions made by scripts/optimize_images.py (data/assets_optimized.json): an AVIF
+  with a progressive preview layer plus an optional progressive JPEG fallback (browsers without
+  AVIF get the original upload when no JPEG was uploaded), at most 1800x2400 and with GPS and
+  other EXIF removed. The lightbox opens the AVIF as well, so the full-size originals
+  (5-8 MB, with location data) are no longer linked. Images without an entry keep the old markup.
+*/ -}}
+{{ $opt := index (site.Data.assets_optimized | default dict) $src }}
+
 <figure style="margin-top: 1em; margin-bottom: 1em;">
+  {{- with $opt }}
+  <a class="lightgallery" href="{{ .avif | safeURL }}" title="{{ $alt }}" data-thumbnail="{{ .avif | safeURL }}">
+    <picture>
+      <source type="image/avif" srcset="{{ .avif | safeURL }}">
+      <img class="optimized-image" src="{{ .jpg | default $url | safeURL }}" width="{{ .width }}" height="{{ .height }}" alt="{{ $alt | plainify }}" loading="lazy" decoding="async">
+    </picture>
+  </a>
+  {{- else }}
   {{- /*
     Inlined from LoveIt partials/plugin/img.html (commit 97921ffdecafba6d12e3b74ddbb2d0a16ad8c5e0),
     linked branch, minus data-srcset. The theme lists the same file as "1.5x" and "2x", so on
@@ -26,6 +43,7 @@
   <a class="lightgallery" href="{{ $url | safeURL }}" title="{{ $alt }}" data-thumbnail="{{ $url | safeURL }}">
     <img class="lazyload" src="{{ $loading.RelPermalink }}" data-src="{{ $url | safeURL }}" alt="{{ $alt | plainify }}">
   </a>
+  {{- end }}
   <figcaption class="image-caption" style="text-align: center; color: #555; font-size: 0.9em; font-style: italic; margin-top: 0.5em;">
     {{- $alt | safeHTML -}}
   </figcaption>

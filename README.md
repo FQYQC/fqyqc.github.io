@@ -38,6 +38,7 @@ git submodule update --init --recursive
 | `content/` | 页面与文章源文件 |
 | `assets/` | Hugo Pipes 处理的样式和本地素材 |
 | `data/assets_mapping.json` | Markdown 图片路径到远程资源的映射 |
+| `data/assets_optimized.json` | 文章图片的压缩版（AVIF + JPEG）地址和宽高，由 `scripts/optimize_images.py` 生成 |
 | `data/friends.toml` | 友链列表，渲染到双语友链页 |
 | `docs/featured.md` | 首页精选的参考清单，由文章的 `featured` 标记自动生成，勿手改 |
 | `data/updates.toml` | 网站更新日志（非内容更新），渲染到双语 `/updates/` 页面 |

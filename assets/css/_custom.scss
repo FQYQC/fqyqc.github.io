@@ -836,6 +836,15 @@ header.desktop .menu .menu-item {
     border-radius: 6px;
   }
 
+  // 压缩图带 width/height 属性，浏览器加载前就能按比例预留位置，避免页面跳动；
+  // height: auto 让它随 max-width 等比缩小，而不是被 height 属性拉伸。
+  img.optimized-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+
   figcaption.image-caption {
     color: $global-font-secondary-color !important;
     font-style: normal !important;

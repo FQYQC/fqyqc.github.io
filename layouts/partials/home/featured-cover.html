@@ -30,6 +30,8 @@
   {{- end -}}
   {{- with $cover -}}
     {{- $url := index site.Data.assets_mapping . | default . -}}
+    {{- /* Prefer the web-sized JPEG (about 1 MB) over the original upload (often 5-8 MB). */ -}}
+    {{- with index (site.Data.assets_optimized | default dict) . -}}{{- with .jpg -}}{{- $url = . -}}{{- end -}}{{- end -}}
     {{- if hasPrefix $url "http" -}}
       {{- with try (resources.GetRemote $url) -}}
         {{- if not .Err -}}

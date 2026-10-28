@@ -32,6 +32,9 @@ done
 
 python3 -I "$PROJECT_ROOT/scripts/check_friends.py" "$PROJECT_ROOT" "$BUILD_ROOT/public"
 
+# 校验文章压缩图的 URL 和尺寸；尚未压缩或上传的图片只提醒，不失败
+python3 -I "$PROJECT_ROOT/scripts/check_images.py" "$PROJECT_ROOT"
+
 # 校验网站更新日志；有比最新一条更新更晚的 [Lot.]/[Str.] 提交时只提醒，不失败
 python3 -I "$PROJECT_ROOT/scripts/check_updates.py" "$PROJECT_ROOT"
 for UPDATES_PAGE in "$BUILD_ROOT/public/updates/index.html" "$BUILD_ROOT/public/zh-cn/updates/index.html"; do

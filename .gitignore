@@ -95,3 +95,6 @@ Temporary Items
 # config.yaml
 # config.json
 
+
+# Web-sized post images made by scripts/optimize_images.py, uploaded to the image host by hand
+/optimized-images/

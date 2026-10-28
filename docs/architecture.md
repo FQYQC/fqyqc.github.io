@@ -32,6 +32,18 @@ Hugo 读取根配置和双语内容。根目录中的模板与资源优先于主
 
 文章中的图片目标先经过 `layouts/_default/_markup/render-image.html`。该 render hook 查询 `data/assets_mapping.json`；有映射时使用远程 URL，没有映射时保留原始目标。被忽略的 `assets/local-assets/` 是本地素材来源，不属于可复现部署输入。
 
+#### 压缩图
+
+图床上的原图多为手机原片（中位数约 5MB，最大 8MB，大多带 GPS 定位）。`scripts/optimize_images.py` 为每张映射图片生成网页尺寸版本：
+
+1. `python3 scripts/optimize_images.py build`：从 `assets/local-assets/` 读原图（本地没有时从图床下载），按 EXIF 方向转正，缩到最大 1800×2400，输出到被忽略的 `optimized-images/`。每张图生成两份：带渐进预览层的 AVIF（质量 60，桌面 Chrome 可先显示模糊预览），以及渐进式 JPEG（质量 80）作为不支持 AVIF 时的备用。只保留 ICC 色彩配置（不少照片是 Display P3），GPS 等 EXIF 全部去掉。已在 `data/assets_optimized.json` 中的图片会被跳过，`--force` 可全部重做。
+2. 把 `optimized-images/` 里的 `.avif` 批量上传到图床（`.jpg` 可选：不传时，不支持 AVIF 的旧浏览器改用图床原图），把返回的 URL 存进一个文本文件（每行一个，顺序不限，夹杂其他文字也可以）。
+3. `python3 scripts/optimize_images.py link <文件>`：按文件名把 URL 对回图片（兼容图床加的 `<时间戳>_` 前缀），连同宽高写入 `data/assets_optimized.json`。
+
+render hook 发现图片在 `data/assets_optimized.json` 中时，输出 `<picture>`：AVIF 优先，JPEG 备用（没有 JPEG 时用原图），带 `width`/`height` 属性让浏览器在加载前按比例预留位置，使用浏览器原生 `loading="lazy"`；点开大图（lightgallery）也用 AVIF，不再链接原图。没有条目的图片沿用下面的旧写法，所以新文章在压缩上传前也能正常显示。有 JPEG 时首页精选封面也优先下载它，构建更快。`scripts/check_images.py` 由 `scripts/check.sh` 调用，校验条目格式和 URL，并提示还有多少图片没有压缩版本。
+
+依赖：macOS 自带的 `sips`，以及 `brew install libavif jpeg-turbo exiftool`。
+
 render hook 内联了主题 `plugin/img.html` 的链接分支（懒加载与 lightgallery），但不输出 `data-srcset`：主题把同一个文件同时标为 1.5x 和 2x，高像素密度屏幕上浏览器会按图片像素宽度的一半显示，较窄的图片因此比正文窄。去掉后图片按 `max-width: 100%` 撑满正文。图片的 `alt` 使用图注文字而不是 URL。
 
 ### 目录跳转与图片懒加载
